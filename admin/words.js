@@ -2,17 +2,17 @@
 'use strict';
 
 const dictionary = {
-	'linuxinfo adapter settings': {
-		'en': 'Adapter settings for linuxinfo',
-		'de': 'Adaptereinstellungen für linuxinfo',
-		'ru': 'Настройки адаптера для linuxinfo',
-		'pt': 'Configurações do adaptador para linuxinfo',
-		'nl': 'Adapterinstellingen voor linuxinfo',
-		'fr': "Paramètres d'adaptateur pour linuxinfo",
-		'it': "Impostazioni dell'adattatore per linuxinfo",
-		'es': 'Ajustes del adaptador para linuxinfo',
-		'pl': 'Ustawienia adaptera dla linuxinfo',
-		'zh-cn': 'linuxinfo的适配器设置'
+	'linuxcontrol adapter settings': {
+		'en': 'Adapter settings for linuxcontrol',
+		'de': 'Adaptereinstellungen für linuxcontrol',
+		'ru': 'Настройки адаптера для linuxcontrol',
+		'pt': 'Configurações do adaptador para linuxcontrol',
+		'nl': 'Adapterinstellingen voor linuxcontrol',
+		'fr': "Paramètres d'adaptateur pour linuxcontrol",
+		'it': "Impostazioni dell'adattatore per linuxcontrol",
+		'es': 'Ajustes del adaptador para linuxcontrol',
+		'pl': 'Ustawienia adaptera dla linuxcontrol',
+		'zh-cn': 'linuxcontrol'
 	},
 	"pollingInterval": {
 		"en": "polling interval in minutes",

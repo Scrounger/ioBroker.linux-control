@@ -1014,8 +1014,8 @@ if (module.parent) {
 	/**
 	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
-	module.exports = (options) => new Linuxinfo(options);
+	module.exports = (options) => new LinuxControl(options);
 } else {
 	// otherwise start the instance directly
-	new Linuxinfo();
+	new LinuxControl();
 }
