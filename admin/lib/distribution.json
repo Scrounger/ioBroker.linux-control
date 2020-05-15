@@ -1,0 +1,22 @@
+[
+    {
+        "propName": "NAME",
+        "id": "name",
+        "name": "distribution_name"
+    },
+    {
+        "propName": "VERSION_ID",
+        "id": "version",
+        "name": "distribution_version"
+    },
+    {
+        "propName": "VERSION_CODENAME",
+        "id": "codename",
+        "name": "distribution_codename"
+    },
+    {
+        "propName": "PRETTY_NAME",
+        "id": "fullname",
+        "name": "distribution_fullname"
+    }
+]

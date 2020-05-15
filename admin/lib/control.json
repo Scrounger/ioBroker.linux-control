@@ -1,0 +1,27 @@
+[
+    {
+        "id": "aptUpdate",
+        "name": "aptUpdate",
+        "type": "button"
+    },
+    {
+        "id": "aptUpgrade",
+        "name": "aptUpgrade",
+        "type": "button"
+    },
+    {
+        "id": "response",
+        "name": "controlResponse",
+        "type": "string"
+    },
+    {
+        "id": "restart",
+        "name": "restart",
+        "type": "button"
+    },
+    {
+        "id": "shutdown",
+        "name": "shutdown",
+        "type": "button"
+    }
+]

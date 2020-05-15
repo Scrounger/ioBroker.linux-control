@@ -1,0 +1,220 @@
+<html>
+
+<head>
+
+	<!-- Load ioBroker scripts and styles-->
+	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css" />
+
+	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
+	<script type="text/javascript" src="../../lib/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../lib/js/selectID.js"></script>
+	<script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
+
+	<script type="text/javascript" src="../../js/translate.js"></script>
+	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+	<!-- Load our own files -->
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="words.js"></script>
+	<script type="text/javascript" src="index_m.js"></script>
+
+	<style>
+		.treeContainer {
+			width: calc(100% - 24px) !important;
+		}
+
+		.fancytree-container {
+			background: #efefef !important;
+			border-style: none !important;
+			font-size: 1rem !important;
+			font-family: "Segoe UI", Tahoma, Arial, "Courier New" !important;
+		}
+
+		.fancytree-title {
+			background: #efefef !important;
+			height: 24px;
+		}
+
+		.fancytree-node:hover,
+		.fancytree-node:hover>.fancytree-title,
+		.fancytree-title:hover {
+			background: #64b5f6 !important;
+			color: white !important;
+			font-weight: bold !important;
+			cursor: pointer;
+		}
+
+		ul.fancytree-container ul {
+			padding: 0 0 0 18px !important;
+			margin: 0;
+		}
+
+		.fancytree-node>span.fancytree-checkbox {
+			background-position: 0 0;
+			background-image: url("./img/checkbox.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-partsel>span.fancytree-checkbox {
+			background-position: 0 0;
+			background-image: url("./img/checkbox_intermediate.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-partsel.fancytree-selected>span.fancytree-checkbox {
+			background-position: 0 0;
+			background-image: url("./img/checkbox_marked.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node>span.fancytree-icon,
+		.fancytree-node>span.fancytree-icon:hover {
+			background-position: 0 0;
+			background-image: url("./img/state.png");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-folder>span.fancytree-icon {
+			background-position: 0 0;
+			background-image: url("./img/folder.png");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-folder>span.fancytree-expander {
+			background-position: 0 0;
+			background-image: url("./img/menu_right.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-expanded.fancytree-folder>span.fancytree-expander {
+			background-position: 0 0;
+			background-image: url("./img/menu_down.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-item-title-id {
+			min-width: 150px;
+		}
+
+		.fancytree-item-title-name {
+			width: auto;
+		}
+
+		.fancytree-node.fancytree-folder {
+			border-bottom: 0.5px solid #64b5f6;
+			margin-top: 20px;
+		}
+
+		.fancytree-node.fancytree-folder .fancytree-title {
+			font-size: 16px;
+			font-weight: 500;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="m adapter-container">
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" style="height: auto;">
+					<li class="tab col s6 l3"><a href="#tab_general" class="translate active">general</a></li>
+					<li class="tab col s6 l3"><a href="#tab_datapoints" class="translate">datapoints</a></li>
+					<li class="tab col s6 l3 foldersTab"><a href="#tab_folders" class="translate">folders</a></li>
+					<li class="tab col s6 l3 customsTab"><a href="#tab_custom" class="translate">custom</a></li>
+				</ul>
+			</div>
+			<div id="tab_general" class="col s12 page">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s12 m4 l2">
+							<img src="linuxinfo.png" class="logo">
+						</div>
+					</div>
+
+					<!-- Put your content here -->
+
+					<!-- For example columns with settings: -->
+					<div class="row">
+						<div class="col s3 input-field">
+							<input type="number" class="value" id="pollingInterval" />
+							<label for="pollingInterval" class="translate">pollingInterval</label>
+						</div>
+					</div>
+					<div class="row">
+						<p class="translate title">Host configuration table</p>
+						<section>
+							<div class="col s12" id="hosts">
+								<a
+									class="btn-floating waves-effect waves-light blue table-button-add hostsTable-button-add"><i
+										class="material-icons">add</i></a>
+								<div class="table-values-div" style="margin-top: 10px;">
+									<table class="table-values" id="hostsTable">
+										<thead>
+											<tr>
+												<th data-name="name" style="width: auto" class="translate">Name</th>
+												<th data-name="ip" style="width: 10%" class="translate">IP</th>
+												<th data-name="port" data-default="22" style="width: 5%"
+													class="translate">Port</th>
+												<th data-name="user" style="width: 15%" class="translate">User</th>
+												<th data-name="password" data-type="password" style="width: 15%"
+													class="translate">Password</th>
+												<th data-name="rsakey" style="width: 30%" class="translate">RSA Key</th>
+												<th data-name="digits" data-type="number" data-default="5"
+													style="width: 100px" class="translate">timeout</th>
+												<th data-buttons="delete" style="width: 60px"></th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</section>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<label class="translate">whitelistServices</label>
+							<div class="chips whitelistServices"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="tab_datapoints" class="col s12 page">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s12 treeContainer" id="tree_datapoints"></div>
+					</div>
+				</div>
+			</div>
+			<div id="tab_folders" class="col s12 page">
+				<p class="translate title">Table to configure folders to display their size as data points</p>
+				<section>
+					<div class="container_foldersTable">
+						<!-- dynamically creates table on evey change of the select values  -->
+					</div>
+				</section>
+			</div>
+			<div id="tab_custom" class="col s12 page">
+					<p class="translate title">Table to configure your own commands</p>
+					<section>
+						<div class="container_customTable">
+							<!-- dynamically creates table on evey change of the select values  -->
+						</div>
+					</section>
+				</div>			
+		</div>
+	</div>
+</body>
+
+</html>

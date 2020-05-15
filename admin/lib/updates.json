@@ -1,0 +1,22 @@
+[
+    {
+        "id": "lastUpdate",
+        "name": "lastUpdate",
+        "type": "number"
+    },
+    {
+        "id": "newPackages",
+        "name": "newPackages",
+        "type": "number"
+    },
+    {
+        "id": "upgradable",
+        "name": "upgradable",
+        "type": "boolean"
+    },
+    {
+        "id": "newPackagesList",
+        "name": "newPackagesList",
+        "type": "string"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "id": "load",
+        "name": "load",
+        "type": "string"
+    },
+    {
+        "id": "active",
+        "name": "active",
+        "type": "string"
+    },
+    {
+        "id": "running",
+        "name": "running",
+        "type": "boolean"
+    },
+    {
+        "id": "description",
+        "name": "description",
+        "type": "string"
+    },
+    {
+        "id": "restart",
+        "name": "restartService",
+        "type": "button"
+    },
+    {
+        "id": "start",
+        "name": "startService",
+        "type": "button"
+    },
+    {
+        "id": "stop",
+        "name": "stopService",
+        "type": "button"
+    }
+]

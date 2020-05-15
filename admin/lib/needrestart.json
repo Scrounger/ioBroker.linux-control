@@ -1,0 +1,22 @@
+[
+    {
+        "id": "needrestart",
+        "name": "needrestart",
+        "type": "boolean"
+    },
+    {
+        "id": "services",
+        "name": "needRestartServices",
+        "type": "number"
+    },
+    {
+        "id": "containers",
+        "name": "needRestartContainers",
+        "type": "number"
+    },
+    {
+        "id": "sessions",
+        "name": "needRestartSessions",
+        "type": "number"
+    }
+]
