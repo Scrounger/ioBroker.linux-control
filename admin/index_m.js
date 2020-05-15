@@ -161,7 +161,7 @@ async function createTreeViews(settings, onChange) {
 
 }
 
-function createCommandsTable(data,hosts, onChange){
+function createCommandsTable(data, hosts, onChange) {
 	let hostNames = [];
 	for (const host of hosts) {
 		if (host && host.name) {
@@ -282,7 +282,7 @@ function save(callback) {
 
 	obj.servicedWhitelist = chips2list('.whitelistServices');
 
-	obj.hosts = table2values('hosts');
+	obj.hosts = table2values('hosts').filter(o => (o.name !== ''));
 	if (obj.hosts.length > 0) {
 		for (const host of obj.hosts) {
 			host.password = encrypt(secret, host.password);
@@ -290,14 +290,14 @@ function save(callback) {
 		}
 	}
 
-	obj.folders = table2values('folders');
+	obj.folders = table2values('folders').filter(o => (o.name !== ''));
 	if (obj.folders.length > 0) {
 		for (const host of obj.folders) {
 			host.name = host.name.replace(/[*?"'\[\]\s]/g, "_");
 		}
 	}
 
-	obj.commands = table2values('commands');
+	obj.commands = table2values('commands').filter(o => (o.name !== ''));
 	if (obj.commands.length > 0) {
 		for (const host of obj.commands) {
 			host.name = host.name.replace(/[*?"'\[\]\s]/g, "_");
