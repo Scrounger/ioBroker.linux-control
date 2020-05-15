@@ -649,6 +649,90 @@ const dictionary = {
 		"es": "Tabla para configurar tus propios comandos",
 		"pl": "Tabela do konfiguracji własnych poleceń",
 		"zh-cn": "该表配置您自己的命令"
+	},
+	"mycommands": {
+		"en": "my commands",
+		"de": "meine Befehle",
+		"ru": "мои команды",
+		"pt": "meus comandos",
+		"nl": "mijn bevelen",
+		"fr": "mes commandes",
+		"it": "i miei comandi",
+		"es": "mis comandos",
+		"pl": "moje polecenia",
+		"zh-cn": "我的命令"
+	},
+	"Command": {
+		"en": "Command",
+		"de": "Befehl",
+		"ru": "команда",
+		"pt": "Comando",
+		"nl": "Commando",
+		"fr": "Commander",
+		"it": "Comando",
+		"es": "Mando",
+		"pl": "Komenda",
+		"zh-cn": "命令"
+	},
+	"string": {
+		"en": "string",
+		"de": "Zeichenkette",
+		"ru": "строка",
+		"pt": "corda",
+		"nl": "draad",
+		"fr": "chaîne",
+		"it": "corda",
+		"es": "cuerda",
+		"pl": "strunowy",
+		"zh-cn": "串"
+	},
+	"number": {
+		"en": "number",
+		"de": "Zahl",
+		"ru": "число",
+		"pt": "número",
+		"nl": "aantal",
+		"fr": "nombre",
+		"it": "numero",
+		"es": "número",
+		"pl": "numer",
+		"zh-cn": "数"
+	},
+	"boolean": {
+		"en": "boolean",
+		"de": "Logikwert",
+		"ru": "логический",
+		"pt": "boleano",
+		"nl": "boolean",
+		"fr": "booléen",
+		"it": "booleano",
+		"es": "booleano",
+		"pl": "boolean",
+		"zh-cn": "布尔值"
+	},
+	"button": {
+		"en": "button",
+		"de": "Button",
+		"ru": "кнопка",
+		"pt": "botão",
+		"nl": "knop",
+		"fr": "bouton",
+		"it": "pulsante",
+		"es": "botón",
+		"pl": "przycisk",
+		"zh-cn": "纽扣"
+	},
+	"Type": {
+		"en": "Type",
+		"de": "Typ",
+		"ru": "Тип",
+		"pt": "Tipo",
+		"nl": "Type",
+		"fr": "Type",
+		"it": "genere",
+		"es": "Tipo",
+		"pl": "Rodzaj",
+		"zh-cn": "类型"
 	}
 
 };

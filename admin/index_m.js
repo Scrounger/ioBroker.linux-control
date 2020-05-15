@@ -1,5 +1,6 @@
 var hosts = [];
 var folders = [];
+var commands = [];
 var secret;
 var _settings;
 
@@ -10,6 +11,7 @@ async function load(settings, onChange) {
 
 	hosts = settings.hosts || [];
 	folders = settings.folders || [];
+	commands = settings.commands || [];
 
 	// @ts-ignore
 	socket.emit('getObject', 'system.config', function (err, obj) {
@@ -39,6 +41,7 @@ async function load(settings, onChange) {
 	await createTreeViews(settings, onChange);
 
 	createFoldersTable(folders, hosts, onChange);
+	createCommandsTable(commands, hosts, onChange);
 
 	eventsHandler(onChange);
 
@@ -57,6 +60,14 @@ function eventsHandler(onChange) {
 		folders = table2values('folders');
 
 		createFoldersTable(folders, hosts, onChange);
+	});
+
+	$('.mycommandsTab').on('click', function () {
+		//recreate Table on Tab click -> dynamically create select options
+		hosts = table2values('hosts');
+		commands = table2values('commands');
+
+		createCommandsTable(commands, hosts, onChange);
 	});
 }
 
@@ -147,6 +158,46 @@ async function createTreeViews(settings, onChange) {
 			onChange();
 		}
 	});
+
+}
+
+function createCommandsTable(data,hosts, onChange){
+	let hostNames = [];
+	for (const host of hosts) {
+		if (host && host.name) {
+			hostNames.push(host.name);
+		}
+	}
+
+	$('.container_mycommandsTable').empty();
+
+	let element = `<div class="col s12" id="commands">
+							<a class="btn-floating waves-effect waves-light blue table-button-add"><i
+									class="material-icons">add</i></a>
+							<div class="table-values-div" style="margin-top: 10px;">
+								<table class="table-values" id="commandsTable">
+									<thead>
+										<tr>
+											<th data-name="host" class="selectInTable-hosts translate"
+												style="width: 10%; text-align: center;" data-default=""
+												data-type="select" data-style=""
+												data-options="${hostNames.join(";")}">${_("Host")}</th>
+											<th data-name="name" style="width: auto" class="translate">${_("Name")}</th>
+											<th data-name="command" style="width: 50%" class="translate">${_("Command")}</th>
+											<th data-name="type" class="translate"
+												style="width: 10%; text-align: center; " data-default="string"
+												data-type="select" data-style=""
+												data-options="string;number;boolean;button">${_("Type")}</th>
+											<th data-buttons="delete up down" style="width: 120px"></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>`
+
+	$('.container_mycommandsTable').html(element);
+
+	values2table('commands', data, onChange);
 
 }
 
@@ -242,6 +293,13 @@ function save(callback) {
 	obj.folders = table2values('folders');
 	if (obj.folders.length > 0) {
 		for (const host of obj.folders) {
+			host.name = host.name.replace(/[*?"'\[\]\s]/g, "_");
+		}
+	}
+
+	obj.commands = table2values('commands');
+	if (obj.commands.length > 0) {
+		for (const host of obj.commands) {
 			host.name = host.name.replace(/[*?"'\[\]\s]/g, "_");
 		}
 	}

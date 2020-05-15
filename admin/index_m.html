@@ -121,6 +121,14 @@
 			font-size: 16px;
 			font-weight: 500;
 		}
+
+		.container_foldersTable {
+			height: 70%;
+		}
+
+		.container_mycommandsTable {
+			height: 70%;
+		}
 	</style>
 </head>
 
@@ -133,7 +141,8 @@
 					<li class="tab col s6 l3"><a href="#tab_general" class="translate active">general</a></li>
 					<li class="tab col s6 l3"><a href="#tab_datapoints" class="translate">datapoints</a></li>
 					<li class="tab col s6 l3 foldersTab"><a href="#tab_folders" class="translate">folders</a></li>
-					<li class="tab col s6 l3 customsTab"><a href="#tab_custom" class="translate">custom</a></li>
+					<li class="tab col s6 l3 mycommandsTab"><a href="#tab_mycommands" class="translate">mycommands</a>
+					</li>
 				</ul>
 			</div>
 			<div id="tab_general" class="col s12 page">
@@ -205,14 +214,14 @@
 					</div>
 				</section>
 			</div>
-			<div id="tab_custom" class="col s12 page">
-					<p class="translate title">Table to configure your own commands</p>
-					<section>
-						<div class="container_customTable">
-							<!-- dynamically creates table on evey change of the select values  -->
-						</div>
-					</section>
-				</div>			
+			<div id="tab_mycommands" class="col s12 page">
+				<p class="translate title">Table to configure your own commands</p>
+				<section>
+					<div class="container_mycommandsTable">
+						<!-- dynamically creates table on evey change of the select values  -->
+					</div>
+				</section>
+			</div>
 		</div>
 	</div>
 </body>

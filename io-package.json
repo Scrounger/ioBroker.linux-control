@@ -74,6 +74,7 @@
 		"pollingInterval": 15,
 		"hosts": [],
 		"folders": [],
+		"commands": [],
 		"whitelist": {
 			"control": [
 				"aptUpdate",
