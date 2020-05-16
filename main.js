@@ -42,6 +42,16 @@ class LinuxControl extends utils.Adapter {
 		await this.prepareTranslation();
 		await this.setSelectableHosts()
 
+		await this.refresh();
+
+		
+		let adapter = this;
+		setInterval(function () {
+			adapter.refresh();
+		}, this.config.pollingInterval * 60000);
+	}
+
+	async refresh() {
 		// @ts-ignore
 		for (const host of this.config.hosts) {
 			let connection = await this.getConnection(host);
@@ -49,12 +59,12 @@ class LinuxControl extends utils.Adapter {
 			if (connection) {
 				this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
-				// await this.createControls(host);
-				// await this.distributionInfo(connection, host);
-				// await this.updateInfos(connection, host);
-				// await this.servicesInfo(connection, host);
-				// await this.needrestart(connection, host);
-				// await this.folderSizes(connection, host);
+				await this.createControls(host);
+				await this.distributionInfo(connection, host);
+				await this.updateInfos(connection, host);
+				await this.servicesInfo(connection, host);
+				await this.needrestart(connection, host);
+				await this.folderSizes(connection, host);
 
 				await this.userCommand(connection, host);
 
@@ -64,6 +74,7 @@ class LinuxControl extends utils.Adapter {
 			}
 		}
 	}
+
 
 	//#region Command Functions
 
