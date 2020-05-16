@@ -129,6 +129,28 @@
 		.container_mycommandsTable {
 			height: 70%;
 		}
+
+		/* Hosts Table */
+		.values-input[data-name="ip"],
+		.values-input[data-name="port"],
+		.values-input[data-name="interval"],
+		.values-input[data-name="timeout"] {
+			text-align: center;
+		}
+
+		/* Folders Table */
+		.container_foldersTable .values-input[data-name="digits"],
+		.container_foldersTable td:first-child + td + td + td .select-wrapper > input,
+		.container_foldersTable td:first-child + td + td + td .dropdown-content.select-dropdown > li{
+			text-align: center;
+		}
+
+		/* Commands Table */
+		.container_mycommandsTable .values-input[data-name="unit"],
+		.container_mycommandsTable td:first-child + td + td + td + td .select-wrapper > input,
+		.container_mycommandsTable td:first-child + td + td + td + td .dropdown-content.select-dropdown > li{
+			text-align: center;
+		}
 	</style>
 </head>
 
@@ -169,17 +191,17 @@
 										<thead>
 											<tr>
 												<th data-name="name" style="width: auto" class="translate">Name</th>
-												<th data-name="ip" style="width: 10%" class="translate">IP</th>
-												<th data-name="interval" data-type="number" data-default="5"
-												style="width: 10%" class="translate">pollingInterval</th>
-												<th data-name="port" data-default="22" style="width: 5%"
+												<th data-name="ip" style="width: 10%; text-align: center;" class="translate">IP</th>
+												<th data-name="port" data-default="22" style="width: 5%; text-align: center;"
 													class="translate">Port</th>
-												<th data-name="user" style="width: 10%" class="translate">User</th>
+												<th data-name="interval" data-type="number" data-default="5"
+													style="width: 10%; text-align: center;" class="translate">pollingInterval</th>
+												<th data-name="user" style="width: 10%;" class="translate">User</th>
 												<th data-name="password" data-type="password" style="width: 10%"
 													class="translate">Password</th>
 												<th data-name="rsakey" style="width: 30%" class="translate">RSA Key</th>
 												<th data-name="timeout" data-type="number" data-default="5"
-													style="width: 100px" class="translate">timeout</th>
+													style="width: 100px; text-align: center;" class="translate">timeout</th>
 												<th data-buttons="delete" style="width: 60px"></th>
 											</tr>
 										</thead>
@@ -207,7 +229,7 @@
 						<!-- dynamically creates table on evey change of the select values  -->
 					</div>
 				</section>
-			</div>			
+			</div>
 			<div id="tab_folders" class="col s12 page">
 				<p class="translate title">Table to configure folders to display their size as data points</p>
 				<section>

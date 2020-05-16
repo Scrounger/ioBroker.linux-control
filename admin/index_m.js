@@ -42,6 +42,7 @@ async function load(settings, onChange) {
 
 	createFoldersTable(folders, hosts, onChange);
 	createCommandsTable(commands, hosts, onChange);
+	createServicesWhiteListChips(hosts, settings, onChange);
 
 	eventsHandler(settings, onChange);
 
@@ -214,10 +215,10 @@ function createCommandsTable(data, hosts, onChange) {
 											<th data-name="description" style="width: 20%" class="translate">${_("Description")}</th>
 											<th data-name="command" style="width: 30%" class="translate">${_("Command")}</th>
 											<th data-name="type" class="translate"
-												style="width: 10%; text-align: center; " data-default="string"
+												style="width: 10%; text-align: center;" data-default="string"
 												data-type="select" data-style=""
 												data-options="string;number;boolean;button">${_("Type")}</th>
-											<th data-name="unit" style="width: 100px" class="translate">${_("Unit")}</th>												
+											<th data-name="unit" style="width: 100px; text-align: center;" class="translate">${_("Unit")}</th>												
 											<th data-buttons="delete up down" style="width: 120px"></th>
 										</tr>
 									</thead>
