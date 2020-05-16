@@ -69,7 +69,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 */
 	async userCommand(connection, host) {
 		let logPrefix = `[userCommand] ${host.name} (${host.ip}:${host.port}):`;
@@ -116,7 +116,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 */
 	async folderSizes(connection, host) {
 		let logPrefix = `[folderSizes] ${host.name} (${host.ip}:${host.port}):`;
@@ -160,7 +160,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 */
 	async needrestart(connection, host) {
 		let logPrefix = `[needrestart] ${host.name} (${host.ip}:${host.port}):`;
@@ -232,7 +232,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 * @param {string | undefined} serviceName
 	 */
 	async servicesInfo(connection, host, serviceName = undefined) {
@@ -299,7 +299,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 */
 	async distributionInfo(connection, host) {
 		let logPrefix = `[distributionInfo] ${host.name} (${host.ip}:${host.port}):`;
@@ -358,7 +358,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 */
 	async updateInfos(connection, host) {
 		let logPrefix = `[updateInfos] ${host.name} (${host.ip}:${host.port}):`;
@@ -374,7 +374,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 * @param {Boolean} restart
 	 * @param {string | undefined} responseId
 	 */
@@ -398,7 +398,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 * @param {string} responseId
 	 */
 	async cmdAptUpgrade(connection, host, responseId) {
@@ -421,7 +421,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 * @param {string} packageName
 	 * @returns {Promise<boolean>}
 	 */
@@ -448,7 +448,7 @@ class LinuxControl extends utils.Adapter {
 
 	/**
 	 * @param {NodeSSH | undefined} connection
-	 * @param {Object} host
+	 * @param {object} host
 	 * @param {string | undefined} responseId
 	 */
 	async cmdAptUpdate(connection, host, responseId = undefined) {
@@ -594,7 +594,7 @@ class LinuxControl extends utils.Adapter {
 	}
 
 	/**
-	 * @param {Object} host
+	 * @param {object} host
 	 * @returns {Promise<NodeSSH | undefined>}
 	 */
 	async getConnection(host) {
@@ -822,8 +822,6 @@ class LinuxControl extends utils.Adapter {
 							await this.servicesInfo(connection, host, serviceName);
 							connection.dispose();
 						}
-					} else {
-						
 					}
 				}
 			} else if (id.includes('.command.execute')) {
@@ -863,6 +861,39 @@ class LinuxControl extends utils.Adapter {
 					this.log.warn(`execute command: no host is selected!`);
 					await this.reportResponse(responseId, 'no host is selected!');
 				}
+			} else {
+				// user buttons
+				let hostIdSplitted = id.replace(`${this.namespace}.`, '').split('.');
+
+				/** @type {object} */
+				let host = this.getHostById(hostIdSplitted[0]);
+
+				if (host) {
+					let cmdId = id.replace(`${this.namespace}.${host.name}.`, '');
+
+					// @ts-ignore
+					/** @type {object} */
+					let commandsList = this.config.commands;
+					if (commandsList.length > 0) {
+						let command = commandsList.filter(x => {
+							return x.host === host.name && x.name === cmdId;
+						});
+
+						if (command && command.length === 1) {
+							command = command[0];
+
+							let connection = await this.getConnection(host);
+							let logPrefix = `[send userCommand] ${host.name} (${host.ip}:${host.port}) - ${cmdId}:`;
+
+							if (connection && command && command.command) {
+								await this.sendCommand(connection, command.command, logPrefix);
+
+								connection.dispose();
+							}
+
+						}
+					}
+				}
 			}
 		}
 	}
@@ -883,7 +914,7 @@ class LinuxControl extends utils.Adapter {
 	}
 
 	/**
-	 * @param {Object} host
+	 * @param {object} host
 	 */
 	async createControls(host) {
 		let idPrefix = `${host.name.replace(' ', '_')}.control`;
