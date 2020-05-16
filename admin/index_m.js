@@ -183,11 +183,13 @@ function createCommandsTable(data, hosts, onChange) {
 												data-type="select" data-style=""
 												data-options="${hostNames.join(";")}">${_("Host")}</th>
 											<th data-name="name" style="width: auto" class="translate">${_("Name")}</th>
-											<th data-name="command" style="width: 50%" class="translate">${_("Command")}</th>
+											<th data-name="description" style="width: 20%" class="translate">${_("Description")}</th>
+											<th data-name="command" style="width: 30%" class="translate">${_("Command")}</th>
 											<th data-name="type" class="translate"
 												style="width: 10%; text-align: center; " data-default="string"
 												data-type="select" data-style=""
 												data-options="string;number;boolean;button">${_("Type")}</th>
+											<th data-name="unit" style="width: 100px" class="translate">${_("Unit")}</th>												
 											<th data-buttons="delete up down" style="width: 120px"></th>
 										</tr>
 									</thead>

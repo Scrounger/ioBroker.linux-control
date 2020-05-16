@@ -49,12 +49,14 @@ class LinuxControl extends utils.Adapter {
 			if (connection) {
 				this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
-				await this.createControls(host);
-				await this.distributionInfo(connection, host);
-				await this.updateInfos(connection, host);
-				await this.servicesInfo(connection, host);
-				await this.needrestart(connection, host);
-				await this.folderSizes(connection, host);
+				// await this.createControls(host);
+				// await this.distributionInfo(connection, host);
+				// await this.updateInfos(connection, host);
+				// await this.servicesInfo(connection, host);
+				// await this.needrestart(connection, host);
+				// await this.folderSizes(connection, host);
+
+				await this.userCommand(connection, host);
 
 				connection.dispose();
 
@@ -64,6 +66,53 @@ class LinuxControl extends utils.Adapter {
 	}
 
 	//#region Command Functions
+
+	/**
+	 * @param {NodeSSH | undefined} connection
+	 * @param {Object} host
+	 */
+	async userCommand(connection, host) {
+		let logPrefix = `[userCommand] ${host.name} (${host.ip}:${host.port}):`;
+
+		try {
+			if (connection) {
+				// @ts-ignore
+				let commandsList = this.config.commands;
+
+				if (commandsList.length > 0) {
+					let commands = commandsList.filter(x => {
+						return x.host === host.name;
+					});
+
+					for (const cmd of commands) {
+						let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
+
+						if (cmd.type !== 'button') {
+							let response = await this.sendCommand(connection, `${cmd.command}`, logPrefix);
+
+							if (response) {
+								if (cmd.type === 'string') {
+									await this.createObjectString(id, cmd.description);
+									await this.setStateAsync(id, response, true);
+								} else if (cmd.type === 'number') {
+									await this.createObjectNumber(id, cmd.description, cmd.unit);
+									await this.setStateAsync(id, parseFloat(response), true);
+								} else if (cmd.type === 'boolean') {
+									await this.createObjectBoolean(id, cmd.description);
+									await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
+								}
+							}
+						} else {
+							await this.createObjectButton(id, cmd.description);
+							this.subscribeStates(id);
+						}
+					}
+				}
+			}
+		} catch (err) {
+			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+		}
+	}
 
 	/**
 	 * @param {NodeSSH | undefined} connection
@@ -773,6 +822,8 @@ class LinuxControl extends utils.Adapter {
 							await this.servicesInfo(connection, host, serviceName);
 							connection.dispose();
 						}
+					} else {
+						
 					}
 				}
 			} else if (id.includes('.command.execute')) {
