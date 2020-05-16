@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linux-control",
-		"version": "0.0.1",
+		"version": "0.0.2",
 		"news": {
+			"0.0.2": {
+				"en": "rsa key and manual command added",
+				"de": "rsa-Taste und manueller Befehl hinzugefügt",
+				"ru": "rsa ключ и ручная команда добавлены",
+				"pt": "chave rsa e comando manual adicionados",
+				"nl": "rsa-sleutel en handmatige opdracht toegevoegd",
+				"fr": "Touche rsa et commande manuelle ajoutées",
+				"it": "Chiave rsa e comando manuale aggiunti",
+				"es": "rsa clave y comando manual agregado",
+				"pl": "Dodano klucz rsa i polecenie ręczne",
+				"zh-cn": "rsa键和手动命令已添加"
+			},
 			"0.0.1": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung",
