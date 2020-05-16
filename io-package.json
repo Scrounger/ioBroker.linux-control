@@ -1,173 +1,185 @@
 {
-	"common": {
-		"name": "linux-control",
-		"version": "0.0.2",
-		"news": {
-			"0.0.2": {
-				"en": "rsa key and manual command added",
-				"de": "rsa-Taste und manueller Befehl hinzugefügt",
-				"ru": "rsa ключ и ручная команда добавлены",
-				"pt": "chave rsa e comando manual adicionados",
-				"nl": "rsa-sleutel en handmatige opdracht toegevoegd",
-				"fr": "Touche rsa et commande manuelle ajoutées",
-				"it": "Chiave rsa e comando manuale aggiunti",
-				"es": "rsa clave y comando manual agregado",
-				"pl": "Dodano klucz rsa i polecenie ręczne",
-				"zh-cn": "rsa键和手动命令已添加"
-			},
-			"0.0.1": {
-				"en": "initial release",
-				"de": "Erstveröffentlichung",
-				"ru": "Начальная версия",
-				"pt": "lançamento inicial",
-				"nl": "Eerste uitgave",
-				"fr": "Première version",
-				"it": "Versione iniziale",
-				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie",
-				"zh-cn": "首次出版"
-			}
-		},
-		"title": "Control Linux",
-		"titleLang": {
-			"en": "Control Linux",
-			"de": "Control Linux",
-			"ru": "Control Linux",
-			"pt": "Control Linux",
-			"nl": "Control Linux",
-			"fr": "Control Linux",
-			"it": "Control Linux",
-			"es": "Control Linux",
-			"pl": "Control Linux",
-			"zh-cn": "Control Linux"
-		},
-		"desc": {
-			"en": "Controlling Linux devices and information about your system",
-			"de": "Steuern von Linux-Geräten und Informationen zu Ihrem System",
-			"ru": "Управление устройствами Linux и информацией о вашей системе",
-			"pt": "Controlando dispositivos Linux e informações sobre seu sistema",
-			"nl": "Controle van Linux-apparaten en informatie over uw systeem",
-			"fr": "Contrôle des périphériques Linux et des informations sur votre système",
-			"it": "Controllo dei dispositivi Linux e informazioni sul sistema",
-			"es": "Control de dispositivos Linux e información sobre su sistema",
-			"pl": "Kontrolowanie urządzeń z systemem Linux i informacji o systemie",
-			"zh-cn": "控制Linux设备和有关系统的信息"
-		},
-		"authors": [
-			"Scrounger <scrounger@gmx.net>"
-		],
-		"keywords": [
-			"linux",
-			"control",
-			"ssh",
-			"remote"
-		],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "linux-control.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linux-control/master/admin/linux-control.png",
-		"readme": "https://github.com/Scrounger/ioBroker.linux-control/blob/master/README.md",
-		"loglevel": "info",
-		"mode": "daemon",
-		"type": "hardware",
-		"compact": true,
-		"connectionType": "local",
-		"dataSource": "poll",
-		"materialize": true,
-		"dependencies": [
-			{
-				"js-controller": ">=1.4.2"
-			}
-		]
-	},
-	"native": {
-		"pollingInterval": 15,
-		"hosts": [],
-		"folders": [],
-		"commands": [],
-		"whitelist": {
-			"control": [
-				"aptUpdate",
-				"aptUpgrade",
-				"response"
-			],
-			"distribution": [
-				"name",
-				"version",
-				"codename",
-				"fullname"
-			],
-			"updates": [
-				"lastUpdate",
-				"newPackages",
-				"upgradable",
-				"newPackagesList"
-			],
-			"services": [],
-			"needrestart": []
-		},
-		"serviceWhiteList": {}
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "command",
-			"type": "channel",
-			"common": {
-				"name": "Command"
-			},
-			"native": {}
-		},
-		{
-			"_id": "command.execute",
-			"type": "state",
-			"common": {
-				"role": "button",
-				"name": "execute command",
-				"type": "boolean",
-				"read": false,
-				"write": true
-			},
-			"native": {}
-		},
-		{
-			"_id": "command.command",
-			"type": "state",
-			"common": {
-				"role": "value",
-				"name": "command to execute",
-				"type": "string",
-				"read": true,
-				"write": true
-			},
-			"native": {}
-		},
-		{
-			"_id": "command.response",
-			"type": "state",
-			"common": {
-				"role": "value",
-				"name": "command response",
-				"type": "string",
-				"read": true,
-				"write": false
-			},
-			"native": {}
-		},
-		{
-			"_id": "command.host",
-			"type": "state",
-			"common": {
-				"role": "value",
-				"name": "select host",
-				"type": "string",
-				"states": "",
-				"read": true,
-				"write": true
-			},
-			"native": {}
-		}
-	]
+    "common": {
+        "name": "linux-control",
+        "version": "0.0.3",
+        "news": {
+            "0.0.3": {
+                "en": "added services whitelist configurable for each host individually",
+                "de": "Whitelist für hinzugefügte Dienste, die für jeden Host einzeln konfiguriert werden kann",
+                "ru": "белый список добавленных сервисов настраивается для каждого хоста индивидуально",
+                "pt": "lista de permissões de serviços adicionais configurável para cada host individualmente",
+                "nl": "toegevoegde services whitelist configureerbaar voor elke host afzonderlijk",
+                "fr": "liste blanche de services ajoutés configurable pour chaque hôte individuellement",
+                "it": "whitelist di servizi aggiunti configurabile per ciascun host individualmente",
+                "es": "lista blanca de servicios adicionales configurables para cada host individualmente",
+                "pl": "dodana biała lista usług konfigurowana indywidualnie dla każdego hosta",
+                "zh-cn": "可以为每个主机分别配置的添加服务白名单"
+            },
+            "0.0.2": {
+                "en": "rsa key and manual command added",
+                "de": "rsa-Taste und manueller Befehl hinzugefügt",
+                "ru": "rsa ключ и ручная команда добавлены",
+                "pt": "chave rsa e comando manual adicionados",
+                "nl": "rsa-sleutel en handmatige opdracht toegevoegd",
+                "fr": "Touche rsa et commande manuelle ajoutées",
+                "it": "Chiave rsa e comando manuale aggiunti",
+                "es": "rsa clave y comando manual agregado",
+                "pl": "Dodano klucz rsa i polecenie ręczne",
+                "zh-cn": "rsa键和手动命令已添加"
+            },
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Control Linux",
+        "titleLang": {
+            "en": "Control Linux",
+            "de": "Control Linux",
+            "ru": "Control Linux",
+            "pt": "Control Linux",
+            "nl": "Control Linux",
+            "fr": "Control Linux",
+            "it": "Control Linux",
+            "es": "Control Linux",
+            "pl": "Control Linux",
+            "zh-cn": "Control Linux"
+        },
+        "desc": {
+            "en": "Controlling Linux devices and information about your system",
+            "de": "Steuern von Linux-Geräten und Informationen zu Ihrem System",
+            "ru": "Управление устройствами Linux и информацией о вашей системе",
+            "pt": "Controlando dispositivos Linux e informações sobre seu sistema",
+            "nl": "Controle van Linux-apparaten en informatie over uw systeem",
+            "fr": "Contrôle des périphériques Linux et des informations sur votre système",
+            "it": "Controllo dei dispositivi Linux e informazioni sul sistema",
+            "es": "Control de dispositivos Linux e información sobre su sistema",
+            "pl": "Kontrolowanie urządzeń z systemem Linux i informacji o systemie",
+            "zh-cn": "控制Linux设备和有关系统的信息"
+        },
+        "authors": [
+            "Scrounger <scrounger@gmx.net>"
+        ],
+        "keywords": [
+            "linux",
+            "control",
+            "ssh",
+            "remote"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "linux-control.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linux-control/master/admin/linux-control.png",
+        "readme": "https://github.com/Scrounger/ioBroker.linux-control/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "hardware",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "poll",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=1.4.2"
+            }
+        ]
+    },
+    "native": {
+        "pollingInterval": 15,
+        "hosts": [],
+        "folders": [],
+        "commands": [],
+        "whitelist": {
+            "control": [
+                "aptUpdate",
+                "aptUpgrade",
+                "response"
+            ],
+            "distribution": [
+                "name",
+                "version",
+                "codename",
+                "fullname"
+            ],
+            "updates": [
+                "lastUpdate",
+                "newPackages",
+                "upgradable",
+                "newPackagesList"
+            ],
+            "services": [],
+            "needrestart": []
+        },
+        "serviceWhiteList": {}
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "command",
+            "type": "channel",
+            "common": {
+                "name": "Command"
+            },
+            "native": {}
+        },
+        {
+            "_id": "command.execute",
+            "type": "state",
+            "common": {
+                "role": "button",
+                "name": "execute command",
+                "type": "boolean",
+                "read": false,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "command.command",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "command to execute",
+                "type": "string",
+                "read": true,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "command.response",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "command response",
+                "type": "string",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "command.host",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "select host",
+                "type": "string",
+                "states": "",
+                "read": true,
+                "write": true
+            },
+            "native": {}
+        }
+    ]
 }

@@ -18,7 +18,7 @@ Controlling Linux devices and get information about your system
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 0.0.3 (2020-05-16)
 * (Scrounger) added services whitelist configurable for each host individually
 
 ### 0.0.1

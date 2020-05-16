@@ -1,6 +1,6 @@
 {
   "name": "iobroker.linux-control",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Controlling Linux devices and get information about your system",
   "author": {
     "name": "Scrounger",
