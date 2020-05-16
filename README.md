@@ -10,11 +10,31 @@
 
 [![NPM](https://nodei.co/npm/iobroker.linux-control.png?downloads=true)](https://nodei.co/npm/iobroker.linux-control/)
 
+**Tests:**: [![Travis-CI](http://img.shields.io/travis/Scrounger/ioBroker.linux-control/master.svg)](https://travis-ci.org/Scrounger/ioBroker.linux-control)
+
 ## linux-control adapter for ioBroker
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url)
 
 Controlling Linux devices and get information about your system
 
+## Configuration
 
+### General
+![General](docs/en/img/general.png)
+
+
+
+### Datapoints
+![Datapoints](docs/en/img/datapoints.png)
+
+### Services
+![Services](docs/en/img/services.png)
+
+### Folders
+![Folders](docs/en/img/folders.png)
+
+### Custom Commands
+![Custom Commands](docs/en/img/myCommands.png)
 
 ## Changelog
 
