@@ -75,16 +75,16 @@ const dictionary = {
 		"zh-cn": "用户"
 	},
 	"Password": {
-		"en": "Password",
-		"de": "Passwort",
-		"ru": "пароль",
-		"pt": "Senha",
-		"nl": "Wachtwoord",
-		"fr": "Mot de passe",
-		"it": "Parola d'ordine",
-		"es": "Contraseña",
-		"pl": "Hasło",
-		"zh-cn": "密码"
+		"en": "Password / Passphrase",
+		"de": "Passwort / Passphrase",
+		"ru": "Пароль / Пароль",
+		"pt": "Senha / Senha",
+		"nl": "Wachtwoord / wachtwoordzin",
+		"fr": "Mot de passe / phrase de passe",
+		"it": "Password / Passphrase",
+		"es": "Contraseña / Frase de contraseña",
+		"pl": "Hasło / hasło",
+		"zh-cn": "密码/密码"
 	},
 	"Folders": {
 		"en": "Folders",

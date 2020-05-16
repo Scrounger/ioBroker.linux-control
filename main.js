@@ -634,6 +634,7 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				if (host.rsakey) {
+					options.passphrase = password;
 					options.privateKey = host.rsakey;
 				}
 
