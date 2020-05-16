@@ -38,40 +38,54 @@ class LinuxControl extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	async onReady() {
-		// Initialize your adapter here
-		await this.prepareTranslation();
-		await this.setSelectableHosts()
+		try {
+			// Initialize your adapter here
+			await this.prepareTranslation();
+			await this.setSelectableHosts()
 
-		await this.refresh();
+			await this.refreshAll();
 
-		
-		let adapter = this;
-		setInterval(function () {
-			adapter.refresh();
-		}, this.config.pollingInterval * 60000);
+			let adapter = this;
+			// @ts-ignore
+			for (const host of this.config.hosts) {
+				setInterval(function () {
+					adapter.refreshHost(host);
+				}, host.interval * 60000)
+			}
+		} catch (err) {
+			this.log.error(`[onReady] error: ${err.message}, stack: ${err.stack}`);
+		}
 	}
 
-	async refresh() {
+	async refreshAll() {
 		// @ts-ignore
 		for (const host of this.config.hosts) {
-			let connection = await this.getConnection(host);
+			await this.refreshHost(host);
+		}
+	}
 
-			if (connection) {
-				this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
-				await this.createControls(host);
-				await this.distributionInfo(connection, host);
-				await this.updateInfos(connection, host);
-				await this.servicesInfo(connection, host);
-				await this.needrestart(connection, host);
-				await this.folderSizes(connection, host);
+	/**
+	 * @param {object} host
+	 */
+	async refreshHost(host) {
+		let connection = await this.getConnection(host);
 
-				await this.userCommand(connection, host);
+		if (connection) {
+			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
-				connection.dispose();
+			await this.createControls(host);
+			await this.distributionInfo(connection, host);
+			await this.updateInfos(connection, host);
+			await this.servicesInfo(connection, host);
+			await this.needrestart(connection, host);
+			await this.folderSizes(connection, host);
 
-				this.log.info(`successful data from ${host.name} (${host.ip}:${host.port}) received`);
-			}
+			await this.userCommand(connection, host);
+
+			connection.dispose();
+
+			this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
 		}
 	}
 
@@ -481,6 +495,7 @@ class LinuxControl extends utils.Adapter {
 							noheader: true,
 							headers: ['name', 'installedVersion', 'availableVersion'],
 							delimiter: [","]
+						// @ts-ignore
 						}).fromString(response);
 
 						let newPackages = parsed.length;
@@ -654,6 +669,7 @@ class LinuxControl extends utils.Adapter {
 		let hostObj = await this.getObjectAsync(`command.host`);
 		if (hostObj && hostObj.common) {
 			let hostStates = ''
+			// @ts-ignore
 			for (const host of this.config.hosts) {
 				if (host) {
 					// @ts-ignore
@@ -884,7 +900,6 @@ class LinuxControl extends utils.Adapter {
 					let cmdId = id.replace(`${this.namespace}.${host.name}.`, '');
 
 					// @ts-ignore
-					/** @type {object} */
 					let commandsList = this.config.commands;
 					if (commandsList.length > 0) {
 						let command = commandsList.filter(x => {

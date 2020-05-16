@@ -15,15 +15,15 @@ const dictionary = {
 		'zh-cn': 'linuxcontrol'
 	},
 	"pollingInterval": {
-		"en": "polling interval in minutes",
-		"de": "Abfrageintervall in Minuten",
-		"ru": "интервал опроса в минутах",
-		"pt": "intervalo de pesquisa em minutos",
-		"nl": "polling-interval in minuten",
-		"fr": "intervalle d'interrogation en minutes",
-		"it": "intervallo di polling in minuti",
-		"es": "intervalo de sondeo en minutos",
-		"pl": "interwał sondowania w minutach",
+		"en": "polling interval (minutes)",
+		"de": "Abfrageintervall (Minuten)",
+		"ru": "интервал опроса (минуты)",
+		"pt": "intervalo de pesquisa (minutos)",
+		"nl": "polling interval (minuten)",
+		"fr": "intervalle d'interrogation (minutes)",
+		"it": "intervallo di polling (minuti)",
+		"es": "intervalo de sondeo (minutos)",
+		"pl": "interwał odpytywania (minuty)",
 		"zh-cn": "轮询间隔（分钟）"
 	},
 	"Name": {

@@ -158,12 +158,6 @@
 
 					<!-- For example columns with settings: -->
 					<div class="row">
-						<div class="col s3 input-field">
-							<input type="number" class="value" id="pollingInterval" />
-							<label for="pollingInterval" class="translate">pollingInterval</label>
-						</div>
-					</div>
-					<div class="row">
 						<p class="translate title">Host configuration table</p>
 						<section>
 							<div class="col s12" id="hosts">
@@ -176,10 +170,12 @@
 											<tr>
 												<th data-name="name" style="width: auto" class="translate">Name</th>
 												<th data-name="ip" style="width: 10%" class="translate">IP</th>
+												<th data-name="interval" data-type="number" data-default="5"
+												style="width: 10%" class="translate">pollingInterval</th>
 												<th data-name="port" data-default="22" style="width: 5%"
 													class="translate">Port</th>
-												<th data-name="user" style="width: 15%" class="translate">User</th>
-												<th data-name="password" data-type="password" style="width: 15%"
+												<th data-name="user" style="width: 10%" class="translate">User</th>
+												<th data-name="password" data-type="password" style="width: 10%"
 													class="translate">Password</th>
 												<th data-name="rsakey" style="width: 30%" class="translate">RSA Key</th>
 												<th data-name="timeout" data-type="number" data-default="5"

@@ -95,7 +95,6 @@
         ]
     },
     "native": {
-        "pollingInterval": 15,
         "hosts": [],
         "folders": [],
         "commands": [],
