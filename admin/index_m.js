@@ -43,17 +43,15 @@ async function load(settings, onChange) {
 	createFoldersTable(folders, hosts, onChange);
 	createCommandsTable(commands, hosts, onChange);
 
-	eventsHandler(onChange);
+	eventsHandler(settings, onChange);
 
 	onChange(false);
 
 	// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 	if (M) M.updateTextFields();
-
-	list2chips('.whitelistServices', settings.servicedWhitelist || [], onChange);
 }
 
-function eventsHandler(onChange) {
+function eventsHandler(settings, onChange) {
 	$('.foldersTab').on('click', function () {
 		//recreate Table on Tab click -> dynamically create select options
 		hosts = table2values('hosts');
@@ -69,6 +67,14 @@ function eventsHandler(onChange) {
 
 		createCommandsTable(commands, hosts, onChange);
 	});
+
+	$('.servicesTab').on('click', function () {
+		//recreate Table on Tab click -> dynamically create select options
+		hosts = table2values('hosts');
+
+		createServicesWhiteListChips(hosts, settings, onChange);
+	});
+
 }
 
 async function createTreeViews(settings, onChange) {
@@ -159,6 +165,28 @@ async function createTreeViews(settings, onChange) {
 		}
 	});
 
+}
+
+function createServicesWhiteListChips(host, settings, onChange) {
+	$('.container_whitelistServices').empty();
+
+	for (const host of hosts) {
+		if (host && host.name) {
+			$('.container_whitelistServices').append(
+				`<div class="col s12">
+					<div class="row">
+						<p class="translate title">${host.name}: Whitelist</p>
+						<div class="col s12">
+							<label class="translate">${_('whitelistServices')}</label>
+							<div class="chips whitelistServices_${host.name}"></div>
+						</div>
+					</div>
+				</div>`
+			)
+
+			list2chips(`.whitelistServices_${host.name}`, settings.serviceWhiteList[host.name] || [], onChange);
+		}
+	}
 }
 
 function createCommandsTable(data, hosts, onChange) {
@@ -282,13 +310,16 @@ function save(callback) {
 		}
 	});
 
-	obj.servicedWhitelist = chips2list('.whitelistServices');
+
+	obj.serviceWhiteList = {};
 
 	obj.hosts = table2values('hosts').filter(o => (o.name !== ''));
 	if (obj.hosts.length > 0) {
 		for (const host of obj.hosts) {
 			host.password = encrypt(secret, host.password);
 			host.name = host.name.replace(/[*?"'\[\]\s]/g, "_");
+
+			obj.serviceWhiteList[host.name] = chips2list(`.whitelistServices_${host.name}`)
 		}
 	}
 
@@ -369,14 +400,16 @@ function list2chips(selector, list, onChange) {
 }
 
 function chips2list(selector) {
-	const data = $(selector).chips('getData');
-
 	const list = [];
-	for (let i = 0; i < data.length; i++) {
-		list.push(data[i].tag);
+	if ($(selector).length > 0) {
+		const data = $(selector).chips('getData');
+
+
+		for (let i = 0; i < data.length; i++) {
+			list.push(data[i].tag);
+		}
+
+		list.sort();
 	}
-
-	list.sort();
-
 	return list;
 }

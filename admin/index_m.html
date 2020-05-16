@@ -138,10 +138,11 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" style="height: auto;">
-					<li class="tab col s6 l3"><a href="#tab_general" class="translate active">general</a></li>
-					<li class="tab col s6 l3"><a href="#tab_datapoints" class="translate">datapoints</a></li>
-					<li class="tab col s6 l3 foldersTab"><a href="#tab_folders" class="translate">folders</a></li>
-					<li class="tab col s6 l3 mycommandsTab"><a href="#tab_mycommands" class="translate">mycommands</a>
+					<li class="tab col s6 l2"><a href="#tab_general" class="translate active">general</a></li>
+					<li class="tab col s6 l2"><a href="#tab_datapoints" class="translate">datapoints</a></li>
+					<li class="tab col s6 l2 servicesTab"><a href="#tab_services" class="translate">services</a></li>
+					<li class="tab col s6 l2 foldersTab"><a href="#tab_folders" class="translate">folders</a></li>
+					<li class="tab col s6 l2 mycommandsTab"><a href="#tab_mycommands" class="translate">mycommands</a>
 					</li>
 				</ul>
 			</div>
@@ -192,10 +193,8 @@
 						</section>
 					</div>
 					<div class="row">
-						<div class="col s12">
-							<label class="translate">whitelistServices</label>
-							<div class="chips whitelistServices"></div>
-						</div>
+						<div><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url"
+								target="_blank" class="translate">donation</a></div>
 					</div>
 				</div>
 			</div>
@@ -206,6 +205,13 @@
 					</div>
 				</div>
 			</div>
+			<div id="tab_services" class="col s12 page">
+				<section>
+					<div class="container_whitelistServices">
+						<!-- dynamically creates table on evey change of the select values  -->
+					</div>
+				</section>
+			</div>			
 			<div id="tab_folders" class="col s12 page">
 				<p class="translate title">Table to configure folders to display their size as data points</p>
 				<section>

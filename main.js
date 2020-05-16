@@ -277,7 +277,7 @@ class LinuxControl extends utils.Adapter {
 								let id = `${idPrefix}.${obj.id}`;
 
 								// @ts-ignore
-								if (this.config.whitelist["services"].includes(obj.id) && (this.config.servicedWhitelist.includes(result.id.replace('.service', '')) || this.config.servicedWhitelist.length === 0)) {
+								if (this.config.whitelist["services"].includes(obj.id) && (this.config.serviceWhiteList[host.name].includes(result.id.replace('.service', '')) || this.config.serviceWhiteList[host.name].length === 0)) {
 									if (obj.type === 'string') {
 										await this.createObjectString(id, obj.name);
 										await this.setStateAsync(id, result[obj.id], true);

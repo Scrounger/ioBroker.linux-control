@@ -339,16 +339,16 @@ const dictionary = {
 		"zh-cn": "关掉"
 	},
 	"whitelistServices": {
-		"en": "only creating datapoints for the following services (empty = disabled)",
-		"de": "Datenpunkte nur für die folgenden Dienste erstellen (leer = deaktiviert)",
-		"ru": "создание только точек данных для следующих сервисов (пусто = отключено)",
-		"pt": "apenas criando pontos de dados para os seguintes serviços (vazio = desativado)",
-		"nl": "alleen datapunten maken voor de volgende services (leeg = uitgeschakeld)",
-		"fr": "création de points de données uniquement pour les services suivants (vide = désactivé)",
-		"it": "creando solo punti dati per i seguenti servizi (vuoto = disabilitato)",
-		"es": "solo creando puntos de datos para los siguientes servicios (vacío = deshabilitado)",
-		"pl": "tylko tworzenie punktów danych dla następujących usług (pusty = wyłączony)",
-		"zh-cn": "仅为以下服务创建数据点（空=禁用）"
+		"en": "only creating datapoints for the following services (empty to get all services)",
+		"de": "Nur Datenpunkte für die folgenden Dienste erstellen (leer, um alle Dienste abzurufen)",
+		"ru": "создание только точек данных для следующих сервисов (пусто для получения всех сервисов)",
+		"pt": "apenas criando pontos de dados para os seguintes serviços (vazio para obter todos os serviços)",
+		"nl": "alleen datapunten maken voor de volgende services (leeg om alle services te krijgen)",
+		"fr": "création de points de données uniquement pour les services suivants (vide pour obtenir tous les services)",
+		"it": "creando solo punti dati per i seguenti servizi (vuoto per ottenere tutti i servizi)",
+		"es": "solo creando puntos de datos para los siguientes servicios (vacío para obtener todos los servicios)",
+		"pl": "tylko tworzenie punktów danych dla następujących usług (puste, aby uzyskać wszystkie usługi)",
+		"zh-cn": "仅为以下服务创建数据点（空获取所有服务）"
 	},
 	"root_control": {
 		"en": "Remote control of your Linux distribution",
@@ -733,6 +733,18 @@ const dictionary = {
 		"es": "Tipo",
 		"pl": "Rodzaj",
 		"zh-cn": "类型"
+	},
+	"donation": {
+		"en": "You like the adapter? Then support the adapter developer (Scrounger) with a small donation.",
+		"de": "Dir gefällt der Adapter? Dann unterstütze den Adapterentwickler (Scrounger) mit einer kleinen Spende.",
+		"ru": "Вам нравится адаптер? Затем поддержите разработчика адаптера (Scrounger) с небольшим пожертвованием.",
+		"pt": "Você gosta do adaptador? Depois, ofereça suporte ao desenvolvedor do adaptador (Scrounger) com uma pequena doação.",
+		"nl": "Vind je de adapter leuk? Ondersteun vervolgens de adapterontwikkelaar (Scrounger) met een kleine donatie.",
+		"fr": "Vous aimez l'adaptateur? Soutenez ensuite le développeur de l'adaptateur (Scrounger) avec un petit don.",
+		"it": "Ti piace l'adattatore? Quindi supportare lo sviluppatore dell'adattatore (Scrounger) con una piccola donazione.",
+		"es": "¿Te gusta el adaptador? Luego, apoye al desarrollador del adaptador (Scrounger) con una pequeña donación.",
+		"pl": "Podoba ci się adapter? Następnie wesprzyj programistę adaptera (Scrounger) niewielką darowizną.",
+		"zh-cn": "您喜欢适配器吗？然后以少量捐款支持适配器开发人员（Scrounger）。"
 	}
 
 };

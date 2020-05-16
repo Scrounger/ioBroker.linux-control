@@ -108,7 +108,7 @@
 			"services": [],
 			"needrestart": []
 		},
-		"servicedWhitelist": ""
+		"serviceWhiteList": {}
 	},
 	"objects": [],
 	"instanceObjects": [
