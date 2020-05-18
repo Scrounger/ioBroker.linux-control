@@ -1,6 +1,8 @@
 var hosts = [];
 var folders = [];
 var commands = [];
+var serviceWhiteList = [];
+var blacklistDatapoints = [];
 var secret;
 var _settings;
 
@@ -12,6 +14,8 @@ async function load(settings, onChange) {
 	hosts = settings.hosts || [];
 	folders = settings.folders || [];
 	commands = settings.commands || [];
+	serviceWhiteList = settings.serviceWhiteList || [];
+	blacklistDatapoints = settings.blacklistDatapoints || [];
 
 	// @ts-ignore
 	socket.emit('getObject', 'system.config', function (err, obj) {
@@ -74,12 +78,20 @@ function eventsHandler(settings, onChange) {
 		//recreate Table on Tab click -> dynamically create select options
 		hosts = table2values('hosts');
 
+		for (const host of hosts) {
+			serviceWhiteList[host.name] = chips2list(`.whitelistServices_${host.name}`)
+		}
+
 		createServicesWhiteListChips(hosts, settings, onChange);
 	});
 
 	$('.datapointsTab').on('click', function () {
 		//recreate Table on Tab click -> dynamically create select options
 		hosts = table2values('hosts');
+
+		for (const host of hosts) {
+			blacklistDatapoints[host.name] = chips2list(`.blacklistDatapoints_${host.name}`)
+		}
 
 		createDatapointsBlacklistChips(hosts, settings, onChange);
 	});
@@ -110,7 +122,7 @@ async function createTreeViews(settings, onChange) {
 		}
 
 		tree.push({
-			title: _(`root_${key}`),
+			title: `<div class="fancytree-folder-title-id">${key}</div><div class="fancytree-item-title-name">${_(`root_${key}`)}</div>`,
 			key: key,
 			folder: true,
 			expanded: expanded,
@@ -203,7 +215,7 @@ async function createTreeViews(settings, onChange) {
 									<div class="fancytree-drag-text">${data.node.key}</div>
 								</div>`).appendTo("body");
 				data.dataTransfer.setDragImage($dragItem[0], -10, -10);
-				
+
 				// Prevent henerating the default echo
 				data.useDefaultImage = false;
 
@@ -231,7 +243,7 @@ function createServicesWhiteListChips(host, settings, onChange) {
 				</div>`
 			)
 
-			list2chips(`.whitelistServices_${host.name}`, settings.serviceWhiteList[host.name] || [], onChange, 'AddService');
+			list2chips(`.whitelistServices_${host.name}`, serviceWhiteList[host.name] || [], onChange, 'AddService');
 		}
 	}
 }
@@ -252,7 +264,7 @@ function createDatapointsBlacklistChips(host, settings, onChange) {
 				</div>`
 			)
 
-			list2chips(`.blacklistDatapoints_${host.name}`, settings.blacklistDatapoints[host.name] || [], onChange, 'Drag here');
+			list2chips(`.blacklistDatapoints_${host.name}`, blacklistDatapoints[host.name] || [], onChange, 'Drag here');
 
 			$(`.blacklistDatapoints_${host.name}`).find('input').prop('readonly', true);
 
