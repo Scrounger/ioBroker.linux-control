@@ -119,6 +119,7 @@
             "services": [],
             "needrestart": []
         },
+        "blacklistDatapoints": {},
         "serviceWhiteList": {}
     },
     "objects": [],

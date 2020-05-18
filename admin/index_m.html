@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="../../lib/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="../../lib/js/selectID.js"></script>
 	<script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
+	<script type="text/javascript" src="./lib/jquery.fancytree.dnd5.min.js"></script>
 
 	<script type="text/javascript" src="../../js/translate.js"></script>
 	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
@@ -130,6 +131,29 @@
 			height: 70%;
 		}
 
+		/* Drag Item Layout */
+		.fancytree-drag-item-container {
+			display: flex;
+			align-items: center;
+			background: #64b5f6;
+			width: 250px;
+			height: 24px;
+			background: #64b5f6 !important;
+		}
+
+		.fancytree-drag-item-image {
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-drag-text {
+			color: white !important;
+			font-size: 0.8rem !important;
+			font-family: "Segoe UI", Tahoma, Arial, "Courier New" !important;
+			font-weight: bold !important;
+			margin-left: 6px;
+		}
+
 		/* Hosts Table */
 		.values-input[data-name="ip"],
 		.values-input[data-name="port"],
@@ -140,16 +164,44 @@
 
 		/* Folders Table */
 		.container_foldersTable .values-input[data-name="digits"],
-		.container_foldersTable td:first-child + td + td + td .select-wrapper > input,
-		.container_foldersTable td:first-child + td + td + td .dropdown-content.select-dropdown > li{
+		.container_foldersTable td:first-child+td+td+td .select-wrapper>input,
+		.container_foldersTable td:first-child+td+td+td .dropdown-content.select-dropdown>li {
 			text-align: center;
 		}
 
 		/* Commands Table */
 		.container_mycommandsTable .values-input[data-name="unit"],
-		.container_mycommandsTable td:first-child + td + td + td + td .select-wrapper > input,
-		.container_mycommandsTable td:first-child + td + td + td + td .dropdown-content.select-dropdown > li{
+		.container_mycommandsTable td:first-child+td+td+td+td .select-wrapper>input,
+		.container_mycommandsTable td:first-child+td+td+td+td .dropdown-content.select-dropdown>li {
 			text-align: center;
+		}
+
+		/* chips */
+		.m .chips.focus {
+			border-bottom: 1px solid #64b5f6;
+			box-shadow: 0 1px 0 0 #64b5f6;
+		}
+
+		.m .chip:focus {
+			outline: none;
+			background-color: #64b5f6;
+		}
+
+		.m .chips .input {
+			width: unset !important;
+		}
+
+		.container_blacklistDatapoints {
+			margin-top: 20px;
+		}
+
+		.blacklistDatapoints_header {
+			display: block;
+			background-color: #2196f3;
+			width: 100%;
+			color: #fff !important;
+			letter-spacing: .5px;
+			padding: .3rem;
 		}
 	</style>
 </head>
@@ -161,7 +213,8 @@
 			<div class="col s12">
 				<ul class="tabs" style="height: auto;">
 					<li class="tab col s6 l2"><a href="#tab_general" class="translate active">general</a></li>
-					<li class="tab col s6 l2"><a href="#tab_datapoints" class="translate">datapoints</a></li>
+					<li class="tab col s6 l2 datapointsTab"><a href="#tab_datapoints" class="translate">datapoints</a>
+					</li>
 					<li class="tab col s6 l2 servicesTab"><a href="#tab_services" class="translate">services</a></li>
 					<li class="tab col s6 l2 foldersTab"><a href="#tab_folders" class="translate">folders</a></li>
 					<li class="tab col s6 l2 mycommandsTab"><a href="#tab_mycommands" class="translate">mycommands</a>
@@ -191,17 +244,20 @@
 										<thead>
 											<tr>
 												<th data-name="name" style="width: auto" class="translate">Name</th>
-												<th data-name="ip" style="width: 10%; text-align: center;" class="translate">IP</th>
-												<th data-name="port" data-default="22" style="width: 5%; text-align: center;"
-													class="translate">Port</th>
+												<th data-name="ip" style="width: 10%; text-align: center;"
+													class="translate">IP</th>
+												<th data-name="port" data-default="22"
+													style="width: 5%; text-align: center;" class="translate">Port</th>
 												<th data-name="interval" data-type="number" data-default="5"
-													style="width: 10%; text-align: center;" class="translate">pollingInterval</th>
+													style="width: 10%; text-align: center;" class="translate">
+													pollingInterval</th>
 												<th data-name="user" style="width: 10%;" class="translate">User</th>
 												<th data-name="password" data-type="password" style="width: 10%"
 													class="translate">Password</th>
 												<th data-name="rsakey" style="width: 30%" class="translate">RSA Key</th>
 												<th data-name="timeout" data-type="number" data-default="5"
-													style="width: 100px; text-align: center;" class="translate">timeout</th>
+													style="width: 100px; text-align: center;" class="translate">timeout
+												</th>
 												<th data-buttons="delete" style="width: 60px"></th>
 											</tr>
 										</thead>
@@ -217,11 +273,20 @@
 				</div>
 			</div>
 			<div id="tab_datapoints" class="col s12 page">
-				<div class="col s12">
-					<div class="row">
-						<div class="col s12 treeContainer" id="tree_datapoints"></div>
+				<section>
+					<div class="col s7">
+						<div class="row">
+							<div class="treeContainer" id="tree_datapoints"></div>
+						</div>
 					</div>
-				</div>
+					<div class="col s5">
+						<div class="row">
+							<div class="container_blacklistDatapoints">
+								<!-- dynamically creates table on evey change of the select values  -->
+							</div>
+						</div>
+					</div>
+				</section>
 			</div>
 			<div id="tab_services" class="col s12 page">
 				<section>

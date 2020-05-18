@@ -43,6 +43,7 @@ async function load(settings, onChange) {
 	createFoldersTable(folders, hosts, onChange);
 	createCommandsTable(commands, hosts, onChange);
 	createServicesWhiteListChips(hosts, settings, onChange);
+	createDatapointsBlacklistChips(hosts, settings, onChange);
 
 	eventsHandler(settings, onChange);
 
@@ -76,6 +77,12 @@ function eventsHandler(settings, onChange) {
 		createServicesWhiteListChips(hosts, settings, onChange);
 	});
 
+	$('.datapointsTab').on('click', function () {
+		//recreate Table on Tab click -> dynamically create select options
+		hosts = table2values('hosts');
+
+		createDatapointsBlacklistChips(hosts, settings, onChange);
+	});
 }
 
 async function createTreeViews(settings, onChange) {
@@ -112,6 +119,7 @@ async function createTreeViews(settings, onChange) {
 	}
 
 	$(`#tree_datapoints`).fancytree({
+		extensions: ["dnd5"],						// Drag & Drop lib
 		activeVisible: true,                        // Make sure, active nodes are visible (expanded)
 		aria: true,                                 // Enable WAI-ARIA support
 		autoActivate: true,                         // Automatically activate a node when it is focused using keyboard
@@ -139,6 +147,9 @@ async function createTreeViews(settings, onChange) {
 		//         return "unifi.png";
 		//     }
 		// },
+		source:
+			tree
+		,
 		click: function (event, data) {
 			if (data.targetType === 'title' && !data.node.folder) {
 				data.node.setSelected(!data.node.isSelected());
@@ -148,10 +159,6 @@ async function createTreeViews(settings, onChange) {
 				data.node.setExpanded(!data.node.isSelected());
 			}
 		},
-
-		source:
-			tree
-		,
 		select: function (event, data) {
 
 			// Funktion um alle title auszulesen, kann für Übersetzung verwendet werden -> bitte drin lassen!
@@ -163,9 +170,48 @@ async function createTreeViews(settings, onChange) {
 			// console.log(selKeys.join('\n').replace(/_/g, " "));
 
 			onChange();
+		},
+		dnd5: {
+			// // Available options with their default:
+			// autoExpandMS: 1500,           // Expand nodes after n milliseconds of hovering.
+			// dropMarkerOffsetX: -24,       // absolute position offset for .fancytree-drop-marker
+			// // relatively to ..fancytree-title (icon/img near a node accepting drop)
+			// dropMarkerInsertOffsetX: -16, // additional offset for drop-marker with hitMode = "before"/"after"
+			// effectAllowed: "all",         // Restrict the possible cursor shapes and modifier operations 
+			// // (can also be set in the dragStart event)
+			// dropEffectDefault: "move",    // Default dropEffect ('copy', 'link', or 'move') 
+			// // when no modifier is pressed (overide in dragDrag, dragOver).
+			// multiSource: false,           // true: Drag multiple (i.e. selected) nodes. 
+			// // Also a callback() is allowed to return a node list
+			// preventForeignNodes: false,   // Prevent dropping nodes from another Fancytree
+			// preventLazyParents: true,     // Prevent dropping items on unloaded lazy Fancytree nodes
+			// preventNonNodes: false,       // Prevent dropping items other than Fancytree nodes
+			// preventRecursion: true,       // Prevent dropping nodes on own descendants when in move-mode
+			// preventSameParent: false,     // Prevent dropping nodes under same direct parent
+			// preventVoidMoves: true,       // Prevent moving nodes 'before self', etc.
+			scroll: true,                 // Enable auto-scrolling while dragging
+			scrollSensitivity: 80,        // Active top/bottom margin in pixel
+			// scrollSpeed: 5,               // Pixel per event
+			// setTextTypeJson: false,       // Allow dragging of nodes to different IE windows
+			dragStart: function (node, data) {
+				// Return false to cancel dragging of node.
+				if (node.isFolder()) { return false; }
+
+				// Image must exist in DOM
+				var $dragItem = $(`<div class="fancytree-drag-item-container">
+									<img class="fancytree-drag-item-image" src="./img/state.png" />
+									<div class="fancytree-drag-text">${data.node.key}</div>
+								</div>`).appendTo("body");
+				data.dataTransfer.setDragImage($dragItem[0], -10, -10);
+				
+				// Prevent henerating the default echo
+				data.useDefaultImage = false;
+
+				data.dataTransfer.setData('text/plain', data.node.key);
+				return true;
+			}
 		}
 	});
-
 }
 
 function createServicesWhiteListChips(host, settings, onChange) {
@@ -185,7 +231,38 @@ function createServicesWhiteListChips(host, settings, onChange) {
 				</div>`
 			)
 
-			list2chips(`.whitelistServices_${host.name}`, settings.serviceWhiteList[host.name] || [], onChange);
+			list2chips(`.whitelistServices_${host.name}`, settings.serviceWhiteList[host.name] || [], onChange, 'AddService');
+		}
+	}
+}
+
+function createDatapointsBlacklistChips(host, settings, onChange) {
+	$('.container_blacklistDatapoints').empty();
+
+	for (const host of hosts) {
+		if (host && host.name) {
+			$('.container_blacklistDatapoints').append(
+				`<div class="col s12">
+					<div class="row">
+						<div class="col s12">
+							<label class="translate blacklistDatapoints_header">${host.name}: ${_('blacklistDatapoints')}</label>
+							<div class="chips blacklistDatapoints_${host.name}"></div>
+						</div>
+					</div>
+				</div>`
+			)
+
+			list2chips(`.blacklistDatapoints_${host.name}`, settings.blacklistDatapoints[host.name] || [], onChange, 'Drag here');
+
+			$(`.blacklistDatapoints_${host.name}`).find('input').prop('readonly', true);
+
+			$(`.blacklistDatapoints_${host.name}`).on('dragover', false).on('drop', function (e) {
+				// do something
+				let data = e.originalEvent.dataTransfer.getData("text/plain");
+
+				M.Chips.getInstance($(`.blacklistDatapoints_${host.name}`)).addChip({ tag: data });
+				return false;
+			});
 		}
 	}
 }
@@ -313,6 +390,7 @@ function save(callback) {
 
 
 	obj.serviceWhiteList = {};
+	obj.blacklistDatapoints = {};
 
 	obj.hosts = table2values('hosts').filter(o => (o.name !== ''));
 	if (obj.hosts.length > 0) {
@@ -321,6 +399,7 @@ function save(callback) {
 			host.name = host.name.replace(/[*?"'\[\]\s]/g, "_");
 
 			obj.serviceWhiteList[host.name] = chips2list(`.whitelistServices_${host.name}`)
+			obj.blacklistDatapoints[host.name] = chips2list(`.blacklistDatapoints_${host.name}`)
 		}
 	}
 
@@ -380,7 +459,7 @@ function decrypt(key, value) {
 /**
  * Chips
  */
-function list2chips(selector, list, onChange) {
+function list2chips(selector, list, onChange, placeholder) {
 	const data = [];
 
 	list.sort();
@@ -393,8 +472,8 @@ function list2chips(selector, list, onChange) {
 
 	$(selector).chips({
 		data: data,
-		placeholder: _('AddService'),
-		secondaryPlaceholder: _('AddService'),
+		placeholder: _(placeholder),
+		secondaryPlaceholder: _(placeholder),
 		onChipAdd: onChange,
 		onChipDelete: onChange
 	});
