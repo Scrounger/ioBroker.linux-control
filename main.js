@@ -217,7 +217,7 @@ class LinuxControl extends utils.Adapter {
 
 							for (const obj of objects) {
 								// @ts-ignore
-								if (this.config.whitelist["needrestart"].includes(obj.id)) {
+								if (this.config.whitelist["needrestart"].includes(obj.id) && !this.config.blacklistDatapoints[host.name].includes(`needrestart.${obj.id}`)) {
 									if (parsed && parsed[0] && parsed[0][obj.id]) {
 										let id = `${host.name.replace(' ', '_')}.needrestart.${obj.id}`;
 
@@ -291,7 +291,7 @@ class LinuxControl extends utils.Adapter {
 								let id = `${idPrefix}.${obj.id}`;
 
 								// @ts-ignore
-								if (this.config.whitelist["services"].includes(obj.id) && (this.config.serviceWhiteList[host.name].includes(result.id.replace('.service', '')) || this.config.serviceWhiteList[host.name].length === 0)) {
+								if (this.config.whitelist["services"].includes(obj.id) && !this.config.blacklistDatapoints[host.name].includes(`services.${obj.id}`) && (this.config.serviceWhiteList[host.name].includes(result.id.replace('.service', '')) || this.config.serviceWhiteList[host.name].length === 0)) {
 									if (obj.type === 'string') {
 										await this.createObjectString(id, obj.name);
 										await this.setStateAsync(id, result[obj.id], true);
@@ -352,7 +352,7 @@ class LinuxControl extends utils.Adapter {
 							let obj = parsed.find(x => x.prop === propObj.propName);
 
 							// @ts-ignore
-							if (this.config.whitelist["distribution"].includes(propObj.id)) {
+							if (this.config.whitelist["distribution"].includes(propObj.id) && !this.config.blacklistDatapoints[host.name].includes(`distribution.${propObj.id}`)) {
 								if (obj && obj.prop && obj.val) {
 									let id = `${host.name.replace(' ', '_')}.distribution.${propObj.id}`;
 
@@ -495,7 +495,7 @@ class LinuxControl extends utils.Adapter {
 							noheader: true,
 							headers: ['name', 'installedVersion', 'availableVersion'],
 							delimiter: [","]
-						// @ts-ignore
+							// @ts-ignore
 						}).fromString(response);
 
 						let newPackages = parsed.length;
@@ -503,7 +503,7 @@ class LinuxControl extends utils.Adapter {
 						// Number of new Packages
 						let id = `${host.name.replace(' ', '_')}.updates.newPackages`;
 						// @ts-ignore
-						if (this.config.whitelist["updates"].includes("newPackages")) {
+						if (this.config.whitelist["updates"].includes("newPackages") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackages`)) {
 							await this.createObjectNumber(id, `newPackages`, `packages`);
 							await this.setStateAsync(id, newPackages, true);
 						} else {
@@ -513,7 +513,7 @@ class LinuxControl extends utils.Adapter {
 						// is upgradable
 						id = `${host.name.replace(' ', '_')}.updates.upgradable`;
 						// @ts-ignore
-						if (this.config.whitelist["updates"].includes("upgradable")) {
+						if (this.config.whitelist["updates"].includes("upgradable") && !this.config.blacklistDatapoints[host.name].includes(`updates.upgradable`)) {
 							await this.createObjectBoolean(id, `upgradable`);
 							await this.setStateAsync(id, newPackages > 0 ? true : false, true);
 						} else {
@@ -523,7 +523,7 @@ class LinuxControl extends utils.Adapter {
 						// list of new packages
 						id = `${host.name.replace(' ', '_')}.updates.newPackagesList`;
 						// @ts-ignore
-						if (this.config.whitelist["updates"].includes("newPackagesList")) {
+						if (this.config.whitelist["updates"].includes("newPackagesList") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackagesList`)) {
 
 							if (newPackages > 0) {
 								this.log.debug(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
@@ -542,7 +542,7 @@ class LinuxControl extends utils.Adapter {
 					// last update
 					let id = `${host.name.replace(' ', '_')}.updates.lastUpdate`;
 					// @ts-ignore
-					if (this.config.whitelist["updates"].includes("lastUpdate")) {
+					if (this.config.whitelist["updates"].includes("lastUpdate") && !this.config.blacklistDatapoints[host.name].includes(`updates.lastUpdate`)) {
 						response = await this.sendCommand(connection, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId);
 						if (response) {
 							let timestamp = Date.parse(response);
@@ -954,7 +954,7 @@ class LinuxControl extends utils.Adapter {
 			for (const obj of objects) {
 
 				// @ts-ignore
-				if (this.config.whitelist["control"].includes(obj.id)) {
+				if (this.config.whitelist["control"].includes(obj.id) && !this.config.blacklistDatapoints[host.name].includes(`control.${obj.id}`)) {
 
 					if (obj.type === 'button') {
 						await this.createObjectButton(`${idPrefix}.${obj.id}`, obj.name);
