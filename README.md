@@ -22,10 +22,8 @@ Controlling Linux devices and get information about your system
 ### General
 ![General](docs/en/img/general.png)
 
-
-
 ### Datapoints
-![Datapoints](docs/en/img/datapoints.png)
+![Datapoints](docs/en/img/datapoints.gif)
 
 ### Services
 ![Services](docs/en/img/services.png)
@@ -39,7 +37,9 @@ Controlling Linux devices and get information about your system
 ## Changelog
 
 ### __WORK IN PROGRESS__
+* (Scrounger) added datapoints blacklist configurable for each host individually
 * (Scrounger) added poll interval configurable for each host individually
+* (Scrounger) configuration bug fixes
 
 ### 0.0.3 (2020-05-16)
 * (Scrounger) added services whitelist configurable for each host individually
