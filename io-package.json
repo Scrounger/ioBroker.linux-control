@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.0.3",
+        "version": "0.1.0",
         "news": {
+            "0.1.0": {
+                "en": "added datapoints blacklist configurable for each host individually\nadded poll interval configurable for each host individually\nconfiguration bug fixes",
+                "de": "Es wurde eine Datenpunkt-Blacklist hinzugefügt, die für jeden Host einzeln konfiguriert werden kann\nFür jeden Host individuell konfigurierbares Abfrageintervall hinzugefügt\nKonfigurationsfehlerbehebungen",
+                "ru": "добавлен черный список точек данных, настраиваемый для каждого хоста индивидуально\nдобавлен интервал опроса, настраиваемый для каждого хоста индивидуально\nисправление ошибок конфигурации",
+                "pt": "adicionado lista negra de pontos de dados configurável para cada host individualmente\nadicionado intervalo de pesquisa configurável para cada host individualmente\ncorreções de bugs de configuração",
+                "nl": "datapunten zwarte lijst configureerbaar voor elke host afzonderlijk\ntoegevoegd pollinterval configureerbaar voor elke host afzonderlijk\nconfiguratie bugfixes",
+                "fr": "ajout d'une liste noire de points de données configurable pour chaque hôte individuellement\nintervalle d'interrogation supplémentaire configurable pour chaque hôte individuellement\ncorrections de bugs de configuration",
+                "it": "aggiunta lista nera di punti dati configurabile per ciascun host individualmente\naggiunto intervallo di polling configurabile per ciascun host individualmente\ncorrezioni di bug di configurazione",
+                "es": "lista negra de puntos de datos agregados configurable para cada host individualmente\nintervalo de sondeo agregado configurable para cada host individualmente\ncorrecciones de errores de configuración",
+                "pl": "dodano czarną listę punktów danych konfigurowalną indywidualnie dla każdego hosta\ndodano interwał odpytywania konfigurowany indywidualnie dla każdego hosta\npoprawki błędów konfiguracji",
+                "zh-cn": "为每个主机分别配置了添加的数据点黑名单\n增加了可为每个主机分别配置的轮询间隔\n配置错误修复"
+            },
             "0.0.3": {
                 "en": "added services whitelist configurable for each host individually",
                 "de": "Whitelist für hinzugefügte Dienste, die für jeden Host einzeln konfiguriert werden kann",

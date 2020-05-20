@@ -36,7 +36,7 @@ Controlling Linux devices and get information about your system
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 0.1.0 (2020-05-20)
 * (Scrounger) added datapoints blacklist configurable for each host individually
 * (Scrounger) added poll interval configurable for each host individually
 * (Scrounger) configuration bug fixes
