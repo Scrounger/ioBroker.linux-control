@@ -223,7 +223,7 @@ class LinuxControl extends utils.Adapter {
 
 										if (obj.id === 'needrestart') {
 											await this.createObjectBoolean(id, _(obj.name));
-											await this.setStateAsync(id, parsed[0][obj.id] === 'OK' ? false : true);
+											await this.setStateAsync(id, parsed[0][obj.id] === 'OK' ? false : true, true);
 										}
 
 										if (obj.type === 'number') {
