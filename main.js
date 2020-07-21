@@ -115,7 +115,7 @@ class LinuxControl extends utils.Adapter {
 							let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
 
 							if (cmd.type !== 'button') {
-								let response = await this.sendCommand(connection, `${cmd.command}`, logPrefix);
+								let response = await this.sendCommand(connection, `${cmd.command}`, `[userCommand] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
 
 								if (response) {
 									if (cmd.type === 'string') {
