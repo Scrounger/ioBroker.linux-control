@@ -110,26 +110,32 @@ class LinuxControl extends utils.Adapter {
 					});
 
 					for (const cmd of commands) {
-						let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
+						try {
 
-						if (cmd.type !== 'button') {
-							let response = await this.sendCommand(connection, `${cmd.command}`, logPrefix);
+							let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
 
-							if (response) {
-								if (cmd.type === 'string') {
-									await this.createObjectString(id, cmd.description);
-									await this.setStateAsync(id, response, true);
-								} else if (cmd.type === 'number') {
-									await this.createObjectNumber(id, cmd.description, cmd.unit);
-									await this.setStateAsync(id, parseFloat(response), true);
-								} else if (cmd.type === 'boolean') {
-									await this.createObjectBoolean(id, cmd.description);
-									await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
+							if (cmd.type !== 'button') {
+								let response = await this.sendCommand(connection, `${cmd.command}`, logPrefix);
+
+								if (response) {
+									if (cmd.type === 'string') {
+										await this.createObjectString(id, cmd.description);
+										await this.setStateAsync(id, response, true);
+									} else if (cmd.type === 'number') {
+										await this.createObjectNumber(id, cmd.description, cmd.unit);
+										await this.setStateAsync(id, parseFloat(response), true);
+									} else if (cmd.type === 'boolean') {
+										await this.createObjectBoolean(id, cmd.description);
+										await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
+									}
 								}
+							} else {
+								await this.createObjectButton(id, cmd.description);
+								this.subscribeStates(id);
 							}
-						} else {
-							await this.createObjectButton(id, cmd.description);
-							this.subscribeStates(id);
+						} catch (err) {
+							this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
+							this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
 						}
 					}
 				}
