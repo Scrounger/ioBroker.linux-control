@@ -207,7 +207,7 @@ async function createTreeViews(settings, onChange) {
 			// setTextTypeJson: false,       // Allow dragging of nodes to different IE windows
 			dragStart: function (node, data) {
 				// Return false to cancel dragging of node.
-				if (node.isFolder()) { return false; }
+				// if (node.isFolder()) { return false; }
 
 				// Image must exist in DOM
 				var $dragItem = $(`<div class="fancytree-drag-item-container">
@@ -219,7 +219,16 @@ async function createTreeViews(settings, onChange) {
 				// Prevent henerating the default echo
 				data.useDefaultImage = false;
 
-				data.dataTransfer.setData('text/plain', data.node.key);
+				if (node.isFolder()) {
+					// data.dataTransfer.setData('text/plain', data.node.children);
+					let list = [];
+					for (const child of node.children) {
+						list.push(child.key);
+					}
+					data.dataTransfer.setData('text/plain', list.join(','));
+				} else {
+					data.dataTransfer.setData('text/plain', data.node.key);
+				}
 				return true;
 			}
 		}
@@ -272,7 +281,15 @@ function createDatapointsBlacklistChips(host, settings, onChange) {
 				// do something
 				let data = e.originalEvent.dataTransfer.getData("text/plain");
 
-				M.Chips.getInstance($(`.blacklistDatapoints_${host.name}`)).addChip({ tag: data });
+				if (data.includes(',')) {
+					let list = data.split(',');
+					for (const child of list) {
+						M.Chips.getInstance($(`.blacklistDatapoints_${host.name}`)).addChip({ tag: child });
+					}
+				} else {
+					M.Chips.getInstance($(`.blacklistDatapoints_${host.name}`)).addChip({ tag: data });
+				}
+
 				return false;
 			});
 		}
