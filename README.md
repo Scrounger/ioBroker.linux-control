@@ -22,19 +22,48 @@ Controlling Linux devices and get information about your system
 ### General
 ![General](docs/en/img/general.png)
 
+|setting|description|
+|-------|-----------|
+|datapoint id|id under which all data points are to be stored|
+|IP|IP address of your linux device|
+|Port|SSH Port of your linux device|
+|polling interval|polling interval in minutes|
+|user|ssh user for login|
+|password / passpharse|ssh password for login or passpharse if you use a rsa key|
+|rsa key|path and filename of your rsa key. Access rights must be available!|
+|timeout|connection timeout|
+
 ### Datapoints
 ![Datapoints](docs/en/img/datapoints.gif)
+
+Here you can select which data points should be created. 
+Individual data points can be ignored (i.e. they will not be created) by dragging and dropping them from the blacklist to a
+Additionally you can ignore single data points by drag & drop.
 
 ### Services
 ![Services](docs/en/img/services.png)
 
+If the retrieval of services under datapoints is activated, you can define here per host for which services only information should be retrieved.
+
 ### Folders
 ![Folders](docs/en/img/folders.png)
+
+Here you can retrieve information about the size of folders. For this purpose, the path of the folder must be defined and in which format (MB, GB, etc.) it should be displayed.
 
 ### Custom Commands
 ![Custom Commands](docs/en/img/myCommands.png)
 
+Here, very individual commands can be defined and then written to your own defined data points.
+It is important that the retrieved data is transmitted in the correct type! The type must then be configured accordingly.
+
+
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Scrounger) type array for user commands added
+* (Scrounger) ignore whole datapoints node by using drag and drop 
+* (Scrounger) error handling for user commands improved
+ 
 
 ### 0.1.0 (2020-05-20)
 * (Scrounger) added datapoints blacklist configurable for each host individually
