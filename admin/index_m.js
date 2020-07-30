@@ -322,7 +322,7 @@ function createCommandsTable(data, hosts, onChange) {
 											<th data-name="type" class="translate"
 												style="width: 10%; text-align: center;" data-default="string"
 												data-type="select" data-style=""
-												data-options="string;number;boolean;button">${_("Type")}</th>
+												data-options="string;number;boolean;button;array">${_("Type")}</th>
 											<th data-name="unit" style="width: 100px; text-align: center;" class="translate">${_("Unit")}</th>												
 											<th data-buttons="delete up down" style="width: 120px"></th>
 										</tr>

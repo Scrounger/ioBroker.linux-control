@@ -127,6 +127,9 @@ class LinuxControl extends utils.Adapter {
 									} else if (cmd.type === 'boolean') {
 										await this.createObjectBoolean(id, cmd.description);
 										await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
+									} else if (cmd.type === 'array') {
+										await this.createObjectArray(id, cmd.description);
+										await this.setStateAsync(id, JSON.parse(response), true);
 									}
 								}
 							} else {
@@ -1074,6 +1077,35 @@ class LinuxControl extends utils.Adapter {
 				});
 		}
 	}
+
+	/**
+	 * @param {string} id
+	 * @param {string} name
+	 */
+	async createObjectArray(id, name) {
+		let obj = await this.getObjectAsync(id);
+
+		if (obj) {
+			if (obj.common.name !== _(name)) {
+				obj.common.name = _(name);
+				await this.setObjectAsync(id, obj);
+			}
+		} else {
+			await this.setObjectNotExistsAsync(id,
+				{
+					type: 'state',
+					common: {
+						name: _(name),
+						desc: _(name),
+						type: 'array',
+						read: true,
+						write: false,
+						role: 'value'
+					},
+					native: {}
+				});
+		}
+	}	
 
 	/**
 	 * @param {string} id

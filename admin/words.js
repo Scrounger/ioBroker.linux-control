@@ -710,6 +710,18 @@ const dictionary = {
 		"pl": "boolean",
 		"zh-cn": "布尔值"
 	},
+	"array": {
+		"en": "array",
+		"de": "Array",
+		"ru": "массив",
+		"pt": "matriz",
+		"nl": "matrix",
+		"fr": "tableau",
+		"it": "Vettore",
+		"es": "formación",
+		"pl": "szyk",
+		"zh-cn": "数组"
+	},
 	"button": {
 		"en": "button",
 		"de": "Button",
