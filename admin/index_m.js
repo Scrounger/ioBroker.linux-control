@@ -220,12 +220,11 @@ async function createTreeViews(settings, onChange) {
 				data.useDefaultImage = false;
 
 				if (node.isFolder()) {
-					// data.dataTransfer.setData('text/plain', data.node.children);
-					let list = [];
-					for (const child of node.children) {
-						list.push(child.key);
-					}
-					data.dataTransfer.setData('text/plain', list.join(','));
+					// let list = [];
+					// for (const child of node.children) {
+					// 	list.push(child.key);
+					// }
+					data.dataTransfer.setData('text/plain', `${data.node.key}.all`);
 				} else {
 					data.dataTransfer.setData('text/plain', data.node.key);
 				}

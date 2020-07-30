@@ -200,7 +200,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			// @ts-ignore
-			if (this.config.whitelist && this.config.whitelist["needrestart"] && this.config.whitelist["needrestart"].length > 0) {
+			if (this.config.whitelist && this.config.whitelist["needrestart"] && this.config.whitelist["needrestart"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('needrestart.all')) {
 				if (connection) {
 
 					if (await this.cmdPackageExist(connection, host, 'needrestart')) {
@@ -273,7 +273,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			// @ts-ignore
-			if (this.config.whitelist && this.config.whitelist["services"] && this.config.whitelist["services"].length > 0) {
+			if (this.config.whitelist && this.config.whitelist["services"] && this.config.whitelist["services"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('services.all')) {
 				if (connection) {
 					let response = await this.sendCommand(connection, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix);
 
@@ -339,7 +339,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			// @ts-ignore
-			if (this.config.whitelist && this.config.whitelist["distribution"] && this.config.whitelist["distribution"].length > 0) {
+			if (this.config.whitelist && this.config.whitelist["distribution"] && this.config.whitelist["distribution"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('distribution.all')) {
 				if (connection) {
 					let response = await this.sendCommand(connection, "cat /etc/os-release", logPrefix);
 
@@ -489,7 +489,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			// @ts-ignore
-			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0) {
+			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('updates.all')) {
 				if (connection) {
 					// run apt update
 					let response = await this.sendCommand(connection, "apt-get update", logPrefix, responseId);
@@ -655,6 +655,7 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				if (host.rsakey) {
+					this.log.debug('using rsa key for authentification');
 					options.passphrase = password;
 					options.privateKey = host.rsakey;
 				}
@@ -956,7 +957,7 @@ class LinuxControl extends utils.Adapter {
 		const objects = require('./admin/lib/control.json');
 
 		// @ts-ignore
-		if (this.config.whitelist && this.config.whitelist["control"] && this.config.whitelist["control"].length > 0) {
+		if (this.config.whitelist && this.config.whitelist["control"] && this.config.whitelist["control"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('control.all')) {
 			for (const obj of objects) {
 
 				// @ts-ignore
