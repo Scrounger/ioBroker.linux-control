@@ -182,7 +182,7 @@ class LinuxControl extends utils.Adapter {
 							unitFaktor = "/1024/1024/1024"
 						}
 
-						let response = await this.sendCommand(connection, `du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix);
+						let response = await this.sendCommand(connection, `du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
 
 						if (response) {
 							let id = `${host.name.replace(' ', '_')}.folders.${folder.name}`;
@@ -215,7 +215,7 @@ class LinuxControl extends utils.Adapter {
 				if (connection) {
 
 					if (await this.cmdPackageExist(connection, host, 'needrestart')) {
-						let response = await this.sendCommand(connection, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix);
+						let response = await this.sendCommand(connection, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, true);
 
 						if (response) {
 
@@ -286,7 +286,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["services"] && this.config.whitelist["services"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('services.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix);
+					let response = await this.sendCommand(connection, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, true);
 
 					if (response) {
 						response = response.replace(/\t/g, ',')
@@ -352,7 +352,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["distribution"] && this.config.whitelist["distribution"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('distribution.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, "cat /etc/os-release", logPrefix);
+					let response = await this.sendCommand(connection, "cat /etc/os-release", logPrefix, undefined, true);
 
 					if (response) {
 
@@ -503,10 +503,10 @@ class LinuxControl extends utils.Adapter {
 			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('updates.all')) {
 				if (connection) {
 					// run apt update
-					let response = await this.sendCommand(connection, "apt-get update", logPrefix, responseId);
+					let response = await this.sendCommand(connection, "apt-get update", logPrefix, responseId, true);
 
 					if (response) {
-						response = await this.sendCommand(connection, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix);
+						response = await this.sendCommand(connection, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, true);
 
 						let parsed = await csvToJson({
 							noheader: true,
@@ -560,7 +560,7 @@ class LinuxControl extends utils.Adapter {
 					let id = `${host.name.replace(' ', '_')}.updates.lastUpdate`;
 					// @ts-ignore
 					if (this.config.whitelist["updates"].includes("lastUpdate") && !this.config.blacklistDatapoints[host.name].includes(`updates.lastUpdate`)) {
-						response = await this.sendCommand(connection, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId);
+						response = await this.sendCommand(connection, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
 						if (response) {
 							let timestamp = Date.parse(response);
 
