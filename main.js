@@ -13,6 +13,7 @@ const NodeSSH = require('node-ssh');
 const csvToJson = require('csvtojson');
 const words = require('./admin/words.js');
 const ping = require('ping');
+const { exception } = require('console');
 
 let language = 'en';
 let _ = null;
@@ -53,7 +54,7 @@ class LinuxControl extends utils.Adapter {
 				}, host.interval * 60000)
 			}
 		} catch (err) {
-			this.log.error(`[onReady] error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, '[onReady]');
 		}
 	}
 
@@ -69,19 +70,24 @@ class LinuxControl extends utils.Adapter {
 	 * @param {object} host
 	 */
 	async refreshHost(host) {
+		this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
+
 		let connection = await this.getConnection(host);
 
 		if (connection) {
-			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
-
 			await this.createControls(host);
 			await this.distributionInfo(connection, host);
 			await this.updateInfos(connection, host);
 			await this.servicesInfo(connection, host);
+
+			// sentryTest();
+
 			await this.needrestart(connection, host);
 			await this.folderSizes(connection, host);
 
 			await this.userCommand(connection, host);
+
+
 
 			connection.dispose();
 
@@ -138,13 +144,15 @@ class LinuxControl extends utils.Adapter {
 							}
 						} catch (err) {
 							this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
-							this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+
+							// No Sentry error report for user commands
+							this.errorHandling(err, logPrefix);
 						}
 					}
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -187,7 +195,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -259,7 +267,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -327,7 +335,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -385,7 +393,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -401,7 +409,7 @@ class LinuxControl extends utils.Adapter {
 				await this.cmdAptUpdate(connection, host);
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 			return undefined;
 		}
 	}
@@ -426,7 +434,7 @@ class LinuxControl extends utils.Adapter {
 				await this.sendCommand(connection, cmd, logPrefix, responseId);
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -449,7 +457,7 @@ class LinuxControl extends utils.Adapter {
 
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -474,7 +482,7 @@ class LinuxControl extends utils.Adapter {
 
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 
 		return false;
@@ -571,7 +579,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
@@ -580,9 +588,10 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} cmd
 	 * @param {string} logPrefix
 	 * @param {string | undefined} responseId
+	 * @param {boolean | undefined} responseErrorSendToSentry
 	 * @returns {Promise<string | undefined>}
 	 */
-	async sendCommand(connection, cmd, logPrefix, responseId = undefined) {
+	async sendCommand(connection, cmd, logPrefix, responseId = undefined, responseErrorSendToSentry = false) {
 		try {
 			if (connection) {
 				this.log.debug(`${logPrefix} send command: '${cmd}'`);
@@ -601,14 +610,15 @@ class LinuxControl extends utils.Adapter {
 						}
 						await this.reportResponse(responseId, 'successful');
 					} else {
-						this.log.error(`${logPrefix} response error: ${response.stderr})`)
+						this.errorHandling(new ResponseError(response.stderr), logPrefix, responseErrorSendToSentry);
+
 						await this.reportResponse(responseId, response.stderr);
 					}
 					return undefined;
 				}
 			}
 		} catch (err) {
-			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, logPrefix);
 			await this.reportResponse(responseId, err.message);
 			return undefined;
 		}
@@ -670,7 +680,7 @@ class LinuxControl extends utils.Adapter {
 			}
 		} catch (err) {
 			this.log.error(`[getConnection] Could not establish a connection to '${host.name}' (${host.ip}:${host.port})!`);
-			this.log.error(`[getConnection] error: ${err.message}, stack: ${err.stack}`);
+			this.errorHandling(err, '[getConnection]', false);
 			return undefined;
 		}
 	}
@@ -706,7 +716,6 @@ class LinuxControl extends utils.Adapter {
 		for (let i = 0; i < value.length; ++i) {
 			result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
 		}
-		this.log.debug("client_secret decrypt ready");
 		return result;
 	}
 
@@ -1105,7 +1114,7 @@ class LinuxControl extends utils.Adapter {
 					native: {}
 				});
 		}
-	}	
+	}
 
 	/**
 	 * @param {string} id
@@ -1135,6 +1144,30 @@ class LinuxControl extends utils.Adapter {
 		}
 	}
 
+	/**
+	 * @param {Error} err
+	 * @param {string} logPrefix
+	 * @param {boolean} sendToSentry
+	 */
+	errorHandling(err, logPrefix, sendToSentry = true) {
+		if (err.name === 'ResponseError') {
+			this.log.error(`${logPrefix} response error: ${err.message}, stack: ${err.stack}`);
+		} else {
+			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
+		}
+
+		if (sendToSentry) {
+			if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
+				const sentryInstance = this.getPluginInstance('sentry');
+				if (sentryInstance) {
+					sentryInstance.getSentryObject().captureException(err);
+				}
+			}
+		}
+	}
+
+
+
 	//#endregion
 
 	// /**
@@ -1156,6 +1189,13 @@ class LinuxControl extends utils.Adapter {
 
 }
 
+class ResponseError extends Error {
+	constructor(message) {
+		super(message); // (1)
+		this.name = "ResponseError"; // (2)
+	}
+}
+
 // @ts-ignore parent is a valid property on module
 if (module.parent) {
 	// Export the constructor in compact mode
@@ -1167,3 +1207,4 @@ if (module.parent) {
 	// otherwise start the instance directly
 	new LinuxControl();
 }
+
