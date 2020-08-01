@@ -17,6 +17,8 @@
 
 Controlling Linux devices and get information about your system
 
+**This adapter uses Sentry libraries to automatically report exceptions and code errors to the developers.** For more details and for information how to disable the error reporting see [Sentry-Plugin Documentation](https://github.com/ioBroker/plugin-sentry#plugin-sentry)! Sentry reporting is used starting with js-controller 3.0.
+
 ## Configuration
 
 ### General
@@ -63,6 +65,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
 * (Scrounger) type array for user commands added
 * (Scrounger) ignore whole datapoints node by using drag and drop 
 * (Scrounger) error handling for user commands improved
+* (Scrounger) Sentry implemented
  
 
 ### 0.1.0 (2020-05-20)

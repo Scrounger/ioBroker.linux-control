@@ -104,7 +104,12 @@
             {
                 "js-controller": ">=1.4.2"
             }
-        ]
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://b78d46cef31e48cbb69ac7b00c79b5a3@sentry.iobroker.net/76"
+            }
+        }
     },
     "native": {
         "hosts": [],
