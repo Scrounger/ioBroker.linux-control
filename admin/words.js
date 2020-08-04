@@ -781,6 +781,18 @@ const dictionary = {
 		"es": "se acabó el tiempo",
 		"pl": "koniec czasu",
 		"zh-cn": "超时"
+	},
+	"use Sudo": {
+		"en": "use Sudo",
+		"de": "benutze Sudo",
+		"ru": "использовать судо",
+		"pt": "use Sudo",
+		"nl": "gebruik Sudo",
+		"fr": "utiliser Sudo",
+		"it": "usa il Sudo",
+		"es": "usar sudo",
+		"pl": "użyj Sudo",
+		"zh-cn": "使用须藤"
 	}
 };
 

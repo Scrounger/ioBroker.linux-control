@@ -159,6 +159,11 @@
 			margin-left: 6px;
 		}
 
+		/* all tables */
+		.m td {
+			text-align: center;
+		}
+
 		/* Hosts Table */
 		.values-input[data-name="ip"],
 		.values-input[data-name="port"],
@@ -254,15 +259,17 @@
 												<th data-name="port" data-default="22"
 													style="width: 5%; text-align: center;" class="translate">Port</th>
 												<th data-name="interval" data-type="number" data-default="5"
-													style="width: 10%; text-align: center;" class="translate">
-													pollingInterval</th>
+													style="width: 10%; text-align: center;" 
+													class="translate">pollingInterval</th>
 												<th data-name="user" style="width: 10%;" class="translate">User</th>
 												<th data-name="password" data-type="password" style="width: 10%"
 													class="translate">Password</th>
+												<th data-name="useSudo" data-type="checkbox" style="width: 20px;" data-style="width: 20px;"
+													class="translate">use Sudo</th>
 												<th data-name="rsakey" style="width: 30%" class="translate">RSA Key</th>
 												<th data-name="timeout" data-type="number" data-default="5"
-													style="width: 100px; text-align: center;" class="translate">timeout
-												</th>
+													style="width: 100px; text-align: center;" 
+													class="translate">timeout</th>												
 												<th data-buttons="delete up down" style="width: 60px"></th>
 											</tr>
 										</thead>
