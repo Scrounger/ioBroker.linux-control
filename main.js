@@ -182,7 +182,7 @@ class LinuxControl extends utils.Adapter {
 							unitFaktor = "/1024/1024/1024"
 						}
 
-						let response = await this.sendCommand(connection, host, `du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
+						let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
 
 						if (response) {
 							let id = `${host.name.replace(' ', '_')}.folders.${folder.name}`;
@@ -256,6 +256,11 @@ class LinuxControl extends utils.Adapter {
 
 					} else {
 						this.log.warn(`${logPrefix} package 'needrestart' not installed. You must install 'needrestart' to use this functions or deactivate the datapoints!`);
+
+						let needRestartStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.needrestart.*`);
+						for (const id of Object.keys(needRestartStates)) {
+							await this.delMyObject(id);
+						}
 					}
 				}
 			} else {
@@ -426,9 +431,9 @@ class LinuxControl extends utils.Adapter {
 		try {
 			if (connection) {
 
-				let cmd = "shutdown 0"
+				let cmd = `${host.useSudo ? 'sudo ' : ''}shutdown 0`
 				if (restart) {
-					cmd = "shutdown -r 0"
+					cmd = `${host.useSudo ? 'sudo ' : ''}shutdown -r 0`
 				}
 
 				await this.sendCommand(connection, host, cmd, logPrefix, responseId);
@@ -448,7 +453,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			if (connection) {
-				let response = await this.sendCommand(connection, host, "DEBIAN_FRONTEND=noninteractive apt-get upgrade -y", logPrefix, responseId);
+				let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}DEBIAN_FRONTEND=noninteractive apt-get upgrade -y`, logPrefix, responseId);
 
 				if (response) {
 					await this.setStateAsync(responseId, response, true);
@@ -503,7 +508,7 @@ class LinuxControl extends utils.Adapter {
 			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('updates.all')) {
 				if (connection) {
 					// run apt update
-					let response = await this.sendCommand(connection, host, "apt-get update", logPrefix, responseId, true);
+					let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}apt-get update`, logPrefix, responseId, true);
 
 					if (response) {
 						response = await this.sendCommand(connection, host, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, true);
@@ -600,14 +605,20 @@ class LinuxControl extends utils.Adapter {
 	async sendCommand(connection, host, cmd, logPrefix, responseId = undefined, responseErrorSendToSentry = false) {
 		try {
 			if (connection) {
+				this.log.debug(`${logPrefix} send command: '${cmd}'`);
 
 				let response = undefined;
-				if (host.useSudo) {
+				if (host.useSudo && cmd.includes('sudo ')) {
 					// using sudo
-					this.log.debug(`${logPrefix} send command (using sudo): '${'sudo ' + cmd}'`);
-					response = await connection.execCommand('sudo ' + cmd, { execOptions: { pty: true }, stdin: `${await this.getPassword(host)}\n` });
+					let password = await this.getPassword(host);
+					response = await connection.execCommand(cmd, { execOptions: { pty: true }, stdin: `${password}\n` });
+
+					if (!response.stderr) {
+						response.stdout = response.stdout.replace(password, "")
+							.replace(`[sudo] password for ${host.user}: \r`, "")
+							.replace('sudo: setrlimit(RLIMIT_CORE): Operation not permitted', "").replace("\n\n", "");
+					}
 				} else {
-					this.log.debug(`${logPrefix} send command: '${cmd}'`);
 					response = await connection.execCommand(cmd);
 				}
 
@@ -1170,7 +1181,7 @@ class LinuxControl extends utils.Adapter {
 	errorHandling(err, logPrefix, sendToSentry = true) {
 		if (err.name === 'ResponseError') {
 			if (err.message.includes('Permission denied')) {
-				this.log.error('Permisson denied. Check the permissons rights of your user on your linux devices!')
+				this.log.error(`Permisson denied. Check the permission rights of your user on your linux devices! Perhaps you need to use 'sudo'?`);
 			}
 			this.log.error(`${logPrefix} response error: ${err.message}, stack: ${err.stack}`);
 		} else {
