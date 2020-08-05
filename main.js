@@ -121,7 +121,7 @@ class LinuxControl extends utils.Adapter {
 							let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
 
 							if (cmd.type !== 'button') {
-								let response = await this.sendCommand(connection, `${cmd.command}`, `[userCommand] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
+								let response = await this.sendCommand(connection, host, `${cmd.command}`, `[userCommand] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
 
 								if (response) {
 									if (cmd.type === 'string') {
@@ -182,7 +182,7 @@ class LinuxControl extends utils.Adapter {
 							unitFaktor = "/1024/1024/1024"
 						}
 
-						let response = await this.sendCommand(connection, `du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
+						let response = await this.sendCommand(connection, host, `du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
 
 						if (response) {
 							let id = `${host.name.replace(' ', '_')}.folders.${folder.name}`;
@@ -215,7 +215,7 @@ class LinuxControl extends utils.Adapter {
 				if (connection) {
 
 					if (await this.cmdPackageExist(connection, host, 'needrestart')) {
-						let response = await this.sendCommand(connection, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, true);
+						let response = await this.sendCommand(connection, host, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, true);
 
 						if (response) {
 
@@ -226,10 +226,6 @@ class LinuxControl extends utils.Adapter {
 								delimiter: [" "]
 							}).fromString(response);
 
-							// if (parsed && parsed[0] && parsed[0].needrestart) {
-							// 	parsed[0].needrestart = parsed[0].needrestart === 'OK' ? false : true;
-							// }
-
 							this.log.debug(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
 
 							for (const obj of objects) {
@@ -239,11 +235,15 @@ class LinuxControl extends utils.Adapter {
 										let id = `${host.name.replace(' ', '_')}.needrestart.${obj.id}`;
 
 										if (obj.id === 'needrestart') {
+											this.log.debug(`${logPrefix} ${id}: ${parsed[0][obj.id] === 'OK' ? false : true}`);
+
 											await this.createObjectBoolean(id, _(obj.name));
 											await this.setStateAsync(id, parsed[0][obj.id] === 'OK' ? false : true, true);
 										}
 
 										if (obj.type === 'number') {
+											this.log.debug(`${logPrefix} ${id}: ${parseInt(parsed[0][obj.id])}`);
+
 											await this.createObjectNumber(id, _(obj.name), '');
 											await this.setStateAsync(id, parseInt(parsed[0][obj.id]), true);
 										}
@@ -286,7 +286,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["services"] && this.config.whitelist["services"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('services.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, true);
+					let response = await this.sendCommand(connection, host, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, true);
 
 					if (response) {
 						response = response.replace(/\t/g, ',')
@@ -352,7 +352,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["distribution"] && this.config.whitelist["distribution"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('distribution.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, "cat /etc/os-release", logPrefix, undefined, true);
+					let response = await this.sendCommand(connection, host, "cat /etc/os-release", logPrefix, undefined, true);
 
 					if (response) {
 
@@ -431,7 +431,7 @@ class LinuxControl extends utils.Adapter {
 					cmd = "shutdown -r 0"
 				}
 
-				await this.sendCommand(connection, cmd, logPrefix, responseId);
+				await this.sendCommand(connection, host, cmd, logPrefix, responseId);
 			}
 		} catch (err) {
 			this.errorHandling(err, logPrefix);
@@ -448,7 +448,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			if (connection) {
-				let response = await this.sendCommand(connection, "DEBIAN_FRONTEND=noninteractive apt-get upgrade -y", logPrefix, responseId);
+				let response = await this.sendCommand(connection, host, "DEBIAN_FRONTEND=noninteractive apt-get upgrade -y", logPrefix, responseId);
 
 				if (response) {
 					await this.setStateAsync(responseId, response, true);
@@ -472,7 +472,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			if (connection) {
-				let response = await this.sendCommand(connection, `dpkg-query --list | grep -i ${packageName}`, logPrefix);
+				let response = await this.sendCommand(connection, host, `dpkg-query --list | grep -i ${packageName}`, logPrefix);
 
 				if (response) {
 					return true;
@@ -503,10 +503,10 @@ class LinuxControl extends utils.Adapter {
 			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('updates.all')) {
 				if (connection) {
 					// run apt update
-					let response = await this.sendCommand(connection, "apt-get update", logPrefix, responseId, true);
+					let response = await this.sendCommand(connection, host, "apt-get update", logPrefix, responseId, true);
 
 					if (response) {
-						response = await this.sendCommand(connection, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, true);
+						response = await this.sendCommand(connection, host, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, true);
 
 						let parsed = await csvToJson({
 							noheader: true,
@@ -521,6 +521,8 @@ class LinuxControl extends utils.Adapter {
 						let id = `${host.name.replace(' ', '_')}.updates.newPackages`;
 						// @ts-ignore
 						if (this.config.whitelist["updates"].includes("newPackages") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackages`)) {
+							this.log.debug(`${logPrefix} ${id}: ${newPackages}`);
+
 							await this.createObjectNumber(id, `newPackages`, `packages`);
 							await this.setStateAsync(id, newPackages, true);
 						} else {
@@ -531,6 +533,8 @@ class LinuxControl extends utils.Adapter {
 						id = `${host.name.replace(' ', '_')}.updates.upgradable`;
 						// @ts-ignore
 						if (this.config.whitelist["updates"].includes("upgradable") && !this.config.blacklistDatapoints[host.name].includes(`updates.upgradable`)) {
+							this.log.debug(`${logPrefix} ${id}: ${newPackages > 0 ? true : false}`);
+
 							await this.createObjectBoolean(id, `upgradable`);
 							await this.setStateAsync(id, newPackages > 0 ? true : false, true);
 						} else {
@@ -543,7 +547,7 @@ class LinuxControl extends utils.Adapter {
 						if (this.config.whitelist["updates"].includes("newPackagesList") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackagesList`)) {
 
 							if (newPackages > 0) {
-								this.log.debug(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
+								this.log.debug(`${logPrefix} ${id}: ${JSON.stringify(parsed)}`);
 
 								await this.createObjectString(id, `newPackagesList`);
 								await this.setStateAsync(id, JSON.stringify(parsed), true);
@@ -560,9 +564,11 @@ class LinuxControl extends utils.Adapter {
 					let id = `${host.name.replace(' ', '_')}.updates.lastUpdate`;
 					// @ts-ignore
 					if (this.config.whitelist["updates"].includes("lastUpdate") && !this.config.blacklistDatapoints[host.name].includes(`updates.lastUpdate`)) {
-						response = await this.sendCommand(connection, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
+						response = await this.sendCommand(connection, host, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
 						if (response) {
 							let timestamp = Date.parse(response);
+
+							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${new Date(timestamp).toLocaleString()}`);
 
 							await this.createObjectNumber(id, `lastUpdate`, '');
 							await this.setStateAsync(id, timestamp, true);
@@ -591,11 +597,19 @@ class LinuxControl extends utils.Adapter {
 	 * @param {boolean | undefined} responseErrorSendToSentry
 	 * @returns {Promise<string | undefined>}
 	 */
-	async sendCommand(connection, cmd, logPrefix, responseId = undefined, responseErrorSendToSentry = false) {
+	async sendCommand(connection, host, cmd, logPrefix, responseId = undefined, responseErrorSendToSentry = false) {
 		try {
 			if (connection) {
-				this.log.debug(`${logPrefix} send command: '${cmd}'`);
-				let response = await connection.execCommand(cmd);
+
+				let response = undefined;
+				if (host.useSudo) {
+					// using sudo
+					this.log.debug(`${logPrefix} send command (using sudo): '${'sudo ' + cmd}'`);
+					response = await connection.execCommand('sudo ' + cmd, { execOptions: { pty: true }, stdin: `${await this.getPassword(host)}\n` });
+				} else {
+					this.log.debug(`${logPrefix} send command: '${cmd}'`);
+					response = await connection.execCommand(cmd);
+				}
 
 				if (!response.stderr) {
 					this.log.debug(`${logPrefix} response stdout: ${response.stdout}`);
@@ -648,14 +662,7 @@ class LinuxControl extends utils.Adapter {
 
 			if (pingResult.alive) {
 				let obj = await this.getForeignObjectAsync('system.config');
-				let password = "";
-				if (obj && obj.native && obj.native.secret) {
-					//noinspection JSUnresolvedVariable
-					password = this.decryptPassword(obj.native.secret, host.password);
-				} else {
-					//noinspection JSUnresolvedVariable
-					password = this.decryptPassword("Zgfr56gFe87jJOM", host.password);
-				}
+				let password = await this.getPassword(host);
 
 				let ssh = new NodeSSH();
 
@@ -682,6 +689,17 @@ class LinuxControl extends utils.Adapter {
 			this.log.error(`[getConnection] Could not establish a connection to '${host.name}' (${host.ip}:${host.port})!`);
 			this.errorHandling(err, '[getConnection]', false);
 			return undefined;
+		}
+	}
+
+	async getPassword(host) {
+		let obj = await this.getForeignObjectAsync('system.config');
+		if (obj && obj.native && obj.native.secret) {
+			//noinspection JSUnresolvedVariable
+			return this.decryptPassword(obj.native.secret, host.password);
+		} else {
+			//noinspection JSUnresolvedVariable
+			return this.decryptPassword("Zgfr56gFe87jJOM", host.password);
 		}
 	}
 
@@ -847,7 +865,7 @@ class LinuxControl extends utils.Adapter {
 						let logPrefix = `[sendCommand restart] ${host.name} (${host.ip}:${host.port}):`;
 
 						if (connection) {
-							await this.sendCommand(connection, `systemctl restart ${serviceName}`, logPrefix);
+							await this.sendCommand(connection, host, `systemctl restart ${serviceName}`, logPrefix);
 							await this.servicesInfo(connection, host, serviceName);
 							connection.dispose();
 						}
@@ -856,7 +874,7 @@ class LinuxControl extends utils.Adapter {
 						let logPrefix = `[sendCommand start] ${host.name} (${host.ip}:${host.port}):`;
 
 						if (connection) {
-							await this.sendCommand(connection, `systemctl start ${serviceName}`, logPrefix);
+							await this.sendCommand(connection, host, `systemctl start ${serviceName}`, logPrefix);
 							await this.servicesInfo(connection, host, serviceName);
 							connection.dispose();
 						}
@@ -865,7 +883,7 @@ class LinuxControl extends utils.Adapter {
 						let logPrefix = `[sendCommand stop] ${host.name} (${host.ip}:${host.port}):`;
 
 						if (connection) {
-							await this.sendCommand(connection, `systemctl stop ${serviceName}`, logPrefix);
+							await this.sendCommand(connection, host, `systemctl stop ${serviceName}`, logPrefix);
 							await this.servicesInfo(connection, host, serviceName);
 							connection.dispose();
 						}
@@ -890,7 +908,7 @@ class LinuxControl extends utils.Adapter {
 
 								await this.reportResponse(responseId, '');
 
-								let response = await this.sendCommand(connection, cmd.val.toString(), logPrefix, responseId);
+								let response = await this.sendCommand(connection, host, cmd.val.toString(), logPrefix, responseId);
 								if (response) {
 									await this.reportResponse(responseId, response);
 								}
@@ -932,7 +950,7 @@ class LinuxControl extends utils.Adapter {
 							let logPrefix = `[send userCommand] ${host.name} (${host.ip}:${host.port}) - ${cmdId}:`;
 
 							if (connection && command && command.command) {
-								await this.sendCommand(connection, command.command, logPrefix);
+								await this.sendCommand(connection, host, command.command, logPrefix);
 
 								connection.dispose();
 							}
@@ -1151,7 +1169,7 @@ class LinuxControl extends utils.Adapter {
 	 */
 	errorHandling(err, logPrefix, sendToSentry = true) {
 		if (err.name === 'ResponseError') {
-			if(err.message.includes('Permission denied')){
+			if (err.message.includes('Permission denied')) {
 				this.log.error('Permisson denied. Check the permissons rights of your user on your linux devices!')
 			}
 			this.log.error(`${logPrefix} response error: ${err.message}, stack: ${err.stack}`);
