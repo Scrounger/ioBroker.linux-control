@@ -93,7 +93,7 @@ class LinuxControl extends utils.Adapter {
 				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
 			}
 		} else {
-			this.log.debug(`getting data from ${host.name} (${host.ip}:${host.port}) is not enabled!`);
+			this.log.debug(`getting data from ${host.name} (${host.ip}:${host.port}) -> not enabled!`);
 		}
 	}
 
@@ -118,37 +118,41 @@ class LinuxControl extends utils.Adapter {
 					});
 
 					for (const cmd of commands) {
-						try {
+						if (cmd.enabled) {
+							try {
 
-							let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
+								let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
 
-							if (cmd.type !== 'button') {
-								let response = await this.sendCommand(connection, host, `${cmd.command}`, `[userCommand] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
+								if (cmd.type !== 'button') {
+									let response = await this.sendCommand(connection, host, `${cmd.command}`, `[userCommand] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
 
-								if (response) {
-									if (cmd.type === 'string') {
-										await this.createObjectString(id, cmd.description);
-										await this.setStateAsync(id, response, true);
-									} else if (cmd.type === 'number') {
-										await this.createObjectNumber(id, cmd.description, cmd.unit);
-										await this.setStateAsync(id, parseFloat(response), true);
-									} else if (cmd.type === 'boolean') {
-										await this.createObjectBoolean(id, cmd.description);
-										await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
-									} else if (cmd.type === 'array') {
-										await this.createObjectArray(id, cmd.description);
-										await this.setStateAsync(id, JSON.parse(response), true);
+									if (response) {
+										if (cmd.type === 'string') {
+											await this.createObjectString(id, cmd.description);
+											await this.setStateAsync(id, response, true);
+										} else if (cmd.type === 'number') {
+											await this.createObjectNumber(id, cmd.description, cmd.unit);
+											await this.setStateAsync(id, parseFloat(response), true);
+										} else if (cmd.type === 'boolean') {
+											await this.createObjectBoolean(id, cmd.description);
+											await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
+										} else if (cmd.type === 'array') {
+											await this.createObjectArray(id, cmd.description);
+											await this.setStateAsync(id, JSON.parse(response), true);
+										}
 									}
+								} else {
+									await this.createObjectButton(id, cmd.description);
+									this.subscribeStates(id);
 								}
-							} else {
-								await this.createObjectButton(id, cmd.description);
-								this.subscribeStates(id);
-							}
-						} catch (err) {
-							this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
+							} catch (err) {
+								this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
 
-							// No Sentry error report for user commands
-							this.errorHandling(err, logPrefix);
+								// No Sentry error report for user commands
+								this.errorHandling(err, logPrefix);
+							}
+						} else {
+							this.log.debug(`${logPrefix} datapoint-id: '${cmd.name}', description: '${cmd.description}' -> is not enabled!`);
 						}
 					}
 				}
@@ -176,22 +180,26 @@ class LinuxControl extends utils.Adapter {
 					})
 
 					for (const folder of hostFolders) {
-						let unitFaktor = "/1024"
+						if (folder.enabled) {
+							let unitFaktor = "/1024"
 
-						if (folder.unit === 'GB') {
-							unitFaktor = "/1024/1024"
-						} else if (folder.unit === 'TB') {
-							unitFaktor = "/1024/1024/1024"
-						}
+							if (folder.unit === 'GB') {
+								unitFaktor = "/1024/1024"
+							} else if (folder.unit === 'TB') {
+								unitFaktor = "/1024/1024/1024"
+							}
 
-						let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
+							let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
 
-						if (response) {
-							let id = `${host.name.replace(' ', '_')}.folders.${folder.name}`;
-							await this.createObjectNumber(id, `${_('folderSize')}: ${folder.path}`, folder.unit);
+							if (response) {
+								let id = `${host.name.replace(' ', '_')}.folders.${folder.name}`;
+								await this.createObjectNumber(id, `${_('folderSize')}: ${folder.path}`, folder.unit);
 
-							let result = parseFloat(response).toFixed(parseInt(folder.digits) || 2);
-							await this.setStateAsync(id, parseFloat(result), true);
+								let result = parseFloat(response).toFixed(parseInt(folder.digits) || 2);
+								await this.setStateAsync(id, parseFloat(result), true);
+							}
+						} else {
+							this.log.debug(`${logPrefix} getting size for '${host.name.replace(' ', '_')}.folders.${folder.name}' -> is not enabled!`);
 						}
 					}
 				}

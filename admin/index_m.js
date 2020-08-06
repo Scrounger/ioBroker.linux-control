@@ -312,6 +312,8 @@ function createCommandsTable(data, hosts, onChange) {
 								<table class="table-values" id="commandsTable">
 									<thead>
 										<tr>
+											<th data-name="enabled" data-type="checkbox" checked="true" data-default="true" style="width: 20px;" data-style="width: 20px;"
+												class="translate">${_("enabled")}</th>										
 											<th data-name="host" class="selectInTable-hosts translate"
 												style="width: 10%; text-align: center;" data-default=""
 												data-type="select" data-style=""
@@ -354,6 +356,8 @@ function createFoldersTable(data, hosts, onChange) {
 								<table class="table-values" id="foldersTable">
 									<thead>
 										<tr>
+											<th data-name="enabled" data-type="checkbox" checked="true" data-default="true" style="width: 20px;" data-style="width: 20px;"
+												class="translate">${_("enabled")}</th>									
 											<th data-name="host" class="selectInTable-hosts translate"
 												style="width: 10%; text-align: center;" data-default=""
 												data-type="select" data-style=""
