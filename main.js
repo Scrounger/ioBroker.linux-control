@@ -70,28 +70,30 @@ class LinuxControl extends utils.Adapter {
 	 * @param {object} host
 	 */
 	async refreshHost(host) {
-		this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
+		if (host.enabled) {
+			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
-		let connection = await this.getConnection(host);
+			let connection = await this.getConnection(host);
 
-		if (connection) {
-			await this.createControls(host);
-			await this.distributionInfo(connection, host);
-			await this.updateInfos(connection, host);
-			await this.servicesInfo(connection, host);
+			if (connection) {
+				await this.createControls(host);
+				await this.distributionInfo(connection, host);
+				await this.updateInfos(connection, host);
+				await this.servicesInfo(connection, host);
 
-			// sentryTest();
+				// sentryTest();
 
-			await this.needrestart(connection, host);
-			await this.folderSizes(connection, host);
+				await this.needrestart(connection, host);
+				await this.folderSizes(connection, host);
 
-			await this.userCommand(connection, host);
+				await this.userCommand(connection, host);
 
+				connection.dispose();
 
-
-			connection.dispose();
-
-			this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
+				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
+			}
+		} else {
+			this.log.debug(`getting data from ${host.name} (${host.ip}:${host.port}) is not enabled!`);
 		}
 	}
 
@@ -686,9 +688,11 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				if (host.rsakey) {
-					this.log.debug('using rsa key for authentification');
+					this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using rsa key for authentification`);
 					options.passphrase = password;
 					options.privateKey = host.rsakey;
+				} else if (host.useSudo) {
+					this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using sudo for authentification`);
 				}
 
 				return await ssh.connect(options);

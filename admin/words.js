@@ -793,6 +793,18 @@ const dictionary = {
 		"es": "usar sudo",
 		"pl": "użyj Sudo",
 		"zh-cn": "使用须藤"
+	},
+	"enabled": {
+		"en": "enabled",
+		"de": "aktiviert",
+		"ru": "включен",
+		"pt": "ativado",
+		"nl": "ingeschakeld",
+		"fr": "activée",
+		"it": "abilitato",
+		"es": "habilitado",
+		"pl": "włączone",
+		"zh-cn": "已启用"
 	}
 };
 
