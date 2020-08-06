@@ -359,16 +359,21 @@ function createFoldersTable(data, hosts, onChange) {
 											<th data-name="enabled" data-type="checkbox" checked="true" data-default="true" style="width: 20px;" data-style="width: 20px;"
 												class="translate">${_("enabled")}</th>									
 											<th data-name="host" class="selectInTable-hosts translate"
-												style="width: 10%; text-align: center;" data-default=""
+												style="width: 15%; text-align: center;" data-default=""
 												data-type="select" data-style=""
 												data-options="${hostNames.join(";")}">${_("Host")}</th>
-											<th data-name="name" style="width: auto" class="translate">${_("Name")}</th>
+											<th data-name="name" style="width: auto;" class="translate">${_("Name")}</th>
 											<th data-name="path" style="width: 40%" class="translate">${_("Path")}</th>
+											<th data-name="fileNamePattern" style="width: 10%" class="translate">${_("fileNamePattern")}</th>
 											<th data-name="unit" class="translate"
-												style="width: 10%; text-align: center; " data-default="MB"
+												style="width: 10%; text-align: center;" data-default="MB"
 												data-type="select" data-style=""
 												data-options="MB;GB;TB">${_("Unit")}</th>
-											<th data-name="digits" data-type="number" data-default="2" style="width: 100px" class="translate">${_("Digits")}</th>												
+											<th data-name="digits" data-type="number" data-default="2" style="width: 100px" class="translate">${_("Digits")}</th>
+											<th data-name="countFiles" data-type="checkbox" checked="true" data-default="true" style="width: 20px; text-align: center;" data-style="width: 20px;"
+												class="translate">${_("countFiles")}</th>
+											<th data-name="lastChange" data-type="checkbox" checked="true" data-default="true" style="width: 20px; text-align: center;" data-style="width: 20px;"
+												class="translate">${_("lastChange")}</th>												
 											<th data-buttons="delete up down" style="width: 120px"></th>
 										</tr>
 									</thead>

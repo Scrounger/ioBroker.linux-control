@@ -580,7 +580,7 @@ const dictionary = {
 	},
 	"Digits": {
 		"en": "decimal places",
-		"de": "Kommastellen",
+		"de": "Komma-stellen",
 		"ru": "десятичные знаки",
 		"pt": "casas decimais",
 		"nl": "decimalen",
@@ -805,6 +805,78 @@ const dictionary = {
 		"es": "habilitado",
 		"pl": "włączone",
 		"zh-cn": "已启用"
+	},
+	"countFiles": {
+		"en": "count of files",
+		"de": "Anzahl Dateien",
+		"ru": "количество файлов",
+		"pt": "contagem de arquivos",
+		"nl": "aantal bestanden",
+		"fr": "nombre de fichiers",
+		"it": "conteggio dei file",
+		"es": "recuento de archivos",
+		"pl": "liczba plików",
+		"zh-cn": "文件数"
+	},
+	"lastChange": {
+		"en": "last change",
+		"de": "letzte Änderung",
+		"ru": "последнее изменение",
+		"pt": "última mudança",
+		"nl": "laatste wijziging",
+		"fr": "dernier changement",
+		"it": "ultima modifica",
+		"es": "ultimo cambio",
+		"pl": "Ostatnia zmiana",
+		"zh-cn": "最后一次变更"
+	},
+	"countFilesInFolder": {
+		"en": "count of files in folder",
+		"de": "Anzahl der Dateien im Ordner",
+		"ru": "количество файлов в папке",
+		"pt": "contagem de arquivos na pasta",
+		"nl": "aantal bestanden in de map",
+		"fr": "nombre de fichiers dans le dossier",
+		"it": "conteggio dei file nella cartella",
+		"es": "recuento de archivos en carpeta",
+		"pl": "liczba plików w folderze",
+		"zh-cn": "文件夹中文件的数量"
+	},
+	"files": {
+		"en": "files",
+		"de": "Dateien",
+		"ru": "файлы",
+		"pt": "arquivos",
+		"nl": "bestanden",
+		"fr": "des dossiers",
+		"it": "File",
+		"es": "archivos",
+		"pl": "pliki",
+		"zh-cn": "档案"
+	},
+	"fileNamePattern": {
+		"en": "file name pattern",
+		"de": "Dateinamen Muster",
+		"ru": "шаблон имени файла",
+		"pt": "padrão de nome de arquivo",
+		"nl": "bestandsnaampatroon",
+		"fr": "modèle de nom de fichier",
+		"it": "modello di nome file",
+		"es": "patrón de nombre de archivo",
+		"pl": "wzorzec nazwy pliku",
+		"zh-cn": "文件名模式"
+	},
+	"last change": {
+		"en": "last change",
+		"de": "letzte Änderung",
+		"ru": "последнее изменение",
+		"pt": "última mudança",
+		"nl": "laatste wijziging",
+		"fr": "dernier changement",
+		"it": "ultima modifica",
+		"es": "ultimo cambio",
+		"pl": "Ostatnia zmiana",
+		"zh-cn": "最后一次变更"
 	}
 };
 

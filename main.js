@@ -189,15 +189,47 @@ class LinuxControl extends utils.Adapter {
 								unitFaktor = "/1024/1024/1024"
 							}
 
-							let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
+							let response = undefined;
+							if (folder.fileNamePattern) {
+								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern}" -exec du -c {} + | tail -1 | awk '{printf $1${unitFaktor}}'`, logPrefix, undefined, true);
+							} else {
+								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
+							}
 
 							if (response) {
-								let id = `${host.name.replace(' ', '_')}.folders.${folder.name}`;
-								await this.createObjectNumber(id, `${_('folderSize')}: ${folder.path}`, folder.unit);
+								let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.size`;
+								await this.createObjectNumber(id, _('folderSize'), folder.unit);
 
 								let result = parseFloat(response).toFixed(parseInt(folder.digits) || 2);
+
+								this.log.debug(`${logPrefix} ${id}: ${parseFloat(result)} ${folder.unit}`);
 								await this.setStateAsync(id, parseFloat(result), true);
+
+								if (folder.countFiles) {
+									response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" | wc -l`, logPrefix, undefined, true);
+
+									if (response) {
+										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.files`;
+										await this.createObjectNumber(id, _('countFilesInFolder'), _('files'));
+
+										this.log.debug(`${logPrefix} ${id}: ${parseInt(response)} ${_('files')}`);
+										await this.setStateAsync(id, parseInt(response), true);
+									}
+								}
+
+								if (folder.lastChange) {
+									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%W %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}') && date +%s -r $tmp`, logPrefix, undefined, true);
+
+									if (response) {
+										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.lastChange`;
+										await this.createObjectNumber(id, _('last change'), undefined);
+
+										this.log.debug(`${logPrefix} ${id}: ${parseInt(response)} -> ${this.formatDate(parseInt(response), 'DD.MM.YYYY hh:mm')}`);
+										await this.setStateAsync(id, parseInt(response), true);
+									}
+								}
 							}
+
 						} else {
 							this.log.debug(`${logPrefix} getting size for '${host.name.replace(' ', '_')}.folders.${folder.name}' -> is not enabled!`);
 						}
@@ -583,7 +615,7 @@ class LinuxControl extends utils.Adapter {
 						if (response) {
 							let timestamp = Date.parse(response);
 
-							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${new Date(timestamp).toLocaleString()}`);
+							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
 							await this.createObjectNumber(id, `lastUpdate`, '');
 							await this.setStateAsync(id, timestamp, true);
@@ -1179,6 +1211,30 @@ class LinuxControl extends utils.Adapter {
 						type: 'boolean',
 						read: false,
 						write: true
+					},
+					native: {}
+				});
+		}
+	}
+
+	/**
+	 * @param {string} id
+	 * @param {string} name
+	 */
+	async createMyChannel(id, name) {
+		let obj = await this.getObjectAsync(id);
+
+		if (obj) {
+			if (obj.common.name !== _(name)) {
+				obj.common.name = _(name);
+				await this.setObjectAsync(id, obj);
+			}
+		} else {
+			await this.setObjectNotExistsAsync(id,
+				{
+					type: 'channel',
+					common: {
+						name: _(name),
 					},
 					native: {}
 				});
