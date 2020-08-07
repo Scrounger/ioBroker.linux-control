@@ -26,21 +26,23 @@ Controlling Linux devices and get information about your system
 
 |setting|description|
 |-------|-----------|
-|datapoint id|id under which all data points are to be stored|
+|datapoint id|id under which all datapoints are to be stored|
 |IP|IP address of your linux device|
 |Port|SSH Port of your linux device|
 |polling interval|polling interval in minutes|
 |user|ssh user for login|
 |password / passpharse|ssh password for login or passpharse if you use a rsa key|
+|use Sudo| using sudo |
 |rsa key|path and filename of your rsa key. Access rights must be available!|
 |timeout|connection timeout|
 
 ### Datapoints
 ![Datapoints](docs/en/img/datapoints.gif)
 
-Here you can select which data points should be created. 
-Individual data points can be ignored (i.e. they will not be created) by dragging and dropping them from the blacklist to a
-Additionally you can ignore single data points by drag & drop.
+The adapter creates predefined datapoints with information and the possibility to control the Linux device. These can be selected here.
+In addition, for each individual host, individual data points or entire channels can be placed on the blacklist by drag & drop so that they are not created for the host.
+
+**Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
 
 ### Services
 ![Services](docs/en/img/services.png)
@@ -50,7 +52,18 @@ If the retrieval of services under datapoints is activated, you can define here 
 ### Folders
 ![Folders](docs/en/img/folders.png)
 
-Here you can retrieve information about the size of folders. For this purpose, the path of the folder must be defined and in which format (MB, GB, etc.) it should be displayed.
+Here you can retrieve information about the size of folders, count of the files included in these folders and the timestamp of the last change in this folder.
+
+|setting|description|
+|-------|-----------|
+|Host|Host which should be used|
+|datapoint id|id under which all datapoints are to be stored|
+|Path|path of the folder|
+|filename pattern|pattern for files names which should be regonized.|
+|Unit|Unit for size|
+|decimal places|decimal places|
+|count of files|create datapoint for count of files|
+|last change|create datapoint for timestamp of the last change in this folder|
 
 ### Custom Commands
 ![Custom Commands](docs/en/img/myCommands.png)
@@ -62,6 +75,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
 ## Changelog
 
 ### __WORK IN PROGRESS__
+* (Scrounger) optional folder datapoints for count of files and last change added
+* (Scrounger) enable options for hosts, folders and user commands added
+* (Scrounger) using sudo implemented
 * (Scrounger) type array for user commands added
 * (Scrounger) ignore whole datapoints node by using drag and drop 
 * (Scrounger) error handling for user commands improved
