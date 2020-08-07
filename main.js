@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-const NodeSSH = require('node-ssh');
+const NodeSSH = require('node-ssh').NodeSSH;
 const csvToJson = require('csvtojson');
 const words = require('./admin/words.js');
 const ping = require('ping');
