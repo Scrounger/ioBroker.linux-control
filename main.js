@@ -1106,8 +1106,6 @@ class LinuxControl extends utils.Adapter {
 
 		if (obj) {
 			if (obj.common.name !== _(name) || obj.common['unit'] !== _(unit)) {
-				this.log.info(JSON.stringify(obj));
-
 				obj.common.name = _(name);
 				obj.common['unit'] = _(unit);
 
