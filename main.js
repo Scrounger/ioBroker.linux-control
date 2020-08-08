@@ -218,7 +218,7 @@ class LinuxControl extends utils.Adapter {
 								}
 
 								if (folder.lastChange) {
-									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%W %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}') && date +%s -r $tmp`, logPrefix, undefined, true);
+									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%Y %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}') && date +%s -r $tmp`, logPrefix, undefined, true);
 
 									if (response) {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.lastChange`;
