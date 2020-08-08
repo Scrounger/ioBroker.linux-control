@@ -829,6 +829,7 @@ class LinuxControl extends utils.Adapter {
 	onUnload(callback) {
 		try {
 			this.log.info('cleaned everything up...');
+			clearInterval();
 			callback();
 		} catch (e) {
 			callback();
