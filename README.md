@@ -74,7 +74,12 @@ It is important that the retrieved data is transmitted in the correct type! The 
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+<!--
+    Placeholder for the next version (at the beginning of the line):
+    ## __WORK IN PROGRESS__
+-->
+
+### 0.2.0 (2020-08-08)
 * (Scrounger) optional folder datapoints for count of files and last change added
 * (Scrounger) enable options for hosts, folders and user commands added
 * (Scrounger) using sudo implemented
