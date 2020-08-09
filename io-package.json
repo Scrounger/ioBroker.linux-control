@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.0",
+        "version": "0.2.1",
         "news": {
+            "0.2.1": {
+                "en": "bug fixes",
+                "de": "Fehlerbehebung",
+                "ru": "исправление ошибок",
+                "pt": "correção de bugs",
+                "nl": "bugfixes",
+                "fr": "corrections de bogues",
+                "it": "correzioni di bug",
+                "es": "corrección de errores",
+                "pl": "poprawki błędów",
+                "zh-cn": "bug修复"
+            },
             "0.2.0": {
                 "en": "optional folder datapoints for count of files and last change added\nenable options for hosts, folders and user commands added\nusing sudo implemented\ntype array for user commands added\nignore whole datapoints node by using drag and drop \nerror handling for user commands improved\nSentry implemented",
                 "de": "Optionale Ordnerdatenpunkte für die Anzahl der Dateien und die letzte hinzugefügte Änderung\nAktivierungsoptionen für Hosts, Ordner und Benutzerbefehle hinzugefügt\nmit sudo implementiert\nTyp Array für Benutzerbefehle hinzugefügt\nIgnorieren Sie den gesamten Datenpunktknoten per Drag & Drop\nFehlerbehandlung für Benutzerbefehle verbessert\nWachposten implementiert",
