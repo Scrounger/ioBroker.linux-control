@@ -76,8 +76,11 @@ It is important that the retrieved data is transmitted in the correct type! The 
 
 <!--
     Placeholder for the next version (at the beginning of the line):
-    ## __WORK IN PROGRESS__
+    ### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+* (Scrounger) bug fixes
 
 ### 0.2.0 (2020-08-08)
 * (Scrounger) optional folder datapoints for count of files and last change added
