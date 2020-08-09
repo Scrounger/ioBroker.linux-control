@@ -613,25 +613,24 @@ class LinuxControl extends utils.Adapter {
 					if (this.config.whitelist["updates"].includes("lastUpdate") && !this.config.blacklistDatapoints[host.name].includes(`updates.lastUpdate`)) {
 						response = await this.sendCommand(connection, host, "dpkg-query -f '${db-fsys:Last-Modified}\n' -W | sort -nr | head -1", logPrefix, responseId, true);
 						if (response) {
-							let timestamp = parseInt(response);
+							let timestamp = parseInt(response) * 1000;
 
 							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
 							await this.createObjectNumber(id, `lastUpdate`, '');
 							await this.setStateAsync(id, timestamp, true);
+						} else {
+							// Fallback method
+							response = await this.sendCommand(connection, host, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
+							if (response) {
+								let timestamp = Date.parse(response);
+
+								this.log.debug(`${logPrefix} ${id}: Fallback method: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
+
+								await this.createObjectNumber(id, `lastUpdate`, '');
+								await this.setStateAsync(id, timestamp, true);
+							}
 						}
-
-						// Fallback method
-						response = await this.sendCommand(connection, host, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
-						if (response) {
-							let timestamp = Date.parse(response);
-
-							this.log.debug(`${logPrefix} ${id}: Fallback method: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
-
-							await this.createObjectNumber(id, `lastUpdate`, '');
-							await this.setStateAsync(id, timestamp, true);
-						}
-
 					} else {
 						await this.delMyObject(id, logPrefix);
 					}
