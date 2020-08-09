@@ -611,9 +611,9 @@ class LinuxControl extends utils.Adapter {
 					let id = `${host.name.replace(' ', '_')}.updates.lastUpdate`;
 					// @ts-ignore
 					if (this.config.whitelist["updates"].includes("lastUpdate") && !this.config.blacklistDatapoints[host.name].includes(`updates.lastUpdate`)) {
-						response = await this.sendCommand(connection, host, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
+						response = await this.sendCommand(connection, host, "dpkg-query -f '${db-fsys:Last-Modified}\n' -W | sort -nr | head -1", logPrefix, responseId, true);
 						if (response) {
-							let timestamp = Date.parse(response);
+							let timestamp = response;
 
 							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
