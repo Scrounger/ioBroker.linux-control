@@ -222,10 +222,13 @@ class LinuxControl extends utils.Adapter {
 
 									if (response) {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.lastChange`;
+
+										let timestamp = parseInt(response) * 1000;
+
 										await this.createObjectNumber(id, _('last change'), undefined);
 
-										this.log.debug(`${logPrefix} ${id}: ${parseInt(response)} -> ${this.formatDate(parseInt(response), 'DD.MM.YYYY hh:mm')}`);
-										await this.setStateAsync(id, parseInt(response), true);
+										this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
+										await this.setStateAsync(id, timestamp, true);
 									}
 								}
 							}
