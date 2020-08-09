@@ -140,6 +140,18 @@ class LinuxControl extends utils.Adapter {
 											await this.createObjectArray(id, cmd.description);
 											await this.setStateAsync(id, JSON.parse(response), true);
 										}
+									} else {
+										if (await this.getObjectAsync(id)) {
+											if (cmd.type === 'string') {
+												await this.setStateAsync(id, "", true);
+											} else if (cmd.type === 'number') {
+												await this.setStateAsync(id, 0, true);
+											} else if (cmd.type === 'boolean') {
+												await this.setStateAsync(id, false, true);
+											} else if (cmd.type === 'array') {
+												await this.setStateAsync(id, null, true);
+											}
+										}
 									}
 								} else {
 									await this.createObjectButton(id, cmd.description);
