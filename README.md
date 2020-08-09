@@ -80,6 +80,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
 -->
 
 ### __WORK IN PROGRESS__
+* (Scrounger) settings: styles optimized
 * (Scrounger) userCommand: null values if response is null or empty
 
 ### 0.2.3 (2020-08-09)
