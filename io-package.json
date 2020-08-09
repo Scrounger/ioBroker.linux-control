@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.2",
+        "version": "0.2.3",
         "news": {
+            "0.2.3": {
+                "en": "bug fixes",
+                "de": "Fehlerbehebung",
+                "ru": "исправление ошибок",
+                "pt": "correção de bugs",
+                "nl": "bugfixes",
+                "fr": "corrections de bogues",
+                "it": "correzioni di bug",
+                "es": "corrección de errores",
+                "pl": "poprawki błędów",
+                "zh-cn": "bug修复"
+            },
             "0.2.2": {
                 "en": "bug fixes",
                 "de": "Fehlerbehebung",
