@@ -53,6 +53,7 @@ class LinuxControl extends utils.Adapter {
 					adapter.refreshHost(host);
 				}, host.interval * 60000)
 			}
+
 		} catch (err) {
 			this.errorHandling(err, '[onReady]');
 		}
@@ -209,7 +210,7 @@ class LinuxControl extends utils.Adapter {
 								let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.size`;
 								await this.createObjectNumber(id, _('folderSize'), folder.unit);
 
-								let result = parseFloat(response).toFixed(parseInt(folder.digits) || 2);
+								let result = parseFloat(response).toFixed(parseInt(folder.digits) || 0);
 
 								this.log.debug(`${logPrefix} ${id}: ${parseFloat(result)} ${folder.unit}`);
 								await this.setStateAsync(id, parseFloat(result), true);
