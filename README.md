@@ -80,6 +80,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
 -->
 
 ### __WORK IN PROGRESS__
+* (Scrounger) datapoint isOnline added
 * (Scrounger) settings: styles optimized
 * (Scrounger) userCommand: null values if response is null or empty
 

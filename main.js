@@ -74,14 +74,11 @@ class LinuxControl extends utils.Adapter {
 			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
 			let connection = await this.getConnection(host);
-
-			if (connection) {
+			if (connection) {				
 				await this.createControls(host);
 				await this.distributionInfo(connection, host);
 				await this.updateInfos(connection, host);
 				await this.servicesInfo(connection, host);
-
-				// sentryTest();
 
 				await this.needrestart(connection, host);
 				await this.folderSizes(connection, host);
@@ -739,7 +736,12 @@ class LinuxControl extends utils.Adapter {
 		try {
 			let pingResult = await ping.promise.probe(host.ip, { timeout: parseInt(host.timeout) || 5 });
 
+			let id = `${host.name.replace(' ', '_')}.isOnline`;
+			this.createObjectBoolean(id, 'server is online');
+
 			if (pingResult.alive) {
+				await this.setStateAsync(id, true, true);
+
 				let obj = await this.getForeignObjectAsync('system.config');
 				let password = await this.getPassword(host);
 
@@ -763,6 +765,8 @@ class LinuxControl extends utils.Adapter {
 
 				return await ssh.connect(options);
 			} else {
+				await this.setStateAsync(id, false, true);
+
 				this.log.info(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) seems not to be online`);
 				return undefined;
 			}
