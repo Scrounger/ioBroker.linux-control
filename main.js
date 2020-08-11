@@ -17,6 +17,7 @@ const { exception } = require('console');
 
 let language = 'en';
 let _ = null;
+var requestInterval;
 
 class LinuxControl extends utils.Adapter {
 
@@ -44,28 +45,14 @@ class LinuxControl extends utils.Adapter {
 			await this.prepareTranslation();
 			await this.setSelectableHosts()
 
-			await this.refreshAll();
-
-			let adapter = this;
-			// @ts-ignore
 			for (const host of this.config.hosts) {
-				setInterval(function () {
-					adapter.refreshHost(host);
-				}, host.interval * 60000)
+				await this.refreshHost(host);
 			}
 
 		} catch (err) {
 			this.errorHandling(err, '[onReady]');
 		}
 	}
-
-	async refreshAll() {
-		// @ts-ignore
-		for (const host of this.config.hosts) {
-			await this.refreshHost(host);
-		}
-	}
-
 
 	/**
 	 * @param {object} host
@@ -75,7 +62,7 @@ class LinuxControl extends utils.Adapter {
 			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
 			let connection = await this.getConnection(host);
-			if (connection) {				
+			if (connection) {
 				await this.createControls(host);
 				await this.distributionInfo(connection, host);
 				await this.updateInfos(connection, host);
@@ -90,6 +77,13 @@ class LinuxControl extends utils.Adapter {
 
 				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
 			}
+
+			// interval using timeout
+			if (requestInterval) requestInterval = null;
+			requestInterval = setTimeout(() => {
+				this.refreshHost(host);
+			}, host.interval * 60000);
+
 		} else {
 			this.log.debug(`getting data from ${host.name} (${host.ip}:${host.port}) -> not enabled!`);
 		}
@@ -859,8 +853,8 @@ class LinuxControl extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
+			clearTimeout(requestInterval);
 			this.log.info('cleaned everything up...');
-			clearInterval();
 			callback();
 		} catch (e) {
 			callback();
