@@ -1062,34 +1062,38 @@ class LinuxControl extends utils.Adapter {
 	 * @param {object} host
 	 */
 	async createControls(host) {
-		let idPrefix = `${host.name.replace(' ', '_')}.control`;
 		let logPrefix = `[createControls] ${host.name} (${host.ip}:${host.port}):`;
 
-		const objects = require('./admin/lib/control.json');
+		try {
+			let idPrefix = `${host.name.replace(' ', '_')}.control`;
+			const objects = require('./admin/lib/control.json');
 
-		// @ts-ignore
-		if (this.config.whitelist && this.config.whitelist["control"] && this.config.whitelist["control"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('control.all')) {
-			for (const obj of objects) {
+			// @ts-ignore
+			if (this.config.whitelist && this.config.whitelist["control"] && this.config.whitelist["control"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('control.all')) {
+				for (const obj of objects) {
 
-				// @ts-ignore
-				if (this.config.whitelist["control"].includes(obj.id) && !this.config.blacklistDatapoints[host.name].includes(`control.${obj.id}`)) {
+					// @ts-ignore
+					if (this.config.whitelist["control"].includes(obj.id) && !this.config.blacklistDatapoints[host.name].includes(`control.${obj.id}`)) {
 
-					if (obj.type === 'button') {
-						await this.createObjectButton(`${idPrefix}.${obj.id}`, obj.name);
-						this.subscribeStates(`${idPrefix}.${obj.id}`);
-					} else if (obj.type === 'string') {
-						await this.createObjectString(`${idPrefix}.${obj.id}`, obj.name);
+						if (obj.type === 'button') {
+							await this.createObjectButton(`${idPrefix}.${obj.id}`, obj.name);
+							this.subscribeStates(`${idPrefix}.${obj.id}`);
+						} else if (obj.type === 'string') {
+							await this.createObjectString(`${idPrefix}.${obj.id}`, obj.name);
+						}
+					} else {
+						await this.delMyObject(`${idPrefix}.${obj.id}`, logPrefix);
 					}
-				} else {
-					await this.delMyObject(`${idPrefix}.${obj.id}`, logPrefix);
+				}
+			} else {
+				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+
+				for (const obj of objects) {
+					await this.delMyObject(`${idPrefix}.${obj.id}`);
 				}
 			}
-		} else {
-			this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
-
-			for (const obj of objects) {
-				await this.delMyObject(`${idPrefix}.${obj.id}`);
-			}
+		} catch (err) {
+			this.errorHandling(err, logPrefix);
 		}
 	}
 
