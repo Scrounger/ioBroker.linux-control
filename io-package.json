@@ -112,18 +112,18 @@
                 "zh-cn": "首次出版"
             }
         },
-        "title": "Control Linux",
+        "title": "Linux Control",
         "titleLang": {
-            "en": "Control Linux",
-            "de": "Control Linux",
-            "ru": "Control Linux",
-            "pt": "Control Linux",
-            "nl": "Control Linux",
-            "fr": "Control Linux",
-            "it": "Control Linux",
-            "es": "Control Linux",
-            "pl": "Control Linux",
-            "zh-cn": "Control Linux"
+            "en": "Linux Control",
+            "de": "Linux Control",
+            "ru": "Linux Control",
+            "pt": "Linux Control",
+            "nl": "Linux Control",
+            "fr": "Linux Control",
+            "it": "Linux Control",
+            "es": "Linux Control",
+            "pl": "Linux Control",
+            "zh-cn": "Linux Control"
         },
         "desc": {
             "en": "Controlling Linux devices and information about your system",

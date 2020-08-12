@@ -12,7 +12,7 @@
 
 **Tests:**: [![Travis-CI](http://img.shields.io/travis/Scrounger/ioBroker.linux-control/master.svg)](https://travis-ci.org/Scrounger/ioBroker.linux-control)
 
-## linux-control adapter for ioBroker
+## Linux Control Adapter for ioBroker
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url)
 
 Controlling Linux devices and get information about your system
