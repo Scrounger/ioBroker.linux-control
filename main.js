@@ -1320,9 +1320,13 @@ class LinuxControl extends utils.Adapter {
 }
 
 class ResponseError extends Error {
-	constructor(message) {
+	/**
+	 * @param {string} message
+	 * @param {string} [logPrefix]
+	 */
+	constructor(message, logPrefix) {
 		super(message); // (1)
-		this.name = "ResponseError"; // (2)
+		this.name = `ResponseError ${logPrefix}`; // (2)
 	}
 }
 
