@@ -79,10 +79,11 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.2.4 (2020-08-12)
 * (Scrounger) datapoint isOnline added
 * (Scrounger) settings: styles optimized
 * (Scrounger) userCommand: null values if response is null or empty
+* (Scrounger) bug fixes
 
 ### 0.2.3 (2020-08-09)
 * (Scrounger) bug fixes

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.3",
+        "version": "0.2.4",
         "news": {
+            "0.2.4": {
+                "en": "datapoint isOnline added\nsettings: styles optimized\nuserCommand: null values if response is null or empty\nbug fixes",
+                "de": "Datenpunkt isOnline hinzugefügt\nEinstellungen: Stile optimiert\nuserCommand: Nullwerte, wenn die Antwort null oder leer ist\nFehlerbehebung",
+                "ru": "datapoint isOnline добавлен\nнастройки: стили оптимизированы\nuserCommand: нулевые значения, если ответ нулевой или пустой\nисправление ошибок",
+                "pt": "datapoint isOnline adicionado\nconfigurações: estilos otimizados\nuserCommand: valores nulos se a resposta for nula ou vazia\ncorreção de bugs",
+                "nl": "datapunt isOnline toegevoegd\ninstellingen: stijlen geoptimaliseerd\nuserCommand: null-waarden als het antwoord null of leeg is\nbugfixes",
+                "fr": "datapoint isOnline ajouté\nparamètres: styles optimisés\nuserCommand: valeurs nulles si la réponse est nulle ou vide\ncorrections de bogues",
+                "it": "datapoint isOnline aggiunto\nimpostazioni: stili ottimizzati\nuserCommand: valori nulli se la risposta è nullo o vuoto\ncorrezioni di bug",
+                "es": "el punto de datos se agrega en línea\nconfiguración: estilos optimizados\nuserCommand: valores nulos si la respuesta es nula o vacía\ncorrección de errores",
+                "pl": "Dodano punkt danych isOnline\nustawienia: style zoptymalizowane\nuserCommand: wartości null, jeśli odpowiedź ma wartość null lub jest pusta\npoprawki błędów",
+                "zh-cn": "数据点isOnline已添加\n设置：优化样式\nuserCommand：如果响应为null或为空，则为null值\nbug修复"
+            },
             "0.2.3": {
                 "en": "bug fixes",
                 "de": "Fehlerbehebung",
