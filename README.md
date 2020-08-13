@@ -79,6 +79,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+__WORK IN PROGRESS__
+* (Scrounger) info datapoints added, isOnline changed to info.is_online
+
 ### 0.2.4 (2020-08-12)
 * (Scrounger) datapoint isOnline added
 * (Scrounger) settings: styles optimized

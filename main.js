@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-const NodeSSH = require('node-ssh').NodeSSH;
+const NodeSSH = require('node-ssh');
 const csvToJson = require('csvtojson');
 const words = require('./admin/words.js');
 const ping = require('ping');
@@ -62,6 +62,9 @@ class LinuxControl extends utils.Adapter {
 			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
 			let connection = await this.getConnection(host);
+
+			await this.getInfos(connection, host);
+
 			if (connection) {
 				await this.createControls(host);
 				await this.distributionInfo(connection, host);
@@ -89,6 +92,48 @@ class LinuxControl extends utils.Adapter {
 		}
 	}
 
+	/**
+	 * @param {NodeSSH | undefined} connection
+	 * @param {object} host
+	 */
+	async getInfos(connection, host) {
+		let logPrefix = `[getInfos] ${host.name} (${host.ip}:${host.port}):`;
+
+		const objects = require('./admin/lib/info.json');
+
+		if (this.config.whitelist && this.config.whitelist["info"] && this.config.whitelist["info"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('info.all')) {
+
+			for (const propObj of objects) {
+				if (this.config.whitelist["info"].includes(propObj.id) && !this.config.blacklistDatapoints[host.name].includes(`info.${propObj.id}`)) {
+					let id = `${host.name.replace(' ', '_')}.info.${propObj.id}`;
+
+					if (propObj.id === "is_online") {
+						if (connection) {
+							await this.createObjectString(id, propObj.name);
+							await this.setStateAsync(id, true, true);
+						} else {
+							await this.createObjectString(id, propObj.name);
+							await this.setStateAsync(id, false, true);
+						}
+					}
+
+					if (propObj.id === "ip") {
+						await this.createObjectString(id, propObj.name);
+						await this.setStateAsync(id, host.ip, true);
+					}
+
+				} else {
+					await this.delMyObject(`${host.name.replace(' ', '_')}.info.${propObj.id}`, logPrefix);
+				}
+			}
+		} else {
+			this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+
+			for (const propObj of objects) {
+				await this.delMyObject(`${host.name.replace(' ', '_')}.info.${propObj.id}`);
+			}
+		}
+	}
 
 	//#region Command Functions
 
@@ -731,12 +776,7 @@ class LinuxControl extends utils.Adapter {
 		try {
 			let pingResult = await ping.promise.probe(host.ip, { timeout: parseInt(host.timeout) || 5 });
 
-			let id = `${host.name.replace(' ', '_')}.isOnline`;
-			this.createObjectBoolean(id, 'server is online');
-
 			if (pingResult.alive) {
-				await this.setStateAsync(id, true, true);
-
 				let obj = await this.getForeignObjectAsync('system.config');
 				let password = await this.getPassword(host);
 
@@ -760,8 +800,6 @@ class LinuxControl extends utils.Adapter {
 
 				return await ssh.connect(options);
 			} else {
-				await this.setStateAsync(id, false, true);
-
 				this.log.info(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) seems not to be online`);
 				return undefined;
 			}

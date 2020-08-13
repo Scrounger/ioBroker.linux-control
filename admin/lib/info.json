@@ -1,0 +1,12 @@
+[
+    {
+        "id": "is_online",
+        "name": "is_online",
+        "type": "boolean"
+    },
+    {
+        "id": "ip",
+        "name": "ip_address",
+        "type": "string"
+    }
+]

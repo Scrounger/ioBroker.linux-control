@@ -410,6 +410,42 @@ const dictionary = {
 		"pl": "Informacja, czy konieczne jest ponowne uruchomienie komputera (należy zainstalować pakiet „needrestart”)",
 		"zh-cn": "如果需要重新启动的信息（必须安装软件包“ needrestart”）"
 	},
+	"root_info": {
+		"en": "infos about the host",
+		"de": "Infos zum Host",
+		"ru": "информация о хозяине",
+		"pt": "informações sobre o anfitrião",
+		"nl": "info over de gastheer",
+		"fr": "infos sur l'hôte",
+		"it": "informazioni sull'host",
+		"es": "información sobre el anfitrión",
+		"pl": "informacje o gospodarzu",
+		"zh-cn": "有关主机的信息"
+	},
+	"is_online": {
+		"en": "host is online",
+		"de": "Host ist online",
+		"ru": "хост в сети",
+		"pt": "anfitrião está online",
+		"nl": "gastheer is online",
+		"fr": "l'hôte est en ligne",
+		"it": "l'host è online",
+		"es": "el anfitrión está en línea",
+		"pl": "host jest online",
+		"zh-cn": "主机在线"
+	},
+	"ip_address": {
+		"en": "IP Address",
+		"de": "IP Adresse",
+		"ru": "Айпи адрес",
+		"pt": "Endereço de IP",
+		"nl": "IP adres",
+		"fr": "Adresse IP",
+		"it": "Indirizzo IP",
+		"es": "Dirección IP",
+		"pl": "Adres IP",
+		"zh-cn": "IP地址"
+	},
 	"description": {
 		"en": "description of service ",
 		"de": "Beschreibung des Dienstes",
