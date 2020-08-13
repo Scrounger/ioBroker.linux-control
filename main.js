@@ -1314,7 +1314,7 @@ class LinuxControl extends utils.Adapter {
 	 */
 	errorHandling(err, logPrefix, sendToSentry = true) {
 		if (err.name === 'ResponseError') {
-			if (err.message.includes('Permission denied')) {
+			if (err.message.includes('Permission denied') || err.message.includes('Keine Berechtigung')) {
 				this.log.error(`Permisson denied. Check the permission rights of your user on your linux devices! Perhaps you need to use 'sudo'?`);
 			}
 			this.log.error(`${logPrefix} response error: ${err.message}, stack: ${err.stack}`);
@@ -1326,7 +1326,7 @@ class LinuxControl extends utils.Adapter {
 			if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
 				const sentryInstance = this.getPluginInstance('sentry');
 				if (sentryInstance) {
-					if (!err.message.includes('Permission denied')) {
+					if (!err.message.includes('Permission denied') || !err.message.includes('Keine Berechtigung')) {
 						sentryInstance.getSentryObject().captureException(err);
 					}
 				}
