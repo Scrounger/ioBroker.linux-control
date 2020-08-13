@@ -740,7 +740,7 @@ class LinuxControl extends utils.Adapter {
 						}
 						await this.reportResponse(responseId, 'successful');
 					} else {
-						this.errorHandling(new ResponseError(response.stderr), logPrefix, responseErrorSendToSentry);
+						this.errorHandling(new ResponseError(`${logPrefix} ${response.stderr}`), logPrefix, responseErrorSendToSentry);
 
 						await this.reportResponse(responseId, response.stderr);
 					}
@@ -1360,11 +1360,10 @@ class LinuxControl extends utils.Adapter {
 class ResponseError extends Error {
 	/**
 	 * @param {string} message
-	 * @param {string} [logPrefix]
 	 */
-	constructor(message, logPrefix) {
+	constructor(message) {
 		super(message); // (1)
-		this.name = `ResponseError ${logPrefix}`; // (2)
+		this.name = 'ResponseError'; // (2)
 	}
 }
 
