@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.4",
+        "version": "0.2.5",
         "news": {
+            "0.2.5": {
+                "en": "sentry error handling optimized\ninfo datapoints added, isOnline changed to info.is_online",
+                "de": "Wachfehlerbehandlung optimiert\nInfo-Datenpunkte hinzugefügt, isOnline in info.is_online geändert",
+                "ru": "оптимизирована обработка ошибок караула\nдобавлены информационные точки данных, isOnline изменено на info.is_online",
+                "pt": "tratamento de erros sentinela otimizado\ninfo datapoints adicionados, isOnline alterado para info.is_online",
+                "nl": "sentry foutafhandeling geoptimaliseerd\ninfo datapunten toegevoegd, isOnline gewijzigd in info.is_online",
+                "fr": "gestion des erreurs de sentinelle optimisée\ninfo points de données ajoutés, isOnline changé en info.is_online",
+                "it": "gestione degli errori di sentinella ottimizzata\nInfo datapoint aggiunti, isOnline modificato in info.is_online",
+                "es": "manejo de errores centinela optimizado\nSe agregaron puntos de datos de información, isOnline cambió a info.is_online",
+                "pl": "zoptymalizowana obsługa błędów wartowników\nDodano punkty danych info, isOnline zmieniono na info.is_online",
+                "zh-cn": "哨兵错误处理已优化\n已添加info数据点，isOnline已更改为info.is_online"
+            },
             "0.2.4": {
                 "en": "datapoint isOnline added\nsettings: styles optimized\nuserCommand: null values if response is null or empty\nbug fixes",
                 "de": "Datenpunkt isOnline hinzugefügt\nEinstellungen: Stile optimiert\nuserCommand: Nullwerte, wenn die Antwort null oder leer ist\nFehlerbehebung",
@@ -176,7 +188,7 @@
         "folders": [],
         "commands": [],
         "whitelist": {
-            "info":[
+            "info": [
                 "is_online",
                 "ip"
             ],
