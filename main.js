@@ -1326,7 +1326,8 @@ class LinuxControl extends utils.Adapter {
 			if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
 				const sentryInstance = this.getPluginInstance('sentry');
 				if (sentryInstance) {
-					if (!err.message.includes('Permission denied') || !err.message.includes('Keine Berechtigung')) {
+					if (!err.message.includes('Permission denied') && !err.message.includes('Keine Berechtigung')) {
+						err.message = `${logPrefix} ${err.message}`;
 						sentryInstance.getSentryObject().captureException(err);
 					}
 				}
