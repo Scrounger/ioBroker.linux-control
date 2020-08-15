@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.5",
+        "version": "0.2.6",
         "news": {
+            "0.2.6": {
+                "en": "Node-SSH bug fix",
+                "de": "Node-SSH-Fehlerbehebung",
+                "ru": "Исправление ошибки Node-SSH",
+                "pt": "Correção de bug Node-SSH",
+                "nl": "Bugfix in Node-SSH",
+                "fr": "Correction de bogue Node-SSH",
+                "it": "Correzione di bug del nodo SSH",
+                "es": "Corrección de errores de Node-SSH",
+                "pl": "Poprawka błędu Node-SSH",
+                "zh-cn": "节点SSH错误修复"
+            },
             "0.2.5": {
                 "en": "sentry error handling optimized\ninfo datapoints added, isOnline changed to info.is_online",
                 "de": "Wachfehlerbehandlung optimiert\nInfo-Datenpunkte hinzugefügt, isOnline in info.is_online geändert",

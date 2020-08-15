@@ -79,6 +79,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### 0.2.6 (2020-08-15)
+* (Scrounger) Node-SSH bug fix
+
 ### 0.2.5 (2020-08-15)
 * (Scrounger) sentry error handling optimized
 * (Scrounger) info datapoints added, isOnline changed to info.is_online
