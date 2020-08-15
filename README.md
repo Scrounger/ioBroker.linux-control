@@ -80,6 +80,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
 -->
 
 __WORK IN PROGRESS__
+* (Scrounger) sentry error handling optimized
 * (Scrounger) info datapoints added, isOnline changed to info.is_online
 
 ### 0.2.4 (2020-08-12)
