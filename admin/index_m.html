@@ -25,6 +25,8 @@
 	<script type="text/javascript" src="index_m.js"></script>
 
 	<style>
+		.m .tabs .tab a:hover { border-bottom: 2px solid #46a0e9 !important; font-weight: bold !important; }
+
 		.treeContainer {
 			width: calc(100% - 24px) !important;
 		}
@@ -213,6 +215,35 @@
 			letter-spacing: .5px;
 			padding: .3rem;
 		}
+
+		/* Header section */
+		#header-area {
+			margin-top: 4px;
+			margin-bottom: 1px;
+			background: white;
+		}
+
+		#header-area #header-logo-title .logo {
+			float: left;
+			margin-right: 10px;
+		}
+
+		#header-area #header-logo-title p {
+			line-height: normal !important;
+			margin: 0 !important;
+			padding: 8px 0 0 8px;
+		}
+
+		#header-area #header-logo-title p>span.h-title {
+			font-size: 2em !important;
+			font-weight: bold !important;
+		}
+
+		#header-area #header-logo-title p>span.h-sub-title {
+			font-size: 1.1em !important;
+			font-style: italic;
+			color: #2196f3;
+		}
 	</style>
 </head>
 
@@ -233,17 +264,21 @@
 			</div>
 			<div id="tab_general" class="col s12 page">
 				<div class="col s12">
-					<div class="row">
-						<div class="col s12 m4 l2">
-							<img src="linux-control.png" class="logo">
+					<div id="header-area" class="row" >
+						<div id="header-logo-title" class="col s6" >
+							<img class="logo" src="linux-control.png" >
+							<p>
+								<span class="h-title">Linux Control</span><br />
+								<span class="h-sub-title translate">Controlling Linux devices and get information about your system</p>
+							</p>
 						</div>
-					</div>
+					</div>					
 
 					<!-- Put your content here -->
 
 					<!-- For example columns with settings: -->
 					<div class="row">
-						<p class="translate title">Host configuration table</p>
+						<p class="translate title" style="margin-top: 4px;">Host configuration table</p>
 						<section>
 							<div class="col s12" id="hosts">
 								<a

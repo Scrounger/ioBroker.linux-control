@@ -14,6 +14,18 @@ const dictionary = {
 		'pl': 'Ustawienia adaptera dla linuxcontrol',
 		'zh-cn': 'linuxcontrol'
 	},
+	"Controlling Linux devices and get information about your system": {
+		"en": "Controlling Linux devices and get information about your system",
+		"de": "Informationen und Steuerung deiner Linux Geräte",
+		"ru": "Управление устройствами Linux и получение информации о вашей системе",
+		"pt": "Controlar dispositivos Linux e obter informações sobre seu sistema",
+		"nl": "Linux-apparaten besturen en informatie over uw systeem krijgen",
+		"fr": "Contrôler les périphériques Linux et obtenir des informations sur votre système",
+		"it": "Controllare i dispositivi Linux e ottenere informazioni sul sistema",
+		"es": "Controlar dispositivos Linux y obtener información sobre su sistema",
+		"pl": "Sterowanie urządzeniami z systemem Linux i uzyskiwanie informacji o systemie",
+		"zh-cn": "控制Linux设备并获取有关系统的信息"
+	},
 	"pollingInterval": {
 		"en": "polling interval (minutes)",
 		"de": "Abfrageintervall (Minuten)",
