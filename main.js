@@ -721,7 +721,9 @@ class LinuxControl extends utils.Adapter {
 					if (!response.stderr) {
 						response.stdout = response.stdout.replace(password, "")
 							.replace(`[sudo] password for ${host.user}: \r`, "")
-							.replace('sudo: setrlimit(RLIMIT_CORE): Operation not permitted', "").replace("\n\n", "");
+							.replace('sudo: setrlimit(RLIMIT_CORE): Operation not permitted', "").replace("\n\n", "")
+							.replace('[sudo] Passwort für pi: \r', "")
+							.replace('[sudo] Passwort für pi: \n', "");
 					}
 				} else {
 					response = await connection.execCommand(cmd);
