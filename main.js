@@ -1334,7 +1334,8 @@ class LinuxControl extends utils.Adapter {
 				if (sentryInstance) {
 					if (!err.message.includes('Permission denied') && !err.message.includes('Keine Berechtigung') &&
 						!err.message.includes('No such file or directory') && !err.message.includes('Datei oder Verzeichnis nicht gefunden') &&
-						!err.message.includes('Not connected to server')) {
+						!err.message.includes('Not connected to server') &&
+						!err.message.includes('command not found')) {
 						err.message = `${logPrefix} ${err.message}`;
 						sentryInstance.getSentryObject().captureException(err);
 					}
