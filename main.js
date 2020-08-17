@@ -796,7 +796,7 @@ class LinuxControl extends utils.Adapter {
 					readyTimeout: parseInt(host.timeout) * 1000 || 5000
 				}
 
-				if (host.rsakey) {
+				if (host.rsakey && host.rsakey.length > 0) {
 					this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using rsa key for authentification`);
 					options.passphrase = password;
 					options.privateKey = host.rsakey;
