@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.6",
+        "version": "0.2.7",
         "news": {
+            "0.2.7": {
+                "en": "option to deactive polling for hosts added\nbug fixes for using sudo",
+                "de": "Option zum Deaktivieren der Abfrage für Hosts hinzugefügt\nFehlerbehebungen für die Verwendung von sudo",
+                "ru": "добавлена возможность деактивного опроса хостов\nисправления ошибок при использовании sudo",
+                "pt": "opção de pesquisa desativada para hosts adicionada\ncorreções de bugs para usar sudo",
+                "nl": "optie om polling voor hosts te deactiveren toegevoegd\nbugfixes voor het gebruik van sudo",
+                "fr": "option de désactivation de l'interrogation pour les hôtes ajoutée\ncorrections de bogues pour l'utilisation de sudo",
+                "it": "opzione per il polling disattivato per gli host aggiunta\ncorrezioni di bug per l'utilizzo di sudo",
+                "es": "opción para desactivar el sondeo para hosts agregada\ncorrecciones de errores para usar sudo",
+                "pl": "dodano opcję wyłączenia odpytywania dla hostów\npoprawki błędów w używaniu sudo",
+                "zh-cn": "对添加的主机停用轮询的选项\n使用sudo的错误修复"
+            },
             "0.2.6": {
                 "en": "Node-SSH bug fix",
                 "de": "Node-SSH-Fehlerbehebung",
