@@ -240,9 +240,9 @@ class LinuxControl extends utils.Adapter {
 
 							let response = undefined;
 							if (folder.fileNamePattern) {
-								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern}" -exec du -c {} + | tail -1 | awk '{printf $1${unitFaktor}}'`, logPrefix, undefined, true);
+								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern}" -exec du -c {} + | tail -1 | awk '{printf $1${unitFaktor}}'`, logPrefix, undefined, true);
 							} else {
-								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }' | tail -1`, logPrefix, undefined, true);
+								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }' | tail -1`, logPrefix, undefined, true);
 							}
 
 							if (response) {
@@ -255,7 +255,7 @@ class LinuxControl extends utils.Adapter {
 								await this.setStateAsync(id, parseFloat(result), true);
 
 								if (folder.countFiles) {
-									response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" | wc -l | tail -1`, logPrefix, undefined, true);
+									response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" | wc -l | tail -1`, logPrefix, undefined, true);
 
 									if (response) {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.files`;
@@ -267,7 +267,7 @@ class LinuxControl extends utils.Adapter {
 								}
 
 								if (folder.lastChange) {
-									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%Y %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}' | tail -1) && date +%s -r $tmp`, logPrefix, undefined, true);
+									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%Y %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}' | tail -1) && date +%s -r $tmp`, logPrefix, undefined, true);
 
 									if (response) {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.lastChange`;
@@ -525,9 +525,9 @@ class LinuxControl extends utils.Adapter {
 		try {
 			if (connection) {
 
-				let cmd = `${host.useSudo ? 'sudo ' : ''}shutdown 0`
+				let cmd = `${host.useSudo ? 'sudo -S ' : ''}shutdown 0`
 				if (restart) {
-					cmd = `${host.useSudo ? 'sudo ' : ''}shutdown -r 0`
+					cmd = `${host.useSudo ? 'sudo -S ' : ''}shutdown -r 0`
 				}
 
 				await this.sendCommand(connection, host, cmd, logPrefix, responseId);
@@ -547,7 +547,7 @@ class LinuxControl extends utils.Adapter {
 
 		try {
 			if (connection) {
-				let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}DEBIAN_FRONTEND=noninteractive apt-get upgrade -y`, logPrefix, responseId);
+				let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}DEBIAN_FRONTEND=noninteractive apt-get upgrade -y`, logPrefix, responseId);
 
 				if (response) {
 					await this.setStateAsync(responseId, response, true);
@@ -602,7 +602,7 @@ class LinuxControl extends utils.Adapter {
 			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('updates.all')) {
 				if (connection) {
 					// run apt update
-					let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo ' : ''}apt-get update`, logPrefix, responseId, true);
+					let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}apt-get update`, logPrefix, responseId, true);
 
 					if (response) {
 						response = await this.sendCommand(connection, host, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, true);
@@ -713,7 +713,7 @@ class LinuxControl extends utils.Adapter {
 				this.log.debug(`${logPrefix} send command: '${cmd}'`);
 
 				let response = undefined;
-				if (host.useSudo && cmd.includes('sudo ')) {
+				if (host.useSudo && cmd.includes('sudo')) {
 					// using sudo
 					let password = await this.getPassword(host);
 					response = await connection.execCommand(cmd, { execOptions: { pty: true }, stdin: `${password}\n` });
