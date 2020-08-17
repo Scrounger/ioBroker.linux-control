@@ -79,6 +79,10 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) option to deactive polling for hosts added
+* (Scrounger) bug fixes for using sudo
+
 ### 0.2.6 (2020-08-15)
 * (Scrounger) Node-SSH bug fix
 
