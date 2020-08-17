@@ -29,7 +29,7 @@ Controlling Linux devices and get information about your system
 |datapoint id|id under which all datapoints are to be stored|
 |IP|IP address of your linux device|
 |Port|SSH Port of your linux device|
-|polling interval|polling interval in minutes|
+|polling interval|polling interval in minutes.<br>To deatcivate the polling you can use '0' or leave it blank|
 |user|ssh user for login|
 |password / passpharse|ssh password for login or passpharse if you use a rsa key|
 |use Sudo| using sudo |

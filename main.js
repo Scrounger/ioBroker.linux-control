@@ -83,10 +83,14 @@ class LinuxControl extends utils.Adapter {
 
 			// interval using timeout
 			if (requestInterval) requestInterval = null;
-			requestInterval = setTimeout(() => {
-				this.refreshHost(host);
-			}, host.interval * 60000);
 
+			if (host.interval && host.interval > 0) {
+				requestInterval = setTimeout(() => {
+					this.refreshHost(host);
+				}, host.interval * 60000);
+			} else {
+				this.log.info(`polling interval is deactivated for ${host.name} (${host.ip}:${host.port})`);
+			}
 		} else {
 			this.log.debug(`getting data from ${host.name} (${host.ip}:${host.port}) -> not enabled!`);
 		}
@@ -1328,9 +1332,9 @@ class LinuxControl extends utils.Adapter {
 			if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
 				const sentryInstance = this.getPluginInstance('sentry');
 				if (sentryInstance) {
-					if (!err.message.includes('Permission denied') && !err.message.includes('Keine Berechtigung') && 
-					!err.message.includes('No such file or directory') && !err.message.includes('Datei oder Verzeichnis nicht gefunden') && 
-					!err.message.includes('Not connected to server')) {
+					if (!err.message.includes('Permission denied') && !err.message.includes('Keine Berechtigung') &&
+						!err.message.includes('No such file or directory') && !err.message.includes('Datei oder Verzeichnis nicht gefunden') &&
+						!err.message.includes('Not connected to server')) {
 						err.message = `${logPrefix} ${err.message}`;
 						sentryInstance.getSentryObject().captureException(err);
 					}
