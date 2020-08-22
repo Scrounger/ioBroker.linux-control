@@ -42,6 +42,9 @@ Controlling Linux devices and get information about your system
 The adapter creates predefined datapoints with information and the possibility to control the Linux device. These can be selected here.
 In addition, for each individual host, individual data points or entire channels can be placed on the blacklist by drag & drop so that they are not created for the host.
 
+Note if you would like to add the whole channel to the blacklist, you must drag & drop the channel node to the blacklist. Only then the whole channel will be ignored - see sreenshot below:
+![Datapoints](docs/en/img/all_to_blacklist.gif)
+
 **Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
 
 ### Services
@@ -49,10 +52,14 @@ In addition, for each individual host, individual data points or entire channels
 
 If the retrieval of services under datapoints is activated, you can define here per host for which services only information should be retrieved.
 
+**Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
+
 ### Folders
 ![Folders](docs/en/img/folders.png)
 
 Here you can retrieve information about the size of folders, count of the files included in these folders and the timestamp of the last change in this folder.
+
+**Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
 
 |setting|description|
 |-------|-----------|
