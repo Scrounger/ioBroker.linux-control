@@ -89,6 +89,7 @@ If you use a user that needs `sudo` then you have to add `sudo -S` to your own c
 -->
 
 ### __WORK IN PROGRESS__
+* (Scrounger) userCommand: individual polling intervals added
 * (Scrounger) userCommand: bug fix if sudo is used
 * (Scrounger) refresh services info after using command
 * (Scrounger) services command: bug fix for using sudo

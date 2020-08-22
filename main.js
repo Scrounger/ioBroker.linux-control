@@ -18,6 +18,7 @@ const { exception } = require('console');
 let language = 'en';
 let _ = null;
 var requestInterval;
+var requestIntervalUserCommand;
 
 class LinuxControl extends utils.Adapter {
 
@@ -165,12 +166,11 @@ class LinuxControl extends utils.Adapter {
 							} else {
 								if (startUp) {
 									// adapter first run -> execute userCommands with diffrent polling interval
-									this.log.warn(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
+									this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
 
 									await this.userCommandExecute(connection, host, cmd);
-
 								} else {
-									this.log.warn(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
+									this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
 								}
 							}
 						} catch (err) {
@@ -197,7 +197,16 @@ class LinuxControl extends utils.Adapter {
 	async userCommandExecute(connection, host, cmd) {
 		let logPrefix = `[userCommandExecute] ${host.name} (${host.ip}:${host.port}):`;
 
+		let establishedNewConnection = false;
+
 		try {
+			if (connection === undefined && cmd.interval && cmd.interval > 0) {
+				establishedNewConnection = true;
+
+				this.log.debug(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> create connection`);
+				connection = await this.getConnection(host);
+			}
+
 			if (connection) {
 				let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
 
@@ -234,6 +243,22 @@ class LinuxControl extends utils.Adapter {
 				} else {
 					await this.createObjectButton(id, cmd.description);
 					this.subscribeStates(id);
+				}
+
+				if (establishedNewConnection) {
+					this.log.debug(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> close connection`);
+					connection.dispose();
+				}
+			}
+
+			if (cmd.interval && cmd.interval > 0) {
+				// interval using timeout
+				if (requestIntervalUserCommand) requestIntervalUserCommand = null;
+
+				if (cmd.interval && cmd.interval > 0) {
+					requestIntervalUserCommand = setTimeout(() => {
+						this.userCommandExecute(undefined, host, cmd);
+					}, cmd.interval * 1000);
 				}
 			}
 		} catch (err) {
@@ -930,6 +955,7 @@ class LinuxControl extends utils.Adapter {
 	onUnload(callback) {
 		try {
 			clearTimeout(requestInterval);
+			clearTimeout(requestIntervalUserCommand);
 			this.log.info('cleaned everything up...');
 			callback();
 		} catch (e) {
