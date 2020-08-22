@@ -79,6 +79,7 @@ Here you can retrieve information about the size of folders, count of the files 
 Here, very individual commands can be defined and then written to your own defined data points.
 It is important that the retrieved data is transmitted in the correct type! The type must then be configured accordingly.
 
+If you use a user that needs `sudo` then you have to add `sudo -S` to your own command!
 
 ## Changelog
 
@@ -88,6 +89,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
 -->
 
 ### __WORK IN PROGRESS__
+* (Scrounger) userCommand: bug fix if sudo is used
 * (Scrounger) refresh services info after using command
 * (Scrounger) services command: bug fix for using sudo
 

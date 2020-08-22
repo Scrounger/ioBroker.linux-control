@@ -717,7 +717,7 @@ class LinuxControl extends utils.Adapter {
 				this.log.debug(`${logPrefix} send command: '${cmd}'`);
 
 				let response = undefined;
-				if (host.useSudo && cmd.includes('sudo')) {
+				if (host.useSudo && cmd.includes('sudo -S')) {
 					// using sudo
 					let password = await this.getPassword(host);
 					response = await connection.execCommand(cmd, { execOptions: { pty: true }, stdin: `${password}\n` });
@@ -729,6 +729,9 @@ class LinuxControl extends utils.Adapter {
 							.replace('[sudo] Passwort für pi: \r', "")
 							.replace('[sudo] Passwort für pi: \n', "");
 					}
+				} else if (cmd.includes('sudo') && !cmd.includes('sudo -S')) {
+					this.errorHandling(new ResponseError(`${logPrefix} you must use 'sudo -S' instead of 'sudo' only!`), logPrefix, responseErrorSendToSentry);
+					return undefined;
 				} else {
 					response = await connection.execCommand(cmd);
 				}
@@ -1332,7 +1335,7 @@ class LinuxControl extends utils.Adapter {
 			if (err.message.includes('Permission denied') || err.message.includes('Keine Berechtigung')) {
 				this.log.error(`Permisson denied. Check the permission rights of your user on your linux devices! Perhaps you need to use 'sudo'?`);
 			}
-			this.log.error(`${logPrefix} response error: ${err.message}, stack: ${err.stack}`);
+			this.log.error(`${logPrefix} response error: ${err.message.replace(logPrefix, '')}, stack: ${err.stack}`);
 		} else {
 			this.log.error(`${logPrefix} error: ${err.message}, stack: ${err.stack}`);
 		}
