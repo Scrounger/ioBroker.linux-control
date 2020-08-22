@@ -318,9 +318,11 @@ function createCommandsTable(data, hosts, onChange) {
 												style="width: 10%; text-align: center;" data-default=""
 												data-type="select" data-style=""
 												data-options="${hostNames.join(";")}">${_("Host")}</th>
-											<th data-name="name" style="width: 15%" class="translate">${_("Name")}</th>
+											<th data-name="name" style="width: 10%" class="translate">${_("Name")}</th>
+											<th data-name="interval" data-type="number" data-default="0"
+											style="width: 5%; text-align: center;" class="translate">${_("pollingInterval")}</th>											
 											<th data-name="description" style="width: auto" class="translate">${_("Description")}</th>
-											<th data-name="command" style="width: 30%" class="translate">${_("Command")}</th>
+											<th data-name="command" style="width: 27%" class="translate">${_("Command")}</th>
 											<th data-name="type" class="translate"
 												style="width: 10%; text-align: center;" data-default="string"
 												data-type="select" data-style=""
