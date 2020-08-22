@@ -46,7 +46,7 @@ class LinuxControl extends utils.Adapter {
 			await this.setSelectableHosts()
 
 			for (const host of this.config.hosts) {
-				await this.refreshHost(host);
+				await this.refreshHost(host, true);
 			}
 
 		} catch (err) {
@@ -57,7 +57,7 @@ class LinuxControl extends utils.Adapter {
 	/**
 	 * @param {object} host
 	 */
-	async refreshHost(host) {
+	async refreshHost(host, startUp = false) {
 		if (host.enabled) {
 			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
@@ -74,7 +74,7 @@ class LinuxControl extends utils.Adapter {
 				await this.needrestart(connection, host);
 				await this.folderSizes(connection, host);
 
-				await this.userCommand(connection, host);
+				await this.userCommand(connection, host, startUp);
 
 				connection.dispose();
 
@@ -145,72 +145,101 @@ class LinuxControl extends utils.Adapter {
 	 * @param {NodeSSH | undefined} connection
 	 * @param {object} host
 	 */
-	async userCommand(connection, host) {
+	async userCommand(connection, host, startUp = false) {
 		let logPrefix = `[userCommand] ${host.name} (${host.ip}:${host.port}):`;
 
 		try {
-			if (connection) {
-				// @ts-ignore
-				let commandsList = this.config.commands;
+			/** @type {any[]} */
+			let commandsList = this.config.commands;
 
-				if (commandsList.length > 0) {
-					let commands = commandsList.filter(x => {
-						return x.host === host.name;
-					});
+			if (commandsList.length > 0) {
+				let commands = commandsList.filter(x => {
+					return x.host === host.name;
+				});
 
-					for (const cmd of commands) {
-						if (cmd.enabled) {
-							try {
+				for (const cmd of commands) {
+					if (cmd.enabled) {
+						try {
+							if (!cmd.interval || cmd.interval === 0) {
+								await this.userCommandExecute(connection, host, cmd);
+							} else {
+								if (startUp) {
+									// adapter first run -> execute userCommands with diffrent polling interval
+									this.log.warn(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
 
-								let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
+									await this.userCommandExecute(connection, host, cmd);
 
-								if (cmd.type !== 'button') {
-									let response = await this.sendCommand(connection, host, `${cmd.command}`, `[userCommand] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
-
-									if (response) {
-										if (cmd.type === 'string') {
-											await this.createObjectString(id, cmd.description);
-											await this.setStateAsync(id, response, true);
-										} else if (cmd.type === 'number') {
-											await this.createObjectNumber(id, cmd.description, cmd.unit);
-											await this.setStateAsync(id, parseFloat(response), true);
-										} else if (cmd.type === 'boolean') {
-											await this.createObjectBoolean(id, cmd.description);
-											await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
-										} else if (cmd.type === 'array') {
-											await this.createObjectArray(id, cmd.description);
-											await this.setStateAsync(id, JSON.parse(response), true);
-										}
-									} else {
-										if (await this.getObjectAsync(id)) {
-											if (cmd.type === 'string') {
-												await this.setStateAsync(id, "", true);
-											} else if (cmd.type === 'number') {
-												await this.setStateAsync(id, 0, true);
-											} else if (cmd.type === 'boolean') {
-												await this.setStateAsync(id, false, true);
-											} else if (cmd.type === 'array') {
-												await this.setStateAsync(id, null, true);
-											}
-										}
-									}
 								} else {
-									await this.createObjectButton(id, cmd.description);
-									this.subscribeStates(id);
+									this.log.warn(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
 								}
-							} catch (err) {
-								this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
-
-								// No Sentry error report for user commands
-								this.errorHandling(err, logPrefix);
 							}
-						} else {
-							this.log.debug(`${logPrefix} datapoint-id: '${cmd.name}', description: '${cmd.description}' -> is not enabled!`);
+						} catch (err) {
+							this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
+
+							// No Sentry error report for user commands
+							this.errorHandling(err, logPrefix);
 						}
+					} else {
+						this.log.debug(`${logPrefix} datapoint-id: '${cmd.name}', description: '${cmd.description}' -> is not enabled!`);
 					}
 				}
 			}
 		} catch (err) {
+			this.errorHandling(err, logPrefix);
+		}
+	}
+
+	/**
+	 * @param {NodeSSH | undefined} connection
+	 * @param {object} host
+	 * @param {object} cmd
+	 */
+	async userCommandExecute(connection, host, cmd) {
+		let logPrefix = `[userCommandExecute] ${host.name} (${host.ip}:${host.port}):`;
+
+		try {
+			if (connection) {
+				let id = `${host.name.replace(' ', '_')}.${cmd.name}`;
+
+				if (cmd.type !== 'button') {
+					let response = await this.sendCommand(connection, host, `${cmd.command}`, `[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}):`);
+
+					if (response) {
+						if (cmd.type === 'string') {
+							await this.createObjectString(id, cmd.description);
+							await this.setStateAsync(id, response, true);
+						} else if (cmd.type === 'number') {
+							await this.createObjectNumber(id, cmd.description, cmd.unit);
+							await this.setStateAsync(id, parseFloat(response), true);
+						} else if (cmd.type === 'boolean') {
+							await this.createObjectBoolean(id, cmd.description);
+							await this.setStateAsync(id, (response === 'true' || parseInt(response) === 1) ? true : false, true);
+						} else if (cmd.type === 'array') {
+							await this.createObjectArray(id, cmd.description);
+							await this.setStateAsync(id, JSON.parse(response), true);
+						}
+					} else {
+						if (await this.getObjectAsync(id)) {
+							if (cmd.type === 'string') {
+								await this.setStateAsync(id, "", true);
+							} else if (cmd.type === 'number') {
+								await this.setStateAsync(id, 0, true);
+							} else if (cmd.type === 'boolean') {
+								await this.setStateAsync(id, false, true);
+							} else if (cmd.type === 'array') {
+								await this.setStateAsync(id, null, true);
+							}
+						}
+					}
+				} else {
+					await this.createObjectButton(id, cmd.description);
+					this.subscribeStates(id);
+				}
+			}
+		} catch (err) {
+			this.log.error(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}`);
+
+			// No Sentry error report for user commands
 			this.errorHandling(err, logPrefix);
 		}
 	}
