@@ -73,7 +73,7 @@ Here you can retrieve information about the size of folders, count of the files 
 |count of files|create datapoint for count of files|
 |last change|create datapoint for timestamp of the last change in this folder|
 
-### Custom Commands
+### My Commands
 ![Custom Commands](docs/en/img/myCommands.png)
 
 Here, very individual commands can be defined and then written to your own defined data points.
