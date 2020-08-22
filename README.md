@@ -43,6 +43,7 @@ The adapter creates predefined datapoints with information and the possibility t
 In addition, for each individual host, individual data points or entire channels can be placed on the blacklist by drag & drop so that they are not created for the host.
 
 Note if you would like to add the whole channel to the blacklist, you must drag & drop the channel node to the blacklist. Only then the whole channel will be ignored - see sreenshot below:
+
 ![Datapoints](docs/en/img/all_to_blacklist.gif)
 
 **Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
