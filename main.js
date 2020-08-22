@@ -990,8 +990,11 @@ class LinuxControl extends utils.Adapter {
 						let logPrefix = `[sendCommand restart] ${host.name} (${host.ip}:${host.port}):`;
 
 						if (connection) {
-							await this.sendCommand(connection, host, `systemctl restart ${serviceName}`, logPrefix);
+							await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}systemctl restart ${serviceName}`, logPrefix);
 							await this.servicesInfo(connection, host, serviceName);
+
+							await this.servicesInfo(connection, host);
+
 							connection.dispose();
 						}
 					} else if (hostIdSplitted[hostIdSplitted.length - 1] === 'start') {
@@ -999,8 +1002,11 @@ class LinuxControl extends utils.Adapter {
 						let logPrefix = `[sendCommand start] ${host.name} (${host.ip}:${host.port}):`;
 
 						if (connection) {
-							await this.sendCommand(connection, host, `systemctl start ${serviceName}`, logPrefix);
+							await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}systemctl start ${serviceName}`, logPrefix);
 							await this.servicesInfo(connection, host, serviceName);
+
+							await this.servicesInfo(connection, host);
+
 							connection.dispose();
 						}
 					} else if (hostIdSplitted[hostIdSplitted.length - 1] === 'stop') {
@@ -1008,8 +1014,11 @@ class LinuxControl extends utils.Adapter {
 						let logPrefix = `[sendCommand stop] ${host.name} (${host.ip}:${host.port}):`;
 
 						if (connection) {
-							await this.sendCommand(connection, host, `systemctl stop ${serviceName}`, logPrefix);
+							await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}systemctl stop ${serviceName}`, logPrefix);
 							await this.servicesInfo(connection, host, serviceName);
+
+							await this.servicesInfo(connection, host);
+
 							connection.dispose();
 						}
 					}

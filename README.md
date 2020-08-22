@@ -79,6 +79,10 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) refresh services info after using command
+* (Scrounger) services command: bug fix for using sudo
+
 ### 0.2.7 (2020-08-17)
 * (Scrounger) option to deactive polling for hosts added
 * (Scrounger) bug fixes for using sudo
