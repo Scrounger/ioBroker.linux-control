@@ -307,9 +307,9 @@ class LinuxControl extends utils.Adapter {
 
 							let response = undefined;
 							if (folder.fileNamePattern) {
-								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern}" -exec du -c {} + | tail -1 | awk '{printf $1${unitFaktor}}'`, logPrefix, undefined, true);
+								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern}" -exec du -c {} + | tail -1 | awk '{printf $1${unitFaktor}}'`, logPrefix, undefined, false);
 							} else {
-								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, true);
+								response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}du -sk ${folder.path} | awk '{ print $1 ${unitFaktor} }'`, logPrefix, undefined, false);
 							}
 
 							if (response) {
@@ -322,7 +322,7 @@ class LinuxControl extends utils.Adapter {
 								await this.setStateAsync(id, parseFloat(result), true);
 
 								if (folder.countFiles) {
-									response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" | wc -l`, logPrefix, undefined, true);
+									response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" | wc -l`, logPrefix, undefined, false);
 
 									if (response) {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.files`;
@@ -334,7 +334,7 @@ class LinuxControl extends utils.Adapter {
 								}
 
 								if (folder.lastChange) {
-									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%Y %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}') && date +%s -r $tmp`, logPrefix, undefined, true);
+									response = await this.sendCommand(connection, host, `tmp=$(${host.useSudo ? 'sudo -S ' : ''}find ${folder.path} -name "${folder.fileNamePattern ? folder.fileNamePattern : '*'}" -type f -exec stat -c "%Y %n" -- {} \\; | sort -nr | head -n1 | awk '{print $2}') && date +%s -r $tmp`, logPrefix, undefined, false);
 
 									if (response) {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.lastChange`;
