@@ -669,10 +669,10 @@ class LinuxControl extends utils.Adapter {
 			if (this.config.whitelist && this.config.whitelist["updates"] && this.config.whitelist["updates"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('updates.all')) {
 				if (connection) {
 					// run apt update
-					let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}apt-get update`, logPrefix, responseId, true);
+					let response = await this.sendCommand(connection, host, `${host.useSudo ? 'sudo -S ' : ''}apt-get update`, logPrefix, responseId, false);
 
 					if (response) {
-						response = await this.sendCommand(connection, host, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, true);
+						response = await this.sendCommand(connection, host, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, false);
 
 						let parsed = await csvToJson({
 							noheader: true,
@@ -730,7 +730,7 @@ class LinuxControl extends utils.Adapter {
 					let id = `${host.name.replace(' ', '_')}.updates.lastUpdate`;
 					// @ts-ignore
 					if (this.config.whitelist["updates"].includes("lastUpdate") && !this.config.blacklistDatapoints[host.name].includes(`updates.lastUpdate`)) {
-						response = await this.sendCommand(connection, host, "dpkg-query -f '${db-fsys:Last-Modified}\n' -W | sort -nr | head -1", logPrefix, responseId, true);
+						response = await this.sendCommand(connection, host, "dpkg-query -f '${db-fsys:Last-Modified}\n' -W | sort -nr | head -1", logPrefix, responseId, false);
 						if (response) {
 							let timestamp = parseInt(response) * 1000;
 
@@ -740,7 +740,7 @@ class LinuxControl extends utils.Adapter {
 							await this.setStateAsync(id, timestamp, true);
 						} else {
 							// Fallback method
-							response = await this.sendCommand(connection, host, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, true);
+							response = await this.sendCommand(connection, host, "grep installed /var/log/dpkg.log | tail -1 | cut -c1-19", logPrefix, responseId, false);
 							if (response) {
 								let timestamp = Date.parse(response);
 
