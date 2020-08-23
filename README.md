@@ -100,7 +100,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.3.0 (2020-08-23)
 * (Scrounger) button to manual refresh a single host added
 * (Scrounger) userCommand: ignore polling interval if type is button
 * (Scrounger) userCommand: individual polling intervals added

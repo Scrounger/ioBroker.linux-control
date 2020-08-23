@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.2.7",
+        "version": "0.3.0",
         "news": {
+            "0.3.0": {
+                "en": "button to manual refresh a single host added\nuserCommand: ignore polling interval if type is button\nuserCommand: individual polling intervals added\nuserCommand: bug fix if sudo is used\nrefresh services info after using command\nservices command: bug fix for using sudo",
+                "de": "Schaltfläche zum manuellen Aktualisieren eines einzelnen hinzugefügten Hosts\nuserCommand: Abrufintervall ignorieren, wenn Typ die Schaltfläche ist\nuserCommand: Einzelne Abfrageintervalle hinzugefügt\nuserCommand: Fehlerbehebung bei Verwendung von sudo\nAktualisieren Sie die Dienstinformationen, nachdem Sie den Befehl verwendet haben\nBefehl services: Fehlerbehebung für die Verwendung von sudo",
+                "ru": "кнопка для ручного обновления добавленного отдельного хоста\nuserCommand: игнорировать интервал опроса, если тип - кнопка\nuserCommand: добавлены индивидуальные интервалы опроса\nuserCommand: исправление ошибки при использовании sudo\nобновить информацию об услугах после использования команды\nкоманда services: исправление ошибки при использовании sudo",
+                "pt": "botão para atualizar manualmente um único host adicionado\nuserCommand: ignora o intervalo de sondagem se o tipo for botão\nuserCommand: intervalos de sondagem individuais adicionados\nuserCommand: correção de bug se sudo for usado\natualize as informações dos serviços após usar o comando\nComando de serviços: correção de bug para usar sudo",
+                "nl": "knop om handmatig een enkele toegevoegde host te vernieuwen\nuserCommand: negeer het polling-interval als het type knop is\nuserCommand: individuele polling-intervallen toegevoegd\nuserCommand: bugfix als sudo wordt gebruikt\nvernieuw de informatie over services na het gebruik van de opdracht\nservices-opdracht: bugfix voor het gebruik van sudo",
+                "fr": "bouton pour actualiser manuellement un seul hôte ajouté\nuserCommand: ignore l'intervalle d'interrogation si le type est bouton\nuserCommand: ajout d'intervalles d'interrogation individuels\nuserCommand: correction de bogue si sudo est utilisé\nactualiser les informations sur les services après avoir utilisé la commande\ncommande services: correction de bogue pour l'utilisation de sudo",
+                "it": "pulsante per aggiornare manualmente un singolo host aggiunto\nuserCommand: ignora l'intervallo di polling se il tipo è pulsante\nuserCommand: aggiunti intervalli di polling individuali\nuserCommand: correzione di bug se viene utilizzato sudo\naggiorna le informazioni sui servizi dopo aver usato il comando\ncomando services: correzione di bug per l'utilizzo di sudo",
+                "es": "botón para actualizar manualmente un solo host agregado\nuserCommand: ignora el intervalo de sondeo si el tipo es botón\nuserCommand: se agregaron intervalos de sondeo individuales\nuserCommand: corrección de errores si se usa sudo\nactualizar la información de los servicios después de usar el comando\ncomando de servicios: corrección de errores para usar sudo",
+                "pl": "Przycisk ręcznego odświeżania dodanego pojedynczego hosta\nuserCommand: ignoruj interwał sondowania, jeśli typ to przycisk\nuserCommand: dodano indywidualne interwały odpytywania\nuserCommand: poprawka błędu, jeśli używane jest sudo\nodśwież informacje o usługach po użyciu polecenia\npolecenie services: poprawka błędu w używaniu sudo",
+                "zh-cn": "按钮以手动刷新添加的单个主机\nuserCommand：如果类型为button，则忽略轮询间隔\nuserCommand：添加了单个轮询间隔\nuserCommand：如果使用sudo的错误修复\n使用命令后刷新服务信息\nservices命令：使用sudo的错误修复"
+            },
             "0.2.7": {
                 "en": "option to deactive polling for hosts added\nbug fixes for using sudo",
                 "de": "Option zum Deaktivieren der Abfrage für Hosts hinzugefügt\nFehlerbehebungen für die Verwendung von sudo",
