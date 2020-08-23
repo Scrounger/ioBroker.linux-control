@@ -26,6 +26,7 @@ Controlling Linux devices and get information about your system
 
 |setting|description|
 |-------|-----------|
+|enabled|enabled or disable updating of the host|
 |datapoint id|id under which all datapoints are to be stored|
 |IP|IP address of your linux device|
 |Port|SSH Port of your linux device|
@@ -64,6 +65,7 @@ Here you can retrieve information about the size of folders, count of the files 
 
 |setting|description|
 |-------|-----------|
+|enabled|enabled or disable updating of the folder|
 |Host|Host which should be used|
 |datapoint id|id under which all datapoints are to be stored|
 |Path|path of the folder|
@@ -79,7 +81,17 @@ Here you can retrieve information about the size of folders, count of the files 
 Here, very individual commands can be defined and then written to your own defined data points.
 It is important that the retrieved data is transmitted in the correct type! The type must then be configured accordingly.
 
-If you use a user that needs `sudo` then you have to add `sudo -S` to your own command!
+|setting|description|
+|-------|-----------|
+|enabled|enabled or disable updating of the command|
+|Host|Host which should be used|
+|datapoint id|id under which datapoints are to be stored|
+|polling interval|diffrent polling interval for the command only. For deactivating use `0` or leave the field blank, then the polling interval from the host is used|
+|description|description / name of the datapoint|
+|command|command that should be used <br><br>If you use a user that needs `sudo` then you have to add `sudo -S` to your own command!|
+|type|type of the datapoint|
+|unit|unit of the datapoint|
+
 
 ## Changelog
 
@@ -89,6 +101,7 @@ If you use a user that needs `sudo` then you have to add `sudo -S` to your own c
 -->
 
 ### __WORK IN PROGRESS__
+* (Scrounger) userCommand: ignore polling interval if type is button
 * (Scrounger) userCommand: individual polling intervals added
 * (Scrounger) userCommand: bug fix if sudo is used
 * (Scrounger) refresh services info after using command

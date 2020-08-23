@@ -161,16 +161,22 @@ class LinuxControl extends utils.Adapter {
 				for (const cmd of commands) {
 					if (cmd.enabled) {
 						try {
-							if (!cmd.interval || cmd.interval === 0) {
+							if ((!cmd.interval || cmd.interval === 0) && cmd.type !== 'button') {
 								await this.userCommandExecute(connection, host, cmd);
 							} else {
 								if (startUp) {
 									// adapter first run -> execute userCommands with diffrent polling interval
-									this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
+									if (cmd.type !== 'button') {
+										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
+									} else {
+										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: create button`);
+									}
 
 									await this.userCommandExecute(connection, host, cmd);
 								} else {
-									this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
+									if (cmd.type !== 'button') {
+										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
+									}
 								}
 							}
 						} catch (err) {
@@ -200,7 +206,7 @@ class LinuxControl extends utils.Adapter {
 		let establishedNewConnection = false;
 
 		try {
-			if (connection === undefined && cmd.interval && cmd.interval > 0) {
+			if (connection === undefined && cmd.interval && cmd.interval > 0 && cmd.type !== 'button') {
 				establishedNewConnection = true;
 
 				this.log.debug(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> create connection`);
@@ -251,7 +257,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 
-			if (cmd.interval && cmd.interval > 0) {
+			if (cmd.interval && cmd.interval > 0 && cmd.type !== 'button') {
 				// interval using timeout
 				if (requestIntervalUserCommand) requestIntervalUserCommand = null;
 
