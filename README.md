@@ -100,6 +100,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) datapoint info lastRefresh added
+
 ### 0.3.0 (2020-08-23)
 * (Scrounger) button to manual refresh a single host added
 * (Scrounger) userCommand: ignore polling interval if type is button

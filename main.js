@@ -82,6 +82,10 @@ class LinuxControl extends utils.Adapter {
 
 				connection.dispose();
 
+				if (await this.getObjectAsync(`${host.name}.info.lastRefresh`)) {
+					await this.setStateAsync(`${host.name}.info.lastRefresh`, new Date().getTime(), true);
+				}
+
 				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
 			}
 
@@ -123,11 +127,15 @@ class LinuxControl extends utils.Adapter {
 							await this.createObjectString(id, propObj.name);
 							await this.setStateAsync(id, false, true);
 						}
-					}
 
-					if (propObj.id === "ip") {
+					} else if (propObj.id === "ip") {
 						await this.createObjectString(id, propObj.name);
 						await this.setStateAsync(id, host.ip, true);
+
+					} else {
+						if (propObj.type === 'number') {
+							await this.createObjectNumber(id, propObj.name);
+						}
 					}
 
 				} else {
@@ -341,7 +349,7 @@ class LinuxControl extends utils.Adapter {
 
 										let timestamp = parseInt(response) * 1000;
 
-										await this.createObjectNumber(id, _('last change'), undefined);
+										await this.createObjectNumber(id, _('last change'));
 
 										this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 										await this.setStateAsync(id, timestamp, true);
@@ -405,7 +413,7 @@ class LinuxControl extends utils.Adapter {
 										if (obj.type === 'number') {
 											this.log.debug(`${logPrefix} ${id}: ${parseInt(parsed[0][obj.id])}`);
 
-											await this.createObjectNumber(id, _(obj.name), '');
+											await this.createObjectNumber(id, _(obj.name));
 											await this.setStateAsync(id, parseInt(parsed[0][obj.id]), true);
 										}
 									}
@@ -736,7 +744,7 @@ class LinuxControl extends utils.Adapter {
 
 							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
-							await this.createObjectNumber(id, `lastUpdate`, '');
+							await this.createObjectNumber(id, `lastUpdate`);
 							await this.setStateAsync(id, timestamp, true);
 						} else {
 							// Fallback method
@@ -746,7 +754,7 @@ class LinuxControl extends utils.Adapter {
 
 								this.log.debug(`${logPrefix} ${id}: Fallback method: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
-								await this.createObjectNumber(id, `lastUpdate`, '');
+								await this.createObjectNumber(id, `lastUpdate`);
 								await this.setStateAsync(id, timestamp, true);
 							}
 						}
@@ -1262,7 +1270,7 @@ class LinuxControl extends utils.Adapter {
 	* @param {string} name
 	* @param {any} unit
 	*/
-	async createObjectNumber(id, name, unit) {
+	async createObjectNumber(id, name, unit = undefined) {
 		let obj = await this.getObjectAsync(id);
 
 		if (obj) {

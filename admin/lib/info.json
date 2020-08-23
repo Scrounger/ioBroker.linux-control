@@ -8,5 +8,10 @@
         "id": "ip",
         "name": "ip_address",
         "type": "string"
+    },
+    {
+        "id": "lastRefresh",
+        "name": "lastRefresh",
+        "type": "number"
     }
 ]
