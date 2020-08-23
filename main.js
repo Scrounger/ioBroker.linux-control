@@ -62,6 +62,9 @@ class LinuxControl extends utils.Adapter {
 		if (host.enabled) {
 			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
 
+			await this.createObjectButton(`${host.name}.refresh`, _('refreshHost'));
+			this.subscribeStates(`${host.name}.refresh`);
+
 			let connection = await this.getConnection(host);
 
 			await this.getInfos(connection, host);
@@ -1123,6 +1126,17 @@ class LinuxControl extends utils.Adapter {
 				} else {
 					this.log.warn(`execute command: no host is selected!`);
 					await this.reportResponse(responseId, 'no host is selected!');
+				}
+			} else if (id.includes(`.refresh`)) {
+				let hostIdSplitted = id.replace(`${this.namespace}.`, '').split('.');
+
+				/** @type {object} */
+				let host = this.getHostById(hostIdSplitted[0]);
+
+				if (host) {
+					if (id.includes(`${host.name}.refresh`)) {
+						await this.refreshHost(host);
+					}
 				}
 			} else {
 				// user buttons

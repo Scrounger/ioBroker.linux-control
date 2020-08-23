@@ -925,6 +925,18 @@ const dictionary = {
 		"es": "ultimo cambio",
 		"pl": "Ostatnia zmiana",
 		"zh-cn": "最后一次变更"
+	},
+	"refreshHost": {
+		"en": "refresh host",
+		"de": "Host aktualisieren",
+		"ru": "обновить хост",
+		"pt": "atualizar host",
+		"nl": "vernieuw de host",
+		"fr": "rafraîchir l'hôte",
+		"it": "aggiorna host",
+		"es": "actualizar host",
+		"pl": "odśwież hosta",
+		"zh-cn": "刷新主机"
 	}
 };
 
