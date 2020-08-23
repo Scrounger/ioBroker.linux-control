@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.0",
+        "version": "0.3.1",
         "news": {
+            "0.3.1": {
+                "en": "datapoint info lastRefresh added",
+                "de": "Datenpunktinfo lastRefresh hinzugefügt",
+                "ru": "добавлена информация о точке данных lastRefresh",
+                "pt": "informação do datapoint lastRefresh adicionada",
+                "nl": "datapunt info lastRefresh toegevoegd",
+                "fr": "info de point de données lastRefresh ajouté",
+                "it": "informazioni datapoint lastRefresh aggiunte",
+                "es": "información del punto de datos lastRefresh agregado",
+                "pl": "Dodano informacje o punkcie danych lastRefresh",
+                "zh-cn": "数据点信息lastRefresh已添加"
+            },
             "0.3.0": {
                 "en": "button to manual refresh a single host added\nuserCommand: ignore polling interval if type is button\nuserCommand: individual polling intervals added\nuserCommand: bug fix if sudo is used\nrefresh services info after using command\nservices command: bug fix for using sudo",
                 "de": "Schaltfläche zum manuellen Aktualisieren eines einzelnen hinzugefügten Hosts\nuserCommand: Abrufintervall ignorieren, wenn Typ die Schaltfläche ist\nuserCommand: Einzelne Abfrageintervalle hinzugefügt\nuserCommand: Fehlerbehebung bei Verwendung von sudo\nAktualisieren Sie die Dienstinformationen, nachdem Sie den Befehl verwendet haben\nBefehl services: Fehlerbehebung für die Verwendung von sudo",
