@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.1",
+        "version": "0.3.2",
         "news": {
+            "0.3.2": {
+                "en": "performance optimizations\nFixed some errors reported via Sentry",
+                "de": "Leistungsoptimierungen\nEinige über Sentry gemeldete Fehler wurden behoben",
+                "ru": "оптимизация производительности\nИсправлены некоторые ошибки, о которых сообщалось через Sentry.",
+                "pt": "otimizações de desempenho\nCorrigidos alguns erros relatados via Sentry",
+                "nl": "prestatie-optimalisaties\nEnkele fouten opgelost die via Sentry werden gerapporteerd",
+                "fr": "optimisations des performances\nCorrection de certaines erreurs signalées via Sentry",
+                "it": "ottimizzazioni delle prestazioni\nRisolti alcuni errori segnalati tramite Sentry",
+                "es": "optimizaciones de rendimiento\nSe corrigieron algunos errores informados a través de Sentry",
+                "pl": "optymalizacje wydajności\nNaprawiono niektóre błędy zgłaszane przez Sentry",
+                "zh-cn": "性能优化\n修复了通过哨兵报告的一些错误"
+            },
             "0.3.1": {
                 "en": "datapoint info lastRefresh added",
                 "de": "Datenpunktinfo lastRefresh hinzugefügt",
