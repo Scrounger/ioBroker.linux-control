@@ -102,6 +102,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
 
 ### __WORK IN PROGRESS__
 * (Scrounger) performance optimizations
+* (Scrounger) Fixed some errors reported via Sentry
 
 ### 0.3.1 (2020-08-23)
 * (Scrounger) datapoint info lastRefresh added
