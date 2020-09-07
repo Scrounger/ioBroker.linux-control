@@ -540,7 +540,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["distribution"] && this.config.whitelist["distribution"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('distribution.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, host, "cat /etc/os-release", logPrefix, undefined, true);
+					let response = await this.sendCommand(connection, host, "cat /etc/os-release", logPrefix, undefined, false);
 
 					if (response) {
 
@@ -1465,6 +1465,7 @@ class LinuxControl extends utils.Adapter {
 						!err.message.includes('No such file or directory') && !err.message.includes('Datei oder Verzeichnis nicht gefunden') &&
 						!err.message.includes('Not connected to server') &&
 						!err.message.includes('command not found')) {
+
 						err.message = `${logPrefix} ${err.message}`;
 						sentryInstance.getSentryObject().captureException(err);
 					}
