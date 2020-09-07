@@ -20,6 +20,8 @@ let _ = null;
 var requestInterval;
 var requestIntervalUserCommand;
 
+this.isAdapterStart = false;
+
 class LinuxControl extends utils.Adapter {
 
 	/**
@@ -46,6 +48,8 @@ class LinuxControl extends utils.Adapter {
 			await this.prepareTranslation();
 			await this.setSelectableHosts()
 
+			this.isAdapterStart = true;
+
 			for (const host of this.config.hosts) {
 				await this.refreshHost(host, true);
 			}
@@ -58,9 +62,9 @@ class LinuxControl extends utils.Adapter {
 	/**
 	 * @param {object} host
 	 */
-	async refreshHost(host, startUp = false) {
+	async refreshHost(host, onReady = false) {
 		if (host.enabled) {
-			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port})`);
+			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port}${this.isAdapterStart ? ', Adapter start' : ''})`);
 
 			await this.createObjectButton(`${host.name}.refresh`, _('refreshHost'));
 			this.subscribeStates(`${host.name}.refresh`);
@@ -78,7 +82,7 @@ class LinuxControl extends utils.Adapter {
 				await this.needrestart(connection, host);
 				await this.folderSizes(connection, host);
 
-				await this.userCommand(connection, host, startUp);
+				await this.userCommand(connection, host);
 
 				connection.dispose();
 
@@ -87,6 +91,10 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
+			}
+
+			if (onReady) {
+				this.isAdapterStart = false;
 			}
 
 			// interval using timeout
@@ -143,10 +151,12 @@ class LinuxControl extends utils.Adapter {
 				}
 			}
 		} else {
-			this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+			if (this.isAdapterStart) {
+				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
-			for (const propObj of objects) {
-				await this.delMyObject(`${host.name.replace(' ', '_')}.info.${propObj.id}`);
+				for (const propObj of objects) {
+					await this.delMyObject(`${host.name.replace(' ', '_')}.info.${propObj.id}`);
+				}
 			}
 		}
 	}
@@ -157,7 +167,7 @@ class LinuxControl extends utils.Adapter {
 	 * @param {NodeSSH | undefined} connection
 	 * @param {object} host
 	 */
-	async userCommand(connection, host, startUp = false) {
+	async userCommand(connection, host) {
 		let logPrefix = `[userCommand] ${host.name} (${host.ip}:${host.port}):`;
 
 		try {
@@ -175,7 +185,7 @@ class LinuxControl extends utils.Adapter {
 							if ((!cmd.interval || cmd.interval === 0) && cmd.type !== 'button') {
 								await this.userCommandExecute(connection, host, cmd);
 							} else {
-								if (startUp) {
+								if (this.isAdapterStart) {
 									// adapter first run -> execute userCommands with diffrent polling interval
 									if (cmd.type !== 'button') {
 										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
@@ -433,11 +443,13 @@ class LinuxControl extends utils.Adapter {
 					}
 				}
 			} else {
-				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+				if (this.isAdapterStart) {
+					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
-				let needRestartStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.needrestart.*`);
-				for (const id of Object.keys(needRestartStates)) {
-					await this.delMyObject(id);
+					let needRestartStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.needrestart.*`);
+					for (const id of Object.keys(needRestartStates)) {
+						await this.delMyObject(id);
+					}
 				}
 			}
 		} catch (err) {
@@ -501,11 +513,13 @@ class LinuxControl extends utils.Adapter {
 					}
 				}
 			} else {
-				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+				if (this.isAdapterStart) {
+					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
-				let servicesStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.services.*`);
-				for (const id of Object.keys(servicesStates)) {
-					await this.delMyObject(id);
+					let servicesStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.services.*`);
+					for (const id of Object.keys(servicesStates)) {
+						await this.delMyObject(id);
+					}
 				}
 			}
 		} catch (err) {
@@ -560,10 +574,12 @@ class LinuxControl extends utils.Adapter {
 					}
 				}
 			} else {
-				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+				if (this.isAdapterStart) {
+					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
-				for (const propObj of objects) {
-					await this.delMyObject(`${host.name.replace(' ', '_')}.distribution.${propObj.id}`);
+					for (const propObj of objects) {
+						await this.delMyObject(`${host.name.replace(' ', '_')}.distribution.${propObj.id}`);
+					}
 				}
 			}
 		} catch (err) {
@@ -763,10 +779,12 @@ class LinuxControl extends utils.Adapter {
 					}
 				}
 			} else {
-				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+				if (this.isAdapterStart) {
+					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
-				for (const propObj of objects) {
-					await this.delMyObject(`${host.name.replace(' ', '_')}.updates.${propObj.id}`);
+					for (const propObj of objects) {
+						await this.delMyObject(`${host.name.replace(' ', '_')}.updates.${propObj.id}`);
+					}
 				}
 			}
 		} catch (err) {
@@ -1188,12 +1206,14 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} id
 	 */
 	async delMyObject(id, logPrefix = undefined) {
-		if (await this.getObjectAsync(id)) {
-			if (id && logPrefix) {
-				this.log.debug(`${logPrefix} datapoint '${id}' is not selected -> removing existing datapoint`);
-			}
+		if (this.isAdapterStart) {
+			if (await this.getObjectAsync(id)) {
+				if (id && logPrefix) {
+					this.log.debug(`${logPrefix} datapoint '${id}' is not selected -> removing existing datapoint`);
+				}
 
-			await this.delObjectAsync(id);
+				await this.delObjectAsync(id);
+			}
 		}
 	}
 
@@ -1225,10 +1245,12 @@ class LinuxControl extends utils.Adapter {
 					}
 				}
 			} else {
-				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+				if (this.isAdapterStart) {
+					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
-				for (const obj of objects) {
-					await this.delMyObject(`${idPrefix}.${obj.id}`);
+					for (const obj of objects) {
+						await this.delMyObject(`${idPrefix}.${obj.id}`);
+					}
 				}
 			}
 		} catch (err) {
@@ -1241,27 +1263,29 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} name
 	 */
 	async createObjectString(id, name) {
-		let obj = await this.getObjectAsync(id);
+		if (this.isAdapterStart) {
+			let obj = await this.getObjectAsync(id);
 
-		if (obj) {
-			if (obj.common.name !== _(name)) {
-				obj.common.name = _(name);
-				await this.setObjectAsync(id, obj);
+			if (obj) {
+				if (obj.common.name !== _(name)) {
+					obj.common.name = _(name);
+					await this.setObjectAsync(id, obj);
+				}
+			} else {
+				await this.setObjectNotExistsAsync(id,
+					{
+						type: 'state',
+						common: {
+							name: _(name),
+							desc: _(name),
+							type: 'string',
+							read: true,
+							write: false,
+							role: 'value'
+						},
+						native: {}
+					});
 			}
-		} else {
-			await this.setObjectNotExistsAsync(id,
-				{
-					type: 'state',
-					common: {
-						name: _(name),
-						desc: _(name),
-						type: 'string',
-						read: true,
-						write: false,
-						role: 'value'
-					},
-					native: {}
-				});
 		}
 	}
 
@@ -1271,29 +1295,31 @@ class LinuxControl extends utils.Adapter {
 	* @param {any} unit
 	*/
 	async createObjectNumber(id, name, unit = undefined) {
-		let obj = await this.getObjectAsync(id);
+		if (this.isAdapterStart) {
+			let obj = await this.getObjectAsync(id);
 
-		if (obj) {
-			if (obj.common.name !== _(name) || obj.common['unit'] !== _(unit)) {
-				obj.common.name = _(name);
-				obj.common['unit'] = _(unit);
+			if (obj) {
+				if (obj.common.name !== _(name) || obj.common['unit'] !== _(unit)) {
+					obj.common.name = _(name);
+					obj.common['unit'] = _(unit);
 
-				await this.setObjectAsync(id, obj);
+					await this.setObjectAsync(id, obj);
+				}
+			} else {
+				await this.setObjectNotExistsAsync(id,
+					{
+						type: 'state',
+						common: {
+							name: _(name),
+							type: 'number',
+							unit: unit,
+							read: true,
+							write: false,
+							role: 'value'
+						},
+						native: {}
+					});
 			}
-		} else {
-			await this.setObjectNotExistsAsync(id,
-				{
-					type: 'state',
-					common: {
-						name: _(name),
-						type: 'number',
-						unit: unit,
-						read: true,
-						write: false,
-						role: 'value'
-					},
-					native: {}
-				});
 		}
 	}
 
@@ -1303,27 +1329,29 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} name
 	 */
 	async createObjectBoolean(id, name) {
-		let obj = await this.getObjectAsync(id);
+		if (this.isAdapterStart) {
+			let obj = await this.getObjectAsync(id);
 
-		if (obj) {
-			if (obj.common.name !== _(name)) {
-				obj.common.name = _(name);
-				await this.setObjectAsync(id, obj);
+			if (obj) {
+				if (obj.common.name !== _(name)) {
+					obj.common.name = _(name);
+					await this.setObjectAsync(id, obj);
+				}
+			} else {
+				await this.setObjectNotExistsAsync(id,
+					{
+						type: 'state',
+						common: {
+							name: _(name),
+							type: 'boolean',
+							read: true,
+							write: false,
+							role: 'value',
+							def: false
+						},
+						native: {}
+					});
 			}
-		} else {
-			await this.setObjectNotExistsAsync(id,
-				{
-					type: 'state',
-					common: {
-						name: _(name),
-						type: 'boolean',
-						read: true,
-						write: false,
-						role: 'value',
-						def: false
-					},
-					native: {}
-				});
 		}
 	}
 
@@ -1332,27 +1360,29 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} name
 	 */
 	async createObjectArray(id, name) {
-		let obj = await this.getObjectAsync(id);
+		if (this.isAdapterStart) {
+			let obj = await this.getObjectAsync(id);
 
-		if (obj) {
-			if (obj.common.name !== _(name)) {
-				obj.common.name = _(name);
-				await this.setObjectAsync(id, obj);
+			if (obj) {
+				if (obj.common.name !== _(name)) {
+					obj.common.name = _(name);
+					await this.setObjectAsync(id, obj);
+				}
+			} else {
+				await this.setObjectNotExistsAsync(id,
+					{
+						type: 'state',
+						common: {
+							name: _(name),
+							desc: _(name),
+							type: 'array',
+							read: true,
+							write: false,
+							role: 'value'
+						},
+						native: {}
+					});
 			}
-		} else {
-			await this.setObjectNotExistsAsync(id,
-				{
-					type: 'state',
-					common: {
-						name: _(name),
-						desc: _(name),
-						type: 'array',
-						read: true,
-						write: false,
-						role: 'value'
-					},
-					native: {}
-				});
 		}
 	}
 
@@ -1361,26 +1391,28 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} name
 	 */
 	async createObjectButton(id, name) {
-		let obj = await this.getObjectAsync(id);
+		if (this.isAdapterStart) {
+			let obj = await this.getObjectAsync(id);
 
-		if (obj) {
-			if (obj.common.name !== _(name)) {
-				obj.common.name = _(name);
-				await this.setObjectAsync(id, obj);
+			if (obj) {
+				if (obj.common.name !== _(name)) {
+					obj.common.name = _(name);
+					await this.setObjectAsync(id, obj);
+				}
+			} else {
+				await this.setObjectNotExistsAsync(id,
+					{
+						type: 'state',
+						common: {
+							name: _(name),
+							role: 'button',
+							type: 'boolean',
+							read: false,
+							write: true
+						},
+						native: {}
+					});
 			}
-		} else {
-			await this.setObjectNotExistsAsync(id,
-				{
-					type: 'state',
-					common: {
-						name: _(name),
-						role: 'button',
-						type: 'boolean',
-						read: false,
-						write: true
-					},
-					native: {}
-				});
 		}
 	}
 
@@ -1389,22 +1421,24 @@ class LinuxControl extends utils.Adapter {
 	 * @param {string} name
 	 */
 	async createMyChannel(id, name) {
-		let obj = await this.getObjectAsync(id);
+		if (this.isAdapterStart) {
+			let obj = await this.getObjectAsync(id);
 
-		if (obj) {
-			if (obj.common.name !== _(name)) {
-				obj.common.name = _(name);
-				await this.setObjectAsync(id, obj);
+			if (obj) {
+				if (obj.common.name !== _(name)) {
+					obj.common.name = _(name);
+					await this.setObjectAsync(id, obj);
+				}
+			} else {
+				await this.setObjectNotExistsAsync(id,
+					{
+						type: 'channel',
+						common: {
+							name: _(name),
+						},
+						native: {}
+					});
 			}
-		} else {
-			await this.setObjectNotExistsAsync(id,
-				{
-					type: 'channel',
-					common: {
-						name: _(name),
-					},
-					native: {}
-				});
 		}
 	}
 

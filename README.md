@@ -100,6 +100,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) performance optimizations
+
 ### 0.3.1 (2020-08-23)
 * (Scrounger) datapoint info lastRefresh added
 
