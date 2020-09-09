@@ -696,57 +696,55 @@ class LinuxControl extends utils.Adapter {
 					if (response) {
 						response = await this.sendCommand(connection, host, `apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\\s([\\w,\\-,\\d,\\.,~,:,\\+]+)\\s\\[([\\w,\\-,\\d,\\.,~,:,\\+]+)\\]\\s\\(([\\w,\\-,\\d,\\.,~,:,\\+]+)\\)? /i) {print \"$1,$2,$3\\n\"}' \| column -s \" \" -t`, logPrefix, undefined, false);
 
-						if (response) {
-							let parsed = await csvToJson({
-								noheader: true,
-								headers: ['name', 'installedVersion', 'availableVersion'],
-								delimiter: [","]
-								// @ts-ignore
-							}).fromString(response);
-
-							let newPackages = parsed.length;
-
-							// Number of new Packages
-							let id = `${host.name.replace(' ', '_')}.updates.newPackages`;
+						let parsed = await csvToJson({
+							noheader: true,
+							headers: ['name', 'installedVersion', 'availableVersion'],
+							delimiter: [","]
 							// @ts-ignore
-							if (this.config.whitelist["updates"].includes("newPackages") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackages`)) {
-								this.log.debug(`${logPrefix} ${id}: ${newPackages}`);
+						}).fromString(response);
 
-								await this.createObjectNumber(id, `newPackages`, `packages`);
-								await this.setStateAsync(id, newPackages, true);
+						let newPackages = parsed.length;
+
+						// Number of new Packages
+						let id = `${host.name.replace(' ', '_')}.updates.newPackages`;
+						// @ts-ignore
+						if (this.config.whitelist["updates"].includes("newPackages") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackages`)) {
+							this.log.debug(`${logPrefix} ${id}: ${newPackages}`);
+
+							await this.createObjectNumber(id, `newPackages`, `packages`);
+							await this.setStateAsync(id, newPackages, true);
+						} else {
+							await this.delMyObject(id, logPrefix);
+						}
+
+						// is upgradable
+						id = `${host.name.replace(' ', '_')}.updates.upgradable`;
+						// @ts-ignore
+						if (this.config.whitelist["updates"].includes("upgradable") && !this.config.blacklistDatapoints[host.name].includes(`updates.upgradable`)) {
+							this.log.debug(`${logPrefix} ${id}: ${newPackages > 0 ? true : false}`);
+
+							await this.createObjectBoolean(id, `upgradable`);
+							await this.setStateAsync(id, newPackages > 0 ? true : false, true);
+						} else {
+							await this.delMyObject(id, logPrefix);
+						}
+
+						// list of new packages
+						id = `${host.name.replace(' ', '_')}.updates.newPackagesList`;
+						// @ts-ignore
+						if (this.config.whitelist["updates"].includes("newPackagesList") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackagesList`)) {
+
+							if (newPackages > 0) {
+								this.log.debug(`${logPrefix} ${id}: ${JSON.stringify(parsed)}`);
+
+								await this.createObjectString(id, `newPackagesList`);
+								await this.setStateAsync(id, JSON.stringify(parsed), true);
 							} else {
-								await this.delMyObject(id, logPrefix);
+								await this.createObjectString(id, `newPackagesList`);
+								await this.setStateAsync(id, '', true);
 							}
-
-							// is upgradable
-							id = `${host.name.replace(' ', '_')}.updates.upgradable`;
-							// @ts-ignore
-							if (this.config.whitelist["updates"].includes("upgradable") && !this.config.blacklistDatapoints[host.name].includes(`updates.upgradable`)) {
-								this.log.debug(`${logPrefix} ${id}: ${newPackages > 0 ? true : false}`);
-
-								await this.createObjectBoolean(id, `upgradable`);
-								await this.setStateAsync(id, newPackages > 0 ? true : false, true);
-							} else {
-								await this.delMyObject(id, logPrefix);
-							}
-
-							// list of new packages
-							id = `${host.name.replace(' ', '_')}.updates.newPackagesList`;
-							// @ts-ignore
-							if (this.config.whitelist["updates"].includes("newPackagesList") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackagesList`)) {
-
-								if (newPackages > 0) {
-									this.log.debug(`${logPrefix} ${id}: ${JSON.stringify(parsed)}`);
-
-									await this.createObjectString(id, `newPackagesList`);
-									await this.setStateAsync(id, JSON.stringify(parsed), true);
-								} else {
-									await this.createObjectString(id, `newPackagesList`);
-									await this.setStateAsync(id, '', true);
-								}
-							} else {
-								await this.delMyObject(id, logPrefix);
-							}
+						} else {
+							await this.delMyObject(id, logPrefix);
 						}
 					}
 
