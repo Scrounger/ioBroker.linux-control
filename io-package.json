@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.2",
+        "version": "0.3.3",
         "news": {
+            "0.3.3": {
+                "en": "bug fix for datapoints creation",
+                "de": "Fehlerbehebung für die Erstellung von Datenpunkten",
+                "ru": "исправление ошибки при создании точек данных",
+                "pt": "correção de bug para criação de pontos de dados",
+                "nl": "bugfix voor het maken van datapunten",
+                "fr": "correction de bogue pour la création de points de données",
+                "it": "correzione di bug per la creazione di datapoint",
+                "es": "corrección de errores para la creación de puntos de datos",
+                "pl": "poprawka błędu tworzenia punktów danych",
+                "zh-cn": "错误修复数据点创建"
+            },
             "0.3.2": {
                 "en": "performance optimizations\nFixed some errors reported via Sentry",
                 "de": "Leistungsoptimierungen\nEinige über Sentry gemeldete Fehler wurden behoben",
