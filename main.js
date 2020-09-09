@@ -51,8 +51,10 @@ class LinuxControl extends utils.Adapter {
 			this.isAdapterStart = true;
 
 			for (const host of this.config.hosts) {
-				await this.refreshHost(host, true);
+				await this.refreshHost(host);
 			}
+
+			this.isAdapterStart = false;
 
 		} catch (err) {
 			this.errorHandling(err, '[onReady]');
@@ -62,7 +64,7 @@ class LinuxControl extends utils.Adapter {
 	/**
 	 * @param {object} host
 	 */
-	async refreshHost(host, onReady = false) {
+	async refreshHost(host) {
 		if (host.enabled) {
 			this.log.info(`getting data from ${host.name} (${host.ip}:${host.port}${this.isAdapterStart ? ', Adapter start' : ''})`);
 
@@ -91,10 +93,6 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
-			}
-
-			if (onReady) {
-				this.isAdapterStart = false;
 			}
 
 			// interval using timeout

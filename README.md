@@ -100,6 +100,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) bug fix for datapoints creation
+
 ### 0.3.2 (2020-09-07)
 * (Scrounger) performance optimizations
 * (Scrounger) Fixed some errors reported via Sentry
