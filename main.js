@@ -392,7 +392,7 @@ class LinuxControl extends utils.Adapter {
 				if (connection) {
 
 					if (await this.cmdPackageExist(connection, host, 'needrestart')) {
-						let response = await this.sendCommand(connection, host, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, true);
+						let response = await this.sendCommand(connection, host, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, false);
 
 						if (response) {
 
@@ -470,7 +470,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["services"] && this.config.whitelist["services"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('services.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, host, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, true);
+					let response = await this.sendCommand(connection, host, `systemctl list-units --type service --all --no-legend | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, false);
 
 					if (response) {
 						response = response.replace(/\t/g, ',')
