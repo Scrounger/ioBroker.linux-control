@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.4",
+        "version": "0.3.5",
         "news": {
+            "0.3.5": {
+                "en": "Fixed some errors reported via Sentry",
+                "de": "Einige über Sentry gemeldete Fehler wurden behoben",
+                "ru": "Исправлены некоторые ошибки, о которых сообщалось через Sentry.",
+                "pt": "Corrigidos alguns erros relatados via Sentry",
+                "nl": "Enkele fouten opgelost die via Sentry werden gerapporteerd",
+                "fr": "Correction de certaines erreurs signalées via Sentry",
+                "it": "Risolti alcuni errori segnalati tramite Sentry",
+                "es": "Se corrigieron algunos errores informados a través de Sentry",
+                "pl": "Naprawiono niektóre błędy zgłaszane przez Sentry",
+                "zh-cn": "修复了通过哨兵报告的一些错误"
+            },
             "0.3.4": {
                 "en": "bug fixes",
                 "de": "Fehlerbehebung",

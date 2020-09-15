@@ -100,7 +100,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.3.5 (2020-09-15)
 * (Scrounger) Fixed some errors reported via Sentry
 
 ### 0.3.4 (2020-09-09)
