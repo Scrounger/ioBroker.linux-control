@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.5",
+        "version": "0.3.6",
         "news": {
+            "0.3.6": {
+                "en": "Bug fix for function needrestart if sudo is used",
+                "de": "Fehlerbehebung für Funktion muss neu gestartet werden, wenn sudo verwendet wird",
+                "ru": "Исправление ошибки для функции needrestart, если используется sudo",
+                "pt": "Correção de bug para a função needrestart se sudo for usado",
+                "nl": "Bugfix voor functie die opnieuw moet worden gestart als sudo wordt gebruikt",
+                "fr": "Correction de bogue pour la fonction needrestart si sudo est utilisé",
+                "it": "Correzione di bug per la funzione needrestart se viene utilizzato sudo",
+                "es": "Corrección de errores para la función needrestart si se usa sudo",
+                "pl": "Poprawka błędu funkcji wymaga ponownego uruchomienia, jeśli używane jest sudo",
+                "zh-cn": "如果使用sudo，则需要对功能needrestart进行错误修复"
+            },
             "0.3.5": {
                 "en": "Fixed some errors reported via Sentry",
                 "de": "Einige über Sentry gemeldete Fehler wurden behoben",
