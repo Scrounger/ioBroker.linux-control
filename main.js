@@ -392,7 +392,7 @@ class LinuxControl extends utils.Adapter {
 				if (connection) {
 
 					if (await this.cmdPackageExist(connection, host, 'needrestart')) {
-						let response = await this.sendCommand(connection, host, `(tmp=$(/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, false);
+						let response = await this.sendCommand(connection, host, `(tmp=$(${host.useSudo ? 'sudo -S ' : ''}/usr/sbin/needrestart -p -l | head -1) && echo "$tmp" | awk '{print $1}' && echo ", $tmp" | sed 's/.*Services=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Containers=\\([0-9]*\\);.*/\\1/' && echo "$tmp" | sed 's/.*Sessions=\\([0-9]*\\);.*/\\1/') | awk '{printf "%s" (NR%4==0?RS:FS),$1}'`, logPrefix, undefined, false);
 
 						if (response) {
 
