@@ -95,6 +95,21 @@ class LinuxControl extends utils.Adapter {
 				this.log.info(`successful received data from ${host.name} (${host.ip}:${host.port})`);
 			}
 
+			if (this.isAdapterStart && this.config.commands) {
+				/** @type {Array<Object>} */
+				let btnList = this.config.commands.filter(x => {
+					// @ts-ignore
+					return x.type === 'button';
+				});
+
+				for (const btn of btnList) {
+					let btnId = `${host.name}.${btn.name}`;
+					this.subscribeStates(btnId);
+
+					this.log.debug(`[refreshHost] ${host.name} (${host.ip}:${host.port}): button '${btnId}' subscribed`);
+				}
+			}
+
 			// interval using timeout
 			if (requestInterval) requestInterval = null;
 
