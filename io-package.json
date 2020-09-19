@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.6",
+        "version": "0.3.7",
         "news": {
+            "0.3.7": {
+                "en": "subscribe bug fix for user commands",
+                "de": "Fehlerbehebung für Benutzerbefehle abonnieren",
+                "ru": "подписаться на исправление ошибок для пользовательских команд",
+                "pt": "subscrever correção de bug para comandos do usuário",
+                "nl": "abonneer bugfix voor gebruikersopdrachten",
+                "fr": "abonnez-vous correction de bogue pour les commandes utilisateur",
+                "it": "sottoscrivere bug fix per i comandi utente",
+                "es": "suscribirse corrección de errores para comandos de usuario",
+                "pl": "zasubskrybuj poprawkę błędu dla poleceń użytkownika",
+                "zh-cn": "订阅用户命令的错误修复"
+            },
             "0.3.6": {
                 "en": "Bug fix for function needrestart if sudo is used",
                 "de": "Fehlerbehebung für Funktion muss neu gestartet werden, wenn sudo verwendet wird",

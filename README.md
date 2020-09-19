@@ -100,7 +100,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.3.7 (2020-09-19)
 * (Scrounger) subscribe bug fix for user commands
 
 ### 0.3.6 (2020-09-17)
