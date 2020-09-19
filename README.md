@@ -100,6 +100,9 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) subscribe bug fix for user commands
+
 ### 0.3.6 (2020-09-17)
 * (Scrounger) Bug fix for function needrestart if sudo is used
 
