@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "0.3.7",
+        "version": "1.0.0",
         "news": {
+            "1.0.0": {
+                "en": "bump to stable",
+                "de": "Stoß zu stabil",
+                "ru": "подъехать к стабильной",
+                "pt": "colidir para estável",
+                "nl": "hobbel naar stabiel",
+                "fr": "bosse à stable",
+                "it": "bump to stabile",
+                "es": "golpe a estable",
+                "pl": "uderzyć do stabilnego",
+                "zh-cn": "颠簸到稳定"
+            },
             "0.3.7": {
                 "en": "subscribe bug fix for user commands",
                 "de": "Fehlerbehebung für Benutzerbefehle abonnieren",
@@ -230,18 +242,6 @@
                 "es": "rsa clave y comando manual agregado",
                 "pl": "Dodano klucz rsa i polecenie ręczne",
                 "zh-cn": "rsa键和手动命令已添加"
-            },
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
             }
         },
         "title": "Linux Control",
