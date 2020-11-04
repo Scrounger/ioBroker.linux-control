@@ -100,7 +100,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 1.0.1 (2020-11-04)
 * (Scrounger) translation for polling interval optimized
 
 ### 1.0.0 (2020-09-30)

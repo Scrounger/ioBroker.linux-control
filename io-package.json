@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "news": {
+            "1.0.1": {
+                "en": "translation for polling interval optimized",
+                "de": "Übersetzung für Abfrageintervall optimiert",
+                "ru": "Оптимизирован перевод для интервала опроса",
+                "pt": "tradução para intervalo de sondagem otimizada",
+                "nl": "vertaling voor geoptimaliseerd polling-interval",
+                "fr": "traduction optimisée pour l'intervalle d'interrogation",
+                "it": "traduzione per l'intervallo di polling ottimizzata",
+                "es": "traducción para intervalo de sondeo optimizado",
+                "pl": "tłumaczenie zoptymalizowane pod kątem interwału odpytywania",
+                "zh-cn": "轮询间隔的转换优化"
+            },
             "1.0.0": {
                 "en": "bump to stable",
                 "de": "Stoß zu stabil",
@@ -230,18 +242,6 @@
                 "es": "lista blanca de servicios adicionales configurables para cada host individualmente",
                 "pl": "dodana biała lista usług konfigurowana indywidualnie dla każdego hosta",
                 "zh-cn": "可以为每个主机分别配置的添加服务白名单"
-            },
-            "0.0.2": {
-                "en": "rsa key and manual command added",
-                "de": "rsa-Taste und manueller Befehl hinzugefügt",
-                "ru": "rsa ключ и ручная команда добавлены",
-                "pt": "chave rsa e comando manual adicionados",
-                "nl": "rsa-sleutel en handmatige opdracht toegevoegd",
-                "fr": "Touche rsa et commande manuelle ajoutées",
-                "it": "Chiave rsa e comando manuale aggiunti",
-                "es": "rsa clave y comando manual agregado",
-                "pl": "Dodano klucz rsa i polecenie ręczne",
-                "zh-cn": "rsa键和手动命令已添加"
             }
         },
         "title": "Linux Control",
