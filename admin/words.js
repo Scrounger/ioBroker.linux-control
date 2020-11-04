@@ -806,29 +806,17 @@ const dictionary = {
 		"pl": "Podoba ci się adapter? Następnie wesprzyj programistę adaptera (Scrounger) niewielką darowizną.",
 		"zh-cn": "您喜欢适配器吗？然后以少量捐款支持适配器开发人员（Scrounger）。"
 	},
-	"pollingInterval": {
-		"en": "polling interval",
-		"de": "Abrufintervall",
-		"ru": "интервал опроса",
-		"pt": "intervalo de pesquisa",
-		"nl": "polling-interval",
-		"fr": "intervalle d'interrogation",
-		"it": "intervallo di polling",
-		"es": "intervalo de votación",
-		"pl": "okres odpytywania",
-		"zh-cn": "轮询间隔"
-	},
-	"timeout": {
-		"en": "timeout",
-		"de": "Timeout",
-		"ru": "Тайм-аут",
-		"pt": "tempo esgotado",
-		"nl": "time-out",
-		"fr": "temps libre",
-		"it": "tempo scaduto",
-		"es": "se acabó el tiempo",
-		"pl": "koniec czasu",
-		"zh-cn": "超时"
+	"pollingInterval_seconds": {
+		"en": "polling interval (seconds)",
+		"de": "Abfrageintervall (Sekunden)",
+		"ru": "интервал опроса (секунды)",
+		"pt": "intervalo de sondagem (segundos)",
+		"nl": "polling-interval (seconden)",
+		"fr": "intervalle d'interrogation (secondes)",
+		"it": "intervallo di polling (secondi)",
+		"es": "intervalo de sondeo (segundos)",
+		"pl": "okres odpytywania (w sekundach)",
+		"zh-cn": "轮询间隔（秒）"
 	},
 	"use Sudo": {
 		"en": "use Sudo",
