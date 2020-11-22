@@ -937,6 +937,54 @@ const dictionary = {
 		"es": "última actualización del host",
 		"pl": "ostatnie odświeżenie hosta",
 		"zh-cn": "主机的最新刷新"
+	},
+	"lc_settings": {
+		"en": "adapter settings",
+		"de": "Adaptereinstellungen",
+		"ru": "настройки адаптера",
+		"pt": "configurações do adaptador",
+		"nl": "adapter instellingen",
+		"fr": "paramètres de l'adaptateur",
+		"it": "impostazioni dell'adattatore",
+		"es": "configuración del adaptador",
+		"pl": "ustawienia adaptera",
+		"zh-cn": "适配器设置"
+	},
+	"lc_forum": {
+		"en": "forum",
+		"de": "Forum",
+		"ru": "Форум",
+		"pt": "fórum",
+		"nl": "forum",
+		"fr": "forum",
+		"it": "Forum",
+		"es": "foro",
+		"pl": "forum",
+		"zh-cn": "论坛"
+	},
+	"blacklistDatapoints": {
+		"en": "excluded datapoints ",
+		"de": "ausgeschlossene Datenpunkte",
+		"ru": "исключенные точки данных",
+		"pt": "pontos de dados excluídos",
+		"nl": "uitgesloten datapunten",
+		"fr": "points de données exclus",
+		"it": "datapoint esclusi",
+		"es": "puntos de datos excluidos",
+		"pl": "wykluczone punkty danych",
+		"zh-cn": "排除的数据点"
+	},
+	"WhitelistServices": {
+		"en": "create datapoints for",
+		"de": "Datenpunkte erstellen für",
+		"ru": "создать точки данных для",
+		"pt": "criar pontos de dados para",
+		"nl": "maak datapunten voor",
+		"fr": "créer des points de données pour",
+		"it": "creare datapoint per",
+		"es": "crear puntos de datos para",
+		"pl": "utwórz punkty danych dla",
+		"zh-cn": "为创建数据点"
 	}
 };
 

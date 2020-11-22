@@ -245,7 +245,7 @@ function createServicesWhiteListChips(host, settings, onChange) {
 						<div class="card-content blacklistDatapoints">
 							<div class="row card-title">
 								<div class="col s12 m9 l9">
-									<div class="translate">${host.name}: Whitelist</div>
+									<div class="translate">${host.name}: ${_('WhitelistServices')}</div>
 								</div>
 							</div>
 							<div class="chips whitelistServices_${host.name}"></div>
