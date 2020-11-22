@@ -25,21 +25,35 @@
 	<script type="text/javascript" src="index_m.js"></script>
 
 	<style>
-		.m .tabs .tab a:hover { border-bottom: 2px solid #46a0e9 !important; font-weight: bold !important; }
+		.m .tabs .tab a:hover {
+			border-bottom: 2px solid #46a0e9 !important;
+			font-weight: bold !important;
+		}
 
-		.treeContainer {
-			width: calc(100% - 24px) !important;
+		.m .tabs .myLinkBar a {
+			border-bottom: 0px solid #46a0e9 !important;
+			font-style: normal !important;
+			text-transform: none !important;
+			font-size: 16px;
+		}
+
+		.m .tabs .myLinkBar a:hover {
+			border-bottom: 0px solid #46a0e9 !important;
+			background: rgba(161, 161, 161, 0.26);
+			font-weight: normal !important;
+			text-transform: none !important;
+			font-size: 16px;
 		}
 
 		.fancytree-container {
-			background: #efefef !important;
+			background: transparent !important;
 			border-style: none !important;
 			font-size: 1rem !important;
 			font-family: "Segoe UI", Tahoma, Arial, "Courier New" !important;
 		}
 
 		.fancytree-title {
-			background: #efefef !important;
+			background: transparent !important;
 			height: 24px;
 		}
 
@@ -217,32 +231,61 @@
 		}
 
 		/* Header section */
-		#header-area {
-			margin-top: 4px;
-			margin-bottom: 1px;
-			background: white;
+		.help-link {
+			order: 3 !important;
+			width: auto !important;
+			display: flex !important;
+			align-items: center !important;
 		}
 
-		#header-area #header-logo-title .logo {
-			float: left;
-			margin-right: 10px;
+		.help-link .btn-floating {
+			margin-top: 0 !important;
 		}
 
-		#header-area #header-logo-title p {
-			line-height: normal !important;
+		.card-stacked {
+			order: 1;
+		}
+
+		.logo {
+			width: 100px;
+			height: 100px;
+			padding: 12px !important;
+		}
+
+		/* Card Styles */
+		.card {
 			margin: 0 !important;
-			padding: 8px 0 0 8px;
+			margin-top: 6px !important;
 		}
 
-		#header-area #header-logo-title p>span.h-title {
-			font-size: 2em !important;
-			font-weight: bold !important;
+		.card-content.fannytree {
+			padding: 0 24px !important;
 		}
 
-		#header-area #header-logo-title p>span.h-sub-title {
-			font-size: 1.1em !important;
-			font-style: italic;
+		.card-content.blacklistDatapoints {
+			padding: 16px 16px 4px 16px !important;
+		}
+
+		.card-content.blacklistDatapoints .card-title {
+			font-size: 20px !important;
+		}
+
+		.card-title {
 			color: #2196f3;
+			margin-bottom: 12px !important;
+		}
+
+		.my-card-subTitle {
+			font-size: 16px !important;
+			margin-top: 6px !important;
+			font-style: italic !important;
+			color: gray !important;
+		}
+
+		.my-card-title {
+			font-size: 24px !important;
+			font-weight: 300 !important;
+			color: #2196f3 !important;
 		}
 	</style>
 </head>
@@ -264,101 +307,155 @@
 			</div>
 			<div id="tab_general" class="col s12 page">
 				<div class="col s12">
-					<div id="header-area" class="row" >
-						<div id="header-logo-title" class="col s6" >
-							<img class="logo" src="linux-control.png" >
-							<p>
-								<span class="h-title">Linux Control</span><br />
-								<span class="h-sub-title translate">Controlling Linux devices and get information about your system</p>
-							</p>
-						</div>
-					</div>					
-
-					<!-- Put your content here -->
-
-					<!-- For example columns with settings: -->
 					<div class="row">
-						<p class="translate title" style="margin-top: 4px;">Host configuration table</p>
-						<section>
-							<div class="col s12" id="hosts">
-								<a
-									class="btn-floating waves-effect waves-light blue table-button-add hostsTable-button-add"><i
-										class="material-icons">add</i></a>
-								<div class="table-values-div" style="margin-top: 10px;">
-									<table class="table-values" id="hostsTable">
-										<thead>
-											<tr>
-												<th data-name="enabled" data-type="checkbox" checked="true" data-default="true" style="width: 20px;" data-style="width: 20px;"
-													class="translate">enabled</th>
-												<th data-name="name" style="width: 10%" class="translate">Name</th>
-												<th data-name="ip" style="width: 10%; text-align: center;"
-													class="translate">IP</th>
-												<th data-name="port" data-default="22"
-													style="width: 5%; text-align: center;" class="translate">Port</th>
-												<th data-name="interval" data-type="number" data-default="5"
-													style="width: 10%; text-align: center;" 
-													class="translate">pollingInterval</th>
-												<th data-name="user" style="width: 10%;" class="translate">User</th>
-												<th data-name="password" data-type="password" style="width: 10%"
-													class="translate">Password</th>
-												<th data-name="useSudo" data-type="checkbox" style="width: 20px;" data-style="width: 20px;"
-													class="translate">use Sudo</th>	
-												<th data-name="rsakey" style="width: auto" class="translate">RSA Key</th>
-												<th data-name="timeout" data-type="number" data-default="5"
-													style="width: 100px; text-align: center;" 
-													class="translate">timeout</th>
-												<th data-buttons="delete up down" style="width: 60px"></th>
-											</tr>
-										</thead>
-									</table>
+						<div class="col s12 m12 l12 card horizontal">
+							<div class="card-image">
+								<img class="logo" src="linux-control.png">
+							</div>
+							<div class="card-stacked">
+								<div class="card-content">
+									<div>
+										<div class="my-card-title">Linux Control</div>
+										<div class="my-card-subTitle translate">Controlling Linux devices and get information about your system</div>
+									</div>
 								</div>
 							</div>
+						</div>
+
+						<!-- Put your content here -->
+
+						<!-- For example columns with settings: -->
+
+						<section>
+							<div class="col s12 m12 l12 card">
+								<div class="card-content">
+									<span class="card-title translate">Documentations</span>
+
+									<ul class="tabs" style="height: auto;">
+										<li class="tab myLinkBar col s6 l2"><a
+												href="https://github.com/Scrounger/ioBroker.vis-materialdesign/blob/master/README.md"
+												target="_blank" class="translate">widget_settings</a></li>
+										<li class="tab myLinkBar col s6 l2"><a
+												href="https://github.com/Scrounger/ioBroker.vis-materialdesign/blob/master/README.md#online-example-project"
+												target="_blank" class="translate">mdw_examples</a></li>
+										<li class="tab myLinkBar col s6 l2"><a
+												href="https://forum.iobroker.net/search?term=Material%20Design%20Widgets%3A&in=titles&matchWords=all&by%5B%5D=Scrounger&categories%5B%5D=7&sortBy=topic.title&sortDirection=desc&showAs=topics"
+												target="_blank" class="translate">mdw_forum</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col s12 m12 l12 card" style="padding-bottom: 20px;">
+								<div class="card-content">
+									<span class="card-title translate">Host configuration table</span>
+
+									<div class="col s12" id="hosts">
+										<a
+											class="btn-floating waves-effect waves-light blue table-button-add hostsTable-button-add"><i
+												class="material-icons">add</i></a>
+										<div class="table-values-div" style="margin-top: 10px;">
+											<table class="table-values" id="hostsTable">
+												<thead>
+													<tr>
+														<th data-name="enabled" data-type="checkbox" checked="true"
+															data-default="true" style="width: 20px;"
+															data-style="width: 20px;" class="translate">enabled</th>
+														<th data-name="name" style="width: 10%" class="translate">Name</th>
+														<th data-name="ip" style="width: 10%; text-align: center;"
+															class="translate">IP</th>
+														<th data-name="port" data-default="22"
+															style="width: 5%; text-align: center;" class="translate">Port</th>
+														<th data-name="interval" data-type="number" data-default="5"
+															style="width: 10%; text-align: center;" class="translate">pollingInterval</th>
+														<th data-name="user" style="width: 10%;" class="translate">User</th>
+														<th data-name="password" data-type="password" style="width: 10%"
+															class="translate">Password</th>
+														<th data-name="useSudo" data-type="checkbox"
+															style="width: 20px;" data-style="width: 20px;"
+															class="translate">use Sudo</th>
+														<th data-name="rsakey" style="width: auto" class="translate">RSA Key</th>
+														<th data-name="timeout" data-type="number" data-default="5"
+															style="width: 100px; text-align: center;" class="translate">timeout</th>
+														<th data-buttons="delete up down" style="width: 60px"></th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col s12 m12 l12 card">
+								<div class="card-content">
+									<div style="display: flex; align-items: center; justify-content: center;"><span class="mdi mdi-coffee" style="font-size: 20px; color: #46a0e9; margin-right: 6px;"></span><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">donation</a></div>
+								</div>
+							</div>							
 						</section>
-					</div>
-					<div class="row">
-						<div><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url"
-								target="_blank" class="translate">donation</a></div>
 					</div>
 				</div>
 			</div>
 			<div id="tab_datapoints" class="col s12 page">
-				<section>
-					<div class="col s7">
-						<div class="row">
-							<div class="treeContainer" id="tree_datapoints"></div>
-						</div>
-					</div>
-					<div class="col s5">
-						<div class="row">
-							<div class="container_blacklistDatapoints">
-								<!-- dynamically creates table on evey change of the select values  -->
+				<div class="row">
+					<section>
+						<div class="col s7 m7 l7" style="padding-right: 3px;">
+							<div class="col s12 m12 l12 card">
+								<div class="card-content fannytree">
+									<div class="row">
+										<div class="treeContainer" id="tree_datapoints"></div>
+									</div>									
+								</div>
 							</div>
 						</div>
-					</div>
-				</section>
+						<div class="col s5" style="margin-top: -20px; padding-left: 3px;">
+							<div class="row">
+								<div class="container_blacklistDatapoints">
+									<!-- dynamically creates table on evey change of the select values  -->
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
 			</div>
 			<div id="tab_services" class="col s12 page">
-				<section>
-					<div class="container_whitelistServices">
-						<!-- dynamically creates table on evey change of the select values  -->
-					</div>
-				</section>
+				<div class="row">
+					<section>
+						<div class="container_whitelistServices">
+							<!-- dynamically creates table on evey change of the select values  -->
+						</div>
+					</section>
+				</div>
 			</div>
 			<div id="tab_folders" class="col s12 page">
-				<p class="translate title">Table to configure folders to display their size as data points</p>
-				<section>
-					<div class="container_foldersTable">
-						<!-- dynamically creates table on evey change of the select values  -->
-					</div>
-				</section>
+				<div class="row">
+					<section>
+						<div class="col s12">
+							<div class="col s12 m12 l12 card" style="padding-bottom: 30px;">
+								<div class="card-content">
+									<span class="card-title translate">Table to configure folders to display their size as data points</span>
+
+									<div class="container_foldersTable">
+										<!-- dynamically creates table on evey change of the select values  -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
 			</div>
 			<div id="tab_mycommands" class="col s12 page">
-				<p class="translate title">Table to configure your own commands</p>
-				<section>
-					<div class="container_mycommandsTable">
-						<!-- dynamically creates table on evey change of the select values  -->
-					</div>
-				</section>
+				<div class="row">
+					<section>
+						<div class="col s12">
+							<div class="col s12 m12 l12 card" style="padding-bottom: 30px;">
+								<div class="card-content">
+									<span class="card-title translate">Table to configure your own commands</span>
+
+									<div class="container_mycommandsTable">
+										<!-- dynamically creates table on evey change of the select values  -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
 			</div>
 		</div>
 	</div>

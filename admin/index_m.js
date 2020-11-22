@@ -240,11 +240,14 @@ function createServicesWhiteListChips(host, settings, onChange) {
 	for (const host of hosts) {
 		if (host && host.name) {
 			$('.container_whitelistServices').append(
-				`<div class="col s12">
-					<div class="row">
-						<p class="translate title">${host.name}: Whitelist</p>
-						<div class="col s12">
-							<label class="translate">${_('whitelistServices')}</label>
+				`<div class="col s12 m12 l12">
+					<div class="col s12 m12 l12 card">
+						<div class="card-content blacklistDatapoints">
+							<div class="row card-title">
+								<div class="col s12 m9 l9">
+									<div class="translate">${host.name}: Whitelist</div>
+								</div>
+							</div>
 							<div class="chips whitelistServices_${host.name}"></div>
 						</div>
 					</div>
@@ -262,10 +265,15 @@ function createDatapointsBlacklistChips(host, settings, onChange) {
 	for (const host of hosts) {
 		if (host && host.name) {
 			$('.container_blacklistDatapoints').append(
-				`<div class="col s12">
-					<div class="row">
-						<div class="col s12">
-							<label class="translate blacklistDatapoints_header">${host.name}: ${_('blacklistDatapoints')}</label>
+				`
+				<div class="col s12 m12 l12">
+					<div class="col s12 m12 l12 card">
+						<div class="card-content blacklistDatapoints">
+							<div class="row card-title">
+								<div class="col s12 m9 l9">
+									<div class="translate">${host.name}: ${_('blacklistDatapoints')}</div>
+								</div>
+							</div>
 							<div class="chips blacklistDatapoints_${host.name}"></div>
 						</div>
 					</div>
