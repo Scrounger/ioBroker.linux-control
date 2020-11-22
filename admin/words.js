@@ -985,6 +985,42 @@ const dictionary = {
 		"es": "crear puntos de datos para",
 		"pl": "utwórz punkty danych dla",
 		"zh-cn": "为创建数据点"
+	},
+	"add_host": {
+		"en": "add host",
+		"de": "Host hinzufügen",
+		"ru": "добавить хост",
+		"pt": "adicionar hospedeiro",
+		"nl": "host toevoegen",
+		"fr": "ajouter un hôte",
+		"it": "aggiungi host",
+		"es": "agregar anfitrión",
+		"pl": "dodaj hosta",
+		"zh-cn": "添加主机"
+	},
+	"add_command": {
+		"en": "add command",
+		"de": "Befehl hinzufügen",
+		"ru": "добавить команду",
+		"pt": "adicionar comando",
+		"nl": "add commando",
+		"fr": "ajouter une commande",
+		"it": "aggiungi comando",
+		"es": "agregar comando",
+		"pl": "dodaj polecenie",
+		"zh-cn": "添加命令"
+	},
+	"add_folder": {
+		"en": "add folder",
+		"de": "Ordner hinzufügen",
+		"ru": "добавить папку",
+		"pt": "adicionar pasta",
+		"nl": "map toevoegen",
+		"fr": "ajouter le dossier",
+		"it": "Aggiungi cartella",
+		"es": "agregar carpeta",
+		"pl": "Dodaj folder",
+		"zh-cn": "新增文件夹"
 	}
 };
 

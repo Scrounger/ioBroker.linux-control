@@ -314,8 +314,11 @@ function createCommandsTable(data, hosts, onChange) {
 	$('.container_mycommandsTable').empty();
 
 	let element = `<div class="col s12" id="commands">
-							<a class="btn-floating waves-effect waves-light blue table-button-add"><i
-									class="material-icons">add</i></a>
+							<div>
+								<a class="btn-floating waves-effect waves-light blue table-button-add"><i
+										class="material-icons">add</i></a>
+								<span class="my-card-subTitle translate" style="margin-left: 10px;">${_('add_command')}</span>
+							</div>
 							<div class="table-values-div" style="margin-top: 10px;">
 								<table class="table-values" id="commandsTable">
 									<thead>
@@ -360,8 +363,11 @@ function createFoldersTable(data, hosts, onChange) {
 	$('.container_foldersTable').empty();
 
 	let element = `<div class="col s12" id="folders">
-							<a class="btn-floating waves-effect waves-light blue table-button-add"><i
-									class="material-icons">add</i></a>
+							<div>
+								<a class="btn-floating waves-effect waves-light blue table-button-add"><i
+										class="material-icons">add</i></a>
+								<span class="my-card-subTitle translate" style="margin-left: 10px;">${_('add_folder')}</span>
+							</div>									
 							<div class="table-values-div" style="margin-top: 10px;">
 								<table class="table-values" id="foldersTable">
 									<thead>
