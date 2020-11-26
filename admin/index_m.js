@@ -5,11 +5,16 @@ var serviceWhiteList = [];
 var blacklistDatapoints = [];
 var secret;
 var _settings;
+var myNamespace;
 
 // This will be called by the admin adapter when the settings page loads
 async function load(settings, onChange) {
 	// example: select elements with id=key and class=value and insert value
 	if (!settings) return;
+
+    myNamespace = `${adapter}.${instance}`;
+
+    addVersionToAdapterTitle();	
 
 	hosts = settings.hosts || [];
 	folders = settings.folders || [];
@@ -414,6 +419,18 @@ async function getObjects(lib) {
 	});
 }
 
+async function getObjectAsync(id) {
+    return new Promise((resolve, reject) => {
+        socket.emit('getObject', id, function (err, res) {
+            if (!err && res) {
+                resolve(res);
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
 function loadHostsTable(settings, hosts, onChange) {
 	if (hosts.length > 0) {
 		for (const host of hosts) {
@@ -545,4 +562,13 @@ function chips2list(selector) {
 		list.sort();
 	}
 	return list;
+}
+
+async function addVersionToAdapterTitle() {
+    let instanceObj = await getObjectAsync(`system.adapter.${myNamespace}`);
+
+    if (instanceObj && instanceObj.common && instanceObj.common.installedVersion) {
+        let title = $('#adapterTitle');
+        title.html(`${title.html()} <font size="3"><i>${instanceObj.common.installedVersion}</i></font>`);
+    }
 }
