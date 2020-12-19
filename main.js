@@ -139,10 +139,10 @@ class LinuxControl extends utils.Adapter {
 
 					if (propObj.id === "is_online") {
 						if (connection) {
-							await this.createObjectString(id, propObj.name);
+							await this.createObjectBoolean(id, propObj.name);
 							await this.setStateAsync(id, true, true);
 						} else {
-							await this.createObjectString(id, propObj.name);
+							await this.createObjectBoolean(id, propObj.name);
 							await this.setStateAsync(id, false, true);
 						}
 
@@ -1296,7 +1296,7 @@ class LinuxControl extends utils.Adapter {
 							type: 'string',
 							read: true,
 							write: false,
-							role: 'value'
+							role: 'state'
 						},
 						native: {}
 					});
@@ -1361,7 +1361,7 @@ class LinuxControl extends utils.Adapter {
 							type: 'boolean',
 							read: true,
 							write: false,
-							role: 'value',
+							role: 'indicator',
 							def: false
 						},
 						native: {}
@@ -1393,7 +1393,7 @@ class LinuxControl extends utils.Adapter {
 							type: 'array',
 							read: true,
 							write: false,
-							role: 'value'
+							role: 'list'
 						},
 						native: {}
 					});
