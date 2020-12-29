@@ -1,6 +1,6 @@
 {
   "name": "iobroker.linux-control",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Controlling Linux devices and get information about your system",
   "author": {
     "name": "Scrounger",
@@ -22,7 +22,7 @@
     "@iobroker/adapter-core": "^2.4.0",
     "node-ssh": "^11.1.1",
     "csvtojson": "^2.0.10",
-    "ping": "^0.3.0"
+    "ping": "^0.4.0"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.4.0",

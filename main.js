@@ -890,7 +890,6 @@ class LinuxControl extends utils.Adapter {
 			let pingResult = await ping.promise.probe(host.ip, { timeout: parseInt(host.timeout) || 5 });
 
 			if (pingResult.alive) {
-				let obj = await this.getForeignObjectAsync('system.config');
 				let password = await this.getPassword(host);
 
 				let ssh = new NodeSSH();
@@ -914,6 +913,7 @@ class LinuxControl extends utils.Adapter {
 				return await ssh.connect(options);
 			} else {
 				this.log.info(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) seems not to be online`);
+				this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) ping result: ${JSON.stringify(pingResult)}`)
 				return undefined;
 			}
 		} catch (err) {
