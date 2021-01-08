@@ -821,7 +821,7 @@ class LinuxControl extends utils.Adapter {
 				this.log.debug(`${logPrefix} send command: '${cmd}'`);
 
 				let response = undefined;
-				if (host.useSudo && cmd.includes('sudo -S')) {
+				if (host.useSudo && cmd.includes('sudo -S ')) {
 					// using sudo
 					let password = await this.getPassword(host);
 					response = await connection.execCommand(cmd, { execOptions: { pty: true }, stdin: `${password}\n` });
@@ -833,7 +833,7 @@ class LinuxControl extends utils.Adapter {
 							.replace('[sudo] Passwort für pi: \r', "")
 							.replace('[sudo] Passwort für pi: \n', "");
 					}
-				} else if (cmd.includes('sudo') && !cmd.includes('sudo -S')) {
+				} else if (cmd.includes('sudo ') && !cmd.includes('sudo -S ')) {
 					this.errorHandling(new ResponseError(`${logPrefix} you must use 'sudo -S' instead of 'sudo' only!`), logPrefix, responseErrorSendToSentry);
 					return undefined;
 				} else {
