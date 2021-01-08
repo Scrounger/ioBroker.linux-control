@@ -854,6 +854,13 @@ class LinuxControl extends utils.Adapter {
 						// .replace('[sudo] Passwort für pi: \n', "");
 					}
 
+					// catch errors that have no .stderr
+					let errorResponse = ['is not in the sudoers file', 'nicht in der sudoers-Datei']
+					if (errorResponse.some(word => response.stdout.includes(word))) {
+						this.errorHandling(new ResponseError(`${logPrefix} ${response.stdout}`), logPrefix, responseErrorSendToSentry);
+						return undefined;
+					}
+
 					return response.stdout;
 				} else {
 					if (response.stderr.includes('Shutdown scheduled for')) {
