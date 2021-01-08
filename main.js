@@ -828,10 +828,6 @@ class LinuxControl extends utils.Adapter {
 
 					if (!response.stderr) {
 						response.stdout = response.stdout.replace(password, "")
-							.replace(`[sudo] password for ${host.user}: \r`, "")
-							.replace('sudo: setrlimit(RLIMIT_CORE): Operation not permitted', "").replace("\n\n", "")
-							.replace('[sudo] Passwort für pi: \r', "")
-							.replace('[sudo] Passwort für pi: \n', "");
 					}
 				} else if (cmd.includes('sudo ') && !cmd.includes('sudo -S ')) {
 					this.errorHandling(new ResponseError(`${logPrefix} you must use 'sudo -S' instead of 'sudo' only!`), logPrefix, responseErrorSendToSentry);
@@ -843,6 +839,21 @@ class LinuxControl extends utils.Adapter {
 				if (!response.stderr) {
 					this.log.debug(`${logPrefix} response stdout: ${response.stdout}`);
 					await this.reportResponse(responseId, 'successful');
+
+					// remove system stdout
+					if (!response.stderr) {
+						response.stdout = response.stdout
+							.replace(/^.*\[sudo\] password for.*$/mg, "")
+							.replace(/^.*\[sudo\] Passwort für.*$/mg, "")
+							.replace(/^.*sudo\: setrlimit\(RLIMIT_CORE\)\: Operation not permitted.*$/mg, "")
+							.replace(/^\s*$(?:\r\n?|\n)/gm, "");	// remove all empty lines
+
+						// .replace(`[sudo] password for ${host.user}: \r`, "")
+						// .replace('sudo: setrlimit(RLIMIT_CORE): Operation not permitted', "").replace("\n\n", "")
+						// .replace('[sudo] Passwort für pi: \r', "")
+						// .replace('[sudo] Passwort für pi: \n', "");
+					}
+
 					return response.stdout;
 				} else {
 					if (response.stderr.includes('Shutdown scheduled for')) {
