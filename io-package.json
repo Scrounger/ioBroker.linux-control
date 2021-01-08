@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "1.1.1",
+        "version": "1.1.2",
         "news": {
+            "1.1.2": {
+                "en": "show error if user is not in sudoers file\nbug fix if response has no result optimized\nmyCommands: bug fix sudo is no longer mandatory",
+                "de": "Fehler anzeigen, wenn sich der Benutzer nicht in der sudoers-Datei befindet\nFehlerbehebung, wenn die Antwort kein optimiertes Ergebnis hat\nmyCommands: Bugfix Sudo ist nicht mehr obligatorisch",
+                "ru": "показать ошибку, если пользователя нет в файле sudoers\nисправление ошибки, если ответ не дал оптимизированного результата\nmyCommands: исправление ошибки sudo больше не является обязательным",
+                "pt": "mostrar erro se o usuário não estiver no arquivo sudoers\ncorreção de bug se a resposta não tiver resultado otimizado\nmyCommands: bug fix sudo não é mais obrigatório",
+                "nl": "show error als de gebruiker niet in het sudoers-bestand zit\nbugfix als reactie geen geoptimaliseerd resultaat heeft\nmyCommands: bug fix sudo is niet langer verplicht",
+                "fr": "afficher l'erreur si l'utilisateur n'est pas dans le fichier sudoers\ncorrection de bogue si la réponse n'a pas de résultat optimisé\nmyCommands: la correction de bogue sudo n'est plus obligatoire",
+                "it": "mostra l'errore se l'utente non è nel file sudoers\ncorrezione di bug se la risposta non ha risultati ottimizzati\nmyCommands: bug fix sudo non è più obbligatorio",
+                "es": "mostrar error si el usuario no está en el archivo sudoers\ncorrección de errores si la respuesta no tiene resultados optimizados\nmyCommands: la corrección de errores sudo ya no es obligatoria",
+                "pl": "pokaż błąd, jeśli użytkownika nie ma w pliku sudoers\npoprawka błędu, jeśli odpowiedź nie ma zoptymalizowanych wyników\nmyCommands: naprawianie błędów sudo nie jest już obowiązkowe",
+                "zh-cn": "如果用户不在sudoers文件中，则显示错误\n错误修复，如果响应没有优化结果\nmyCommands：错误修复sudo不再是必需的"
+            },
             "1.1.0": {
                 "en": "datapoints type and role bug fixes\nadapter settings card layout added",
                 "de": "Fehlerbehebungen für Datenpunkttyp und -rolle\nAdaptereinstellungen Kartenlayout hinzugefügt",
@@ -230,18 +242,6 @@
                 "es": "puntos de datos de carpeta opcionales para el recuento de archivos y el último cambio agregado\nhabilitar opciones para hosts, carpetas y comandos de usuario agregados\nusando sudo implementado\nmatriz de tipos para los comandos de usuario agregados\nignorar el nodo de puntos de datos completo usando arrastrar y soltar\nmanejo de errores para comandos de usuario mejorado\nSentry implementado",
                 "pl": "opcjonalne punkty danych folderu dla liczby plików i ostatniej dodanej zmiany\nwłącz opcje hostów, folderów i dodanych poleceń użytkownika\nprzy użyciu zaimplementowanego sudo\ndodana tablica typów dla poleceń użytkownika\nzignoruj cały węzeł punktów danych za pomocą przeciągania i upuszczania\npoprawiona obsługa błędów dla poleceń użytkownika\nSentry zaimplementowano",
                 "zh-cn": "可选文件夹数据点，用于文件计数和最后添加的更改\n为主机，文件夹和用户命令添加启用选项\n使用sudo实现\n输入用户命令的类型数组\n通过拖放忽略整个数据点节点\n改进了用户命令的错误处理\n哨兵实施"
-            },
-            "0.1.0": {
-                "en": "added datapoints blacklist configurable for each host individually\nadded poll interval configurable for each host individually\nconfiguration bug fixes",
-                "de": "Es wurde eine Datenpunkt-Blacklist hinzugefügt, die für jeden Host einzeln konfiguriert werden kann\nFür jeden Host individuell konfigurierbares Abfrageintervall hinzugefügt\nKonfigurationsfehlerbehebungen",
-                "ru": "добавлен черный список точек данных, настраиваемый для каждого хоста индивидуально\nдобавлен интервал опроса, настраиваемый для каждого хоста индивидуально\nисправление ошибок конфигурации",
-                "pt": "adicionado lista negra de pontos de dados configurável para cada host individualmente\nadicionado intervalo de pesquisa configurável para cada host individualmente\ncorreções de bugs de configuração",
-                "nl": "datapunten zwarte lijst configureerbaar voor elke host afzonderlijk\ntoegevoegd pollinterval configureerbaar voor elke host afzonderlijk\nconfiguratie bugfixes",
-                "fr": "ajout d'une liste noire de points de données configurable pour chaque hôte individuellement\nintervalle d'interrogation supplémentaire configurable pour chaque hôte individuellement\ncorrections de bugs de configuration",
-                "it": "aggiunta lista nera di punti dati configurabile per ciascun host individualmente\naggiunto intervallo di polling configurabile per ciascun host individualmente\ncorrezioni di bug di configurazione",
-                "es": "lista negra de puntos de datos agregados configurable para cada host individualmente\nintervalo de sondeo agregado configurable para cada host individualmente\ncorrecciones de errores de configuración",
-                "pl": "dodano czarną listę punktów danych konfigurowalną indywidualnie dla każdego hosta\ndodano interwał odpytywania konfigurowany indywidualnie dla każdego hosta\npoprawki błędów konfiguracji",
-                "zh-cn": "为每个主机分别配置了添加的数据点黑名单\n增加了可为每个主机分别配置的轮询间隔\n配置错误修复"
             }
         },
         "title": "Linux Control",
