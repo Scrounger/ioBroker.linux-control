@@ -102,7 +102,7 @@ class LinuxControl extends utils.Adapter {
 
 					if (obj && obj.common && obj.common.role === 'button' && obj.common.type === 'boolean') {
 						this.subscribeStates(id);
-						this.log.debug(`[refreshHost] ${host.name} (${host.ip}:${host.port}): button '${id}' subscribed`);
+						this.debugHandling(`[refreshHost] ${host.name} (${host.ip}:${host.port}): button '${id}' subscribed`);
 					}
 				}
 			}
@@ -118,7 +118,7 @@ class LinuxControl extends utils.Adapter {
 				this.log.info(`polling interval is deactivated for ${host.name} (${host.ip}:${host.port})`);
 			}
 		} else {
-			this.log.debug(`getting data from ${host.name} (${host.ip}:${host.port}) -> not enabled!`);
+			this.debugHandling(`getting data from ${host.name} (${host.ip}:${host.port}) -> not enabled!`);
 		}
 	}
 
@@ -162,7 +162,7 @@ class LinuxControl extends utils.Adapter {
 			}
 		} else {
 			if (this.isAdapterStart) {
-				this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+				this.debugHandling(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
 				for (const propObj of objects) {
 					await this.delMyObject(`${host.name.replace(' ', '_')}.info.${propObj.id}`);
@@ -198,15 +198,15 @@ class LinuxControl extends utils.Adapter {
 								if (this.isAdapterStart) {
 									// adapter first run -> execute userCommands with diffrent polling interval
 									if (cmd.type !== 'button') {
-										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
+										this.debugHandling(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: first start of adapter -> run also command with diffrent polling interval configured`);
 									} else {
-										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: create button`);
+										this.debugHandling(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: create button`);
 									}
 
 									await this.userCommandExecute(connection, host, cmd);
 								} else {
 									if (cmd.type !== 'button') {
-										this.log.debug(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
+										this.debugHandling(`${logPrefix} datapoint-id: ${cmd.name}, description: ${cmd.description}: diffrent polling interval configured`);
 									}
 								}
 							}
@@ -217,7 +217,7 @@ class LinuxControl extends utils.Adapter {
 							this.errorHandling(err, logPrefix);
 						}
 					} else {
-						this.log.debug(`${logPrefix} datapoint-id: '${cmd.name}', description: '${cmd.description}' -> is not enabled!`);
+						this.debugHandling(`${logPrefix} datapoint-id: '${cmd.name}', description: '${cmd.description}' -> is not enabled!`);
 					}
 				}
 			}
@@ -240,7 +240,7 @@ class LinuxControl extends utils.Adapter {
 			if (connection === undefined && cmd.interval && cmd.interval > 0 && cmd.type !== 'button') {
 				establishedNewConnection = true;
 
-				this.log.debug(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> create connection`);
+				this.debugHandling(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> create connection`);
 				connection = await this.getConnection(host);
 			}
 
@@ -283,7 +283,7 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				if (establishedNewConnection) {
-					this.log.debug(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> close connection`);
+					this.debugHandling(`[userCommandExecute] ${host.name} (${host.ip}:${host.port}, id: ${cmd.name}, description: ${cmd.description}): diffrent polling interval -> close connection`);
 					connection.dispose();
 				}
 			}
@@ -346,7 +346,7 @@ class LinuxControl extends utils.Adapter {
 
 								let result = parseFloat(response).toFixed(parseInt(folder.digits) || 0);
 
-								this.log.debug(`${logPrefix} ${id}: ${parseFloat(result)} ${folder.unit}`);
+								this.debugHandling(`${logPrefix} ${id}: ${parseFloat(result)} ${folder.unit}`);
 								await this.setStateAsync(id, parseFloat(result), true);
 
 								if (folder.countFiles) {
@@ -356,7 +356,7 @@ class LinuxControl extends utils.Adapter {
 										let id = `${host.name.replace(' ', '_')}.folders.${folder.name}.files`;
 										await this.createObjectNumber(id, _('countFilesInFolder'), _('files'));
 
-										this.log.debug(`${logPrefix} ${id}: ${parseInt(response)} ${_('files')}`);
+										this.debugHandling(`${logPrefix} ${id}: ${parseInt(response)} ${_('files')}`);
 										await this.setStateAsync(id, parseInt(response), true);
 									}
 								}
@@ -371,14 +371,14 @@ class LinuxControl extends utils.Adapter {
 
 										await this.createObjectNumber(id, _('last change'));
 
-										this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
+										this.debugHandling(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 										await this.setStateAsync(id, timestamp, true);
 									}
 								}
 							}
 
 						} else {
-							this.log.debug(`${logPrefix} getting size for '${host.name.replace(' ', '_')}.folders.${folder.name}' -> is not enabled!`);
+							this.debugHandling(`${logPrefix} getting size for '${host.name.replace(' ', '_')}.folders.${folder.name}' -> is not enabled!`);
 						}
 					}
 				}
@@ -415,7 +415,7 @@ class LinuxControl extends utils.Adapter {
 								delimiter: [" "]
 							}).fromString(response);
 
-							this.log.debug(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
+							this.debugHandling(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
 
 							for (const obj of objects) {
 								// @ts-ignore
@@ -424,14 +424,14 @@ class LinuxControl extends utils.Adapter {
 										let id = `${host.name.replace(' ', '_')}.needrestart.${obj.id}`;
 
 										if (obj.id === 'needrestart') {
-											this.log.debug(`${logPrefix} ${id}: ${parsed[0][obj.id] === 'OK' ? false : true}`);
+											this.debugHandling(`${logPrefix} ${id}: ${parsed[0][obj.id] === 'OK' ? false : true}`);
 
 											await this.createObjectBoolean(id, _(obj.name));
 											await this.setStateAsync(id, parsed[0][obj.id] === 'OK' ? false : true, true);
 										}
 
 										if (obj.type === 'number') {
-											this.log.debug(`${logPrefix} ${id}: ${parseInt(parsed[0][obj.id])}`);
+											this.debugHandling(`${logPrefix} ${id}: ${parseInt(parsed[0][obj.id])}`);
 
 											await this.createObjectNumber(id, _(obj.name));
 											await this.setStateAsync(id, parseInt(parsed[0][obj.id]), true);
@@ -454,7 +454,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			} else {
 				if (this.isAdapterStart) {
-					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+					this.debugHandling(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
 					let needRestartStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.needrestart.*`);
 					for (const id of Object.keys(needRestartStates)) {
@@ -494,7 +494,7 @@ class LinuxControl extends utils.Adapter {
 							delimiter: [","]
 						}).fromString(response);
 
-						this.log.debug(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
+						this.debugHandling(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
 
 						// TODO: whitelist für services implementieren
 						for (const result of parsed) {
@@ -524,7 +524,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			} else {
 				if (this.isAdapterStart) {
-					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+					this.debugHandling(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
 					let servicesStates = await this.getStatesAsync(`${this.namespace}.${host.name.replace(' ', '_')}.services.*`);
 					for (const id of Object.keys(servicesStates)) {
@@ -561,7 +561,7 @@ class LinuxControl extends utils.Adapter {
 							delimiter: ["="]
 						}).fromString(response);
 
-						this.log.debug(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
+						this.debugHandling(`${logPrefix} csvToJson result: ${JSON.stringify(parsed)}`);
 
 						for (const propObj of objects) {
 							let obj = parsed.find(x => x.prop === propObj.propName);
@@ -585,7 +585,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			} else {
 				if (this.isAdapterStart) {
-					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+					this.debugHandling(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
 					for (const propObj of objects) {
 						await this.delMyObject(`${host.name.replace(' ', '_')}.distribution.${propObj.id}`);
@@ -726,7 +726,7 @@ class LinuxControl extends utils.Adapter {
 						let id = `${host.name.replace(' ', '_')}.updates.newPackages`;
 						// @ts-ignore
 						if (this.config.whitelist["updates"].includes("newPackages") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackages`)) {
-							this.log.debug(`${logPrefix} ${id}: ${newPackages}`);
+							this.debugHandling(`${logPrefix} ${id}: ${newPackages}`);
 
 							await this.createObjectNumber(id, `newPackages`, `packages`);
 							await this.setStateAsync(id, newPackages, true);
@@ -738,7 +738,7 @@ class LinuxControl extends utils.Adapter {
 						id = `${host.name.replace(' ', '_')}.updates.upgradable`;
 						// @ts-ignore
 						if (this.config.whitelist["updates"].includes("upgradable") && !this.config.blacklistDatapoints[host.name].includes(`updates.upgradable`)) {
-							this.log.debug(`${logPrefix} ${id}: ${newPackages > 0 ? true : false}`);
+							this.debugHandling(`${logPrefix} ${id}: ${newPackages > 0 ? true : false}`);
 
 							await this.createObjectBoolean(id, `upgradable`);
 							await this.setStateAsync(id, newPackages > 0 ? true : false, true);
@@ -752,7 +752,7 @@ class LinuxControl extends utils.Adapter {
 						if (this.config.whitelist["updates"].includes("newPackagesList") && !this.config.blacklistDatapoints[host.name].includes(`updates.newPackagesList`)) {
 
 							if (newPackages > 0) {
-								this.log.debug(`${logPrefix} ${id}: ${JSON.stringify(parsed)}`);
+								this.debugHandling(`${logPrefix} ${id}: ${JSON.stringify(parsed)}`);
 
 								await this.createObjectString(id, `newPackagesList`);
 								await this.setStateAsync(id, JSON.stringify(parsed), true);
@@ -773,7 +773,7 @@ class LinuxControl extends utils.Adapter {
 						if (response) {
 							let timestamp = parseInt(response) * 1000;
 
-							this.log.debug(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
+							this.debugHandling(`${logPrefix} ${id}: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
 							await this.createObjectNumber(id, `lastUpdate`);
 							await this.setStateAsync(id, timestamp, true);
@@ -783,7 +783,7 @@ class LinuxControl extends utils.Adapter {
 							if (response) {
 								let timestamp = Date.parse(response);
 
-								this.log.debug(`${logPrefix} ${id}: Fallback method: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
+								this.debugHandling(`${logPrefix} ${id}: Fallback method: ${timestamp} -> ${this.formatDate(timestamp, 'DD.MM.YYYY hh:mm')}`);
 
 								await this.createObjectNumber(id, `lastUpdate`);
 								await this.setStateAsync(id, timestamp, true);
@@ -795,7 +795,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			} else {
 				if (this.isAdapterStart) {
-					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+					this.debugHandling(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
 					for (const propObj of objects) {
 						await this.delMyObject(`${host.name.replace(' ', '_')}.updates.${propObj.id}`);
@@ -818,7 +818,7 @@ class LinuxControl extends utils.Adapter {
 	async sendCommand(connection, host, cmd, logPrefix, responseId = undefined, responseErrorSendToSentry = false) {
 		try {
 			if (connection) {
-				this.log.debug(`${logPrefix} send command: '${cmd}'`);
+				this.debugHandling(`${logPrefix} send command: '${cmd}'`);
 
 				let response = undefined;
 				if (host.useSudo && cmd.includes('sudo -S ')) {
@@ -837,7 +837,7 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				if (!response.stderr) {
-					this.log.debug(`${logPrefix} response stdout: ${response.stdout}`);
+					this.debugHandling(`${logPrefix} response stdout: ${response.stdout}`);
 					await this.reportResponse(responseId, 'successful');
 
 					// remove system stdout
@@ -921,17 +921,17 @@ class LinuxControl extends utils.Adapter {
 				}
 
 				if (host.rsakey && host.rsakey.length > 0) {
-					this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using rsa key for authentification`);
+					this.debugHandling(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using rsa key for authentification`);
 					options.passphrase = password;
 					options.privateKey = host.rsakey;
 				} else if (host.useSudo) {
-					this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using sudo for authentification`);
+					this.debugHandling(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}): using sudo for authentification`);
 				}
 
 				return await ssh.connect(options);
 			} else {
 				this.log.info(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) seems not to be online`);
-				this.log.debug(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) ping result: ${JSON.stringify(pingResult)}`)
+				this.debugHandling(`[getConnection] Host '${host.name}' (${host.ip}:${host.port}) ping result: ${JSON.stringify(pingResult)}`)
 				return undefined;
 			}
 		} catch (err) {
@@ -1242,7 +1242,7 @@ class LinuxControl extends utils.Adapter {
 		if (this.isAdapterStart) {
 			if (await this.getObjectAsync(id)) {
 				if (id && logPrefix) {
-					this.log.debug(`${logPrefix} datapoint '${id}' is not selected -> removing existing datapoint`);
+					this.debugHandling(`${logPrefix} datapoint '${id}' is not selected -> removing existing datapoint`);
 				}
 
 				await this.delObjectAsync(id);
@@ -1279,7 +1279,7 @@ class LinuxControl extends utils.Adapter {
 				}
 			} else {
 				if (this.isAdapterStart) {
-					this.log.debug(`${logPrefix} no datapoints selected -> removing existing datapoints`);
+					this.debugHandling(`${logPrefix} no datapoints selected -> removing existing datapoints`);
 
 					for (const obj of objects) {
 						await this.delMyObject(`${idPrefix}.${obj.id}`);
@@ -1507,7 +1507,17 @@ class LinuxControl extends utils.Adapter {
 		}
 	}
 
+	/**
+	 * @param {String} message
+	 */
+	debugHandling(message) {
 
+		if (message && (message.toString().includes('not allowed to') || message.toString().includes('Access denied'))) {
+			this.log.warn(message);
+		} else {
+			this.log.debug(message);
+		}
+	}
 
 	//#endregion
 
