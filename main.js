@@ -50,9 +50,7 @@ class LinuxControl extends utils.Adapter {
 
 			this.isAdapterStart = true;
 
-			for (const host of this.config.hosts) {
-				await this.refreshHost(host);
-			}
+			await Promise.allSettled(this.config.hosts.map((host) => this.refreshHost(host)));
 
 			this.isAdapterStart = false;
 
