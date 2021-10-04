@@ -1510,7 +1510,7 @@ class LinuxControl extends utils.Adapter {
 	 */
 	debugHandling(message) {
 
-		if (message && (message.toString().includes('not allowed to') || message.toString().includes('Access denied'))) {
+		if (message && (message.toString().toLowerCase().includes('not allowed to') || message.toString().toLowerCase().includes('access denied') || message.toString().toLowerCase().includes('permission denied'))) {
 			this.log.warn(message);
 		} else {
 			this.log.debug(message);
