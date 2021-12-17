@@ -273,6 +273,20 @@ class LinuxControl extends utils.Adapter {
 							} else if (cmd.type === 'array') {
 								await this.setStateAsync(id, null, true);
 							}
+						} else {
+							if (cmd.type === 'string') {
+								await this.createObjectString(id, cmd.description);
+								await this.setStateAsync(id, "", true);
+							} else if (cmd.type === 'number') {
+								await this.createObjectNumber(id, cmd.description, cmd.unit);
+								await this.setStateAsync(id, 0, true);
+							} else if (cmd.type === 'boolean') {
+								await this.createObjectBoolean(id, cmd.description);
+								await this.setStateAsync(id, false, true);
+							} else if (cmd.type === 'array') {
+								await this.createObjectArray(id, cmd.description);
+								await this.setStateAsync(id, null, true);
+							}
 						}
 					}
 				} else {
@@ -1303,6 +1317,7 @@ class LinuxControl extends utils.Adapter {
 					await this.setObjectAsync(id, obj);
 				}
 			} else {
+				this.log.debug(`[createObjectString] creating datapoint '${id}'`);
 				await this.setObjectNotExistsAsync(id,
 					{
 						type: 'state',
@@ -1337,6 +1352,7 @@ class LinuxControl extends utils.Adapter {
 					await this.setObjectAsync(id, obj);
 				}
 			} else {
+				this.log.debug(`[createObjectNumber] creating datapoint '${id}'`);
 				await this.setObjectNotExistsAsync(id,
 					{
 						type: 'state',
@@ -1369,6 +1385,7 @@ class LinuxControl extends utils.Adapter {
 					await this.setObjectAsync(id, obj);
 				}
 			} else {
+				this.log.debug(`[createObjectBoolean] creating datapoint '${id}'`);
 				await this.setObjectNotExistsAsync(id,
 					{
 						type: 'state',
@@ -1400,6 +1417,7 @@ class LinuxControl extends utils.Adapter {
 					await this.setObjectAsync(id, obj);
 				}
 			} else {
+				this.log.debug(`[createObjectArray] creating datapoint '${id}'`);
 				await this.setObjectNotExistsAsync(id,
 					{
 						type: 'state',
@@ -1431,6 +1449,7 @@ class LinuxControl extends utils.Adapter {
 					await this.setObjectAsync(id, obj);
 				}
 			} else {
+				this.log.debug(`[createObjectButton] creating datapoint '${id}'`);
 				await this.setObjectNotExistsAsync(id,
 					{
 						type: 'state',
@@ -1461,6 +1480,7 @@ class LinuxControl extends utils.Adapter {
 					await this.setObjectAsync(id, obj);
 				}
 			} else {
+				this.log.debug(`[createMyChannel] creating channel '${id}'`);
 				await this.setObjectNotExistsAsync(id,
 					{
 						type: 'channel',
