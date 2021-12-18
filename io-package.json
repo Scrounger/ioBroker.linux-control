@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linux-control",
-        "version": "1.1.3",
+        "version": "1.1.4",
         "news": {
+            "1.1.4": {
+                "en": "always create my command datapoint",
+                "de": "erstelle immer meinen Befehlsdatenpunkt",
+                "ru": "всегда создавать мою точку данных команды",
+                "pt": "sempre crio meu datapoint de comando",
+                "nl": "maak altijd mijn opdrachtgegevenspunt aan",
+                "fr": "toujours créer mon point de données de commande",
+                "it": "crea sempre il mio punto dati di comando",
+                "es": "siempre crea mi punto de datos de comando",
+                "pl": "zawsze twórz mój punkt danych poleceń",
+                "zh-cn": "始终创建我的命令数据点"
+            },
             "1.1.3": {
                 "en": "show warn message if permission denied\npreformance improvment",
                 "de": "Warnmeldung anzeigen, wenn Berechtigung verweigert\nLeistungssteigerung",
@@ -220,18 +232,6 @@
                 "zh-cn": "bug修复"
             },
             "0.2.2": {
-                "en": "bug fixes",
-                "de": "Fehlerbehebung",
-                "ru": "исправление ошибок",
-                "pt": "correção de bugs",
-                "nl": "bugfixes",
-                "fr": "corrections de bogues",
-                "it": "correzioni di bug",
-                "es": "corrección de errores",
-                "pl": "poprawki błędów",
-                "zh-cn": "bug修复"
-            },
-            "0.2.1": {
                 "en": "bug fixes",
                 "de": "Fehlerbehebung",
                 "ru": "исправление ошибок",
