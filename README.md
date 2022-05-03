@@ -101,8 +101,7 @@ It is important that the retrieved data is transmitted in the correct type! The 
     Placeholder for the next version (at the beginning of the line):
     ### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 1.1.5 (2022-05-03)
 * (Scrounger) Dependencies updated
 
 ### 1.1.4 (2021-12-18)
@@ -191,7 +190,6 @@ It is important that the retrieved data is transmitted in the correct type! The 
 * (Scrounger) ignore whole datapoints node by using drag and drop 
 * (Scrounger) error handling for user commands improved
 * (Scrounger) Sentry implemented
- 
 
 ### 0.1.0 (2020-05-20)
 * (Scrounger) added datapoints blacklist configurable for each host individually

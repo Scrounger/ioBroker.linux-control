@@ -1,398 +1,242 @@
 {
-    "common": {
-        "name": "linux-control",
-        "version": "1.1.4",
-        "news": {
-            "1.1.4": {
-                "en": "always create my command datapoint",
-                "de": "erstelle immer meinen Befehlsdatenpunkt",
-                "ru": "всегда создавать мою точку данных команды",
-                "pt": "sempre crio meu datapoint de comando",
-                "nl": "maak altijd mijn opdrachtgegevenspunt aan",
-                "fr": "toujours créer mon point de données de commande",
-                "it": "crea sempre il mio punto dati di comando",
-                "es": "siempre crea mi punto de datos de comando",
-                "pl": "zawsze twórz mój punkt danych poleceń",
-                "zh-cn": "始终创建我的命令数据点"
-            },
-            "1.1.3": {
-                "en": "show warn message if permission denied\npreformance improvment",
-                "de": "Warnmeldung anzeigen, wenn Berechtigung verweigert\nLeistungssteigerung",
-                "ru": "показать предупреждающее сообщение, если в разрешении отказано\nулучшение преформ",
-                "pt": "mostrar mensagem de aviso se a permissão for negada\nmelhoria de performance",
-                "nl": "waarschuwingsbericht weergeven als toestemming geweigerd\nprestatieverbetering",
-                "fr": "afficher un message d'avertissement si l'autorisation est refusée\namélioration des performances",
-                "it": "mostra il messaggio di avviso se l'autorizzazione è negata\nmiglioramento delle prestazioni",
-                "es": "mostrar mensaje de advertencia si se niega el permiso\nmejora del rendimiento",
-                "pl": "pokaż komunikat ostrzegawczy, jeśli odmówiono pozwolenia\npoprawa wydajności",
-                "zh-cn": "如果权限被拒绝，则显示警告消息\n表现改善"
-            },
-            "1.1.2": {
-                "en": "show error if user is not in sudoers file\nbug fix if response has no result optimized\nmyCommands: bug fix sudo is no longer mandatory",
-                "de": "Fehler anzeigen, wenn sich der Benutzer nicht in der sudoers-Datei befindet\nFehlerbehebung, wenn die Antwort kein optimiertes Ergebnis hat\nmyCommands: Bugfix Sudo ist nicht mehr obligatorisch",
-                "ru": "показать ошибку, если пользователя нет в файле sudoers\nисправление ошибки, если ответ не дал оптимизированного результата\nmyCommands: исправление ошибки sudo больше не является обязательным",
-                "pt": "mostrar erro se o usuário não estiver no arquivo sudoers\ncorreção de bug se a resposta não tiver resultado otimizado\nmyCommands: bug fix sudo não é mais obrigatório",
-                "nl": "show error als de gebruiker niet in het sudoers-bestand zit\nbugfix als reactie geen geoptimaliseerd resultaat heeft\nmyCommands: bug fix sudo is niet langer verplicht",
-                "fr": "afficher l'erreur si l'utilisateur n'est pas dans le fichier sudoers\ncorrection de bogue si la réponse n'a pas de résultat optimisé\nmyCommands: la correction de bogue sudo n'est plus obligatoire",
-                "it": "mostra l'errore se l'utente non è nel file sudoers\ncorrezione di bug se la risposta non ha risultati ottimizzati\nmyCommands: bug fix sudo non è più obbligatorio",
-                "es": "mostrar error si el usuario no está en el archivo sudoers\ncorrección de errores si la respuesta no tiene resultados optimizados\nmyCommands: la corrección de errores sudo ya no es obligatoria",
-                "pl": "pokaż błąd, jeśli użytkownika nie ma w pliku sudoers\npoprawka błędu, jeśli odpowiedź nie ma zoptymalizowanych wyników\nmyCommands: naprawianie błędów sudo nie jest już obowiązkowe",
-                "zh-cn": "如果用户不在sudoers文件中，则显示错误\n错误修复，如果响应没有优化结果\nmyCommands：错误修复sudo不再是必需的"
-            },
-            "1.1.0": {
-                "en": "datapoints type and role bug fixes\nadapter settings card layout added",
-                "de": "Fehlerbehebungen für Datenpunkttyp und -rolle\nAdaptereinstellungen Kartenlayout hinzugefügt",
-                "ru": "исправления ошибок типов и ролей точек данных\nдобавлен макет карты настроек адаптера",
-                "pt": "tipo de pontos de dados e correções de bugs de funções\nconfiguração do adaptador layout do cartão adicionado",
-                "nl": "datapunten type en rol bugfixes\nadapter instellingen kaart layout toegevoegd",
-                "fr": "Correction de bogues relatifs au type et au rôle des points de données\nmise en page de la carte des paramètres de l'adaptateur ajoutée",
-                "it": "tipo di datapoint e correzioni di bug di ruolo\nlayout scheda impostazioni adattatore aggiunto",
-                "es": "tipo de puntos de datos y corrección de errores de rol\ndiseño de tarjeta de configuración del adaptador agregado",
-                "pl": "poprawki błędów typu i roli punktów danych\nDodano układ karty ustawień adaptera",
-                "zh-cn": "数据点类型和角色错误修复\n适配器设置卡布局已添加"
-            },
-            "1.0.1": {
-                "en": "translation for polling interval optimized",
-                "de": "Übersetzung für Abfrageintervall optimiert",
-                "ru": "Оптимизирован перевод для интервала опроса",
-                "pt": "tradução para intervalo de sondagem otimizada",
-                "nl": "vertaling voor geoptimaliseerd polling-interval",
-                "fr": "traduction optimisée pour l'intervalle d'interrogation",
-                "it": "traduzione per l'intervallo di polling ottimizzata",
-                "es": "traducción para intervalo de sondeo optimizado",
-                "pl": "tłumaczenie zoptymalizowane pod kątem interwału odpytywania",
-                "zh-cn": "轮询间隔的转换优化"
-            },
-            "1.0.0": {
-                "en": "bump to stable",
-                "de": "Stoß zu stabil",
-                "ru": "подъехать к стабильной",
-                "pt": "colidir para estável",
-                "nl": "hobbel naar stabiel",
-                "fr": "bosse à stable",
-                "it": "bump to stabile",
-                "es": "golpe a estable",
-                "pl": "uderzyć do stabilnego",
-                "zh-cn": "颠簸到稳定"
-            },
-            "0.3.7": {
-                "en": "subscribe bug fix for user commands",
-                "de": "Fehlerbehebung für Benutzerbefehle abonnieren",
-                "ru": "подписаться на исправление ошибок для пользовательских команд",
-                "pt": "subscrever correção de bug para comandos do usuário",
-                "nl": "abonneer bugfix voor gebruikersopdrachten",
-                "fr": "abonnez-vous correction de bogue pour les commandes utilisateur",
-                "it": "sottoscrivere bug fix per i comandi utente",
-                "es": "suscribirse corrección de errores para comandos de usuario",
-                "pl": "zasubskrybuj poprawkę błędu dla poleceń użytkownika",
-                "zh-cn": "订阅用户命令的错误修复"
-            },
-            "0.3.6": {
-                "en": "Bug fix for function needrestart if sudo is used",
-                "de": "Fehlerbehebung für Funktion muss neu gestartet werden, wenn sudo verwendet wird",
-                "ru": "Исправление ошибки для функции needrestart, если используется sudo",
-                "pt": "Correção de bug para a função needrestart se sudo for usado",
-                "nl": "Bugfix voor functie die opnieuw moet worden gestart als sudo wordt gebruikt",
-                "fr": "Correction de bogue pour la fonction needrestart si sudo est utilisé",
-                "it": "Correzione di bug per la funzione needrestart se viene utilizzato sudo",
-                "es": "Corrección de errores para la función needrestart si se usa sudo",
-                "pl": "Poprawka błędu funkcji wymaga ponownego uruchomienia, jeśli używane jest sudo",
-                "zh-cn": "如果使用sudo，则需要对功能needrestart进行错误修复"
-            },
-            "0.3.5": {
-                "en": "Fixed some errors reported via Sentry",
-                "de": "Einige über Sentry gemeldete Fehler wurden behoben",
-                "ru": "Исправлены некоторые ошибки, о которых сообщалось через Sentry.",
-                "pt": "Corrigidos alguns erros relatados via Sentry",
-                "nl": "Enkele fouten opgelost die via Sentry werden gerapporteerd",
-                "fr": "Correction de certaines erreurs signalées via Sentry",
-                "it": "Risolti alcuni errori segnalati tramite Sentry",
-                "es": "Se corrigieron algunos errores informados a través de Sentry",
-                "pl": "Naprawiono niektóre błędy zgłaszane przez Sentry",
-                "zh-cn": "修复了通过哨兵报告的一些错误"
-            },
-            "0.3.4": {
-                "en": "bug fixes",
-                "de": "Fehlerbehebung",
-                "ru": "исправление ошибок",
-                "pt": "correção de bugs",
-                "nl": "bugfixes",
-                "fr": "corrections de bogues",
-                "it": "correzioni di bug",
-                "es": "corrección de errores",
-                "pl": "poprawki błędów",
-                "zh-cn": "bug修复"
-            },
-            "0.3.3": {
-                "en": "bug fix for datapoints creation",
-                "de": "Fehlerbehebung für die Erstellung von Datenpunkten",
-                "ru": "исправление ошибки при создании точек данных",
-                "pt": "correção de bug para criação de pontos de dados",
-                "nl": "bugfix voor het maken van datapunten",
-                "fr": "correction de bogue pour la création de points de données",
-                "it": "correzione di bug per la creazione di datapoint",
-                "es": "corrección de errores para la creación de puntos de datos",
-                "pl": "poprawka błędu tworzenia punktów danych",
-                "zh-cn": "错误修复数据点创建"
-            },
-            "0.3.2": {
-                "en": "performance optimizations\nFixed some errors reported via Sentry",
-                "de": "Leistungsoptimierungen\nEinige über Sentry gemeldete Fehler wurden behoben",
-                "ru": "оптимизация производительности\nИсправлены некоторые ошибки, о которых сообщалось через Sentry.",
-                "pt": "otimizações de desempenho\nCorrigidos alguns erros relatados via Sentry",
-                "nl": "prestatie-optimalisaties\nEnkele fouten opgelost die via Sentry werden gerapporteerd",
-                "fr": "optimisations des performances\nCorrection de certaines erreurs signalées via Sentry",
-                "it": "ottimizzazioni delle prestazioni\nRisolti alcuni errori segnalati tramite Sentry",
-                "es": "optimizaciones de rendimiento\nSe corrigieron algunos errores informados a través de Sentry",
-                "pl": "optymalizacje wydajności\nNaprawiono niektóre błędy zgłaszane przez Sentry",
-                "zh-cn": "性能优化\n修复了通过哨兵报告的一些错误"
-            },
-            "0.3.1": {
-                "en": "datapoint info lastRefresh added",
-                "de": "Datenpunktinfo lastRefresh hinzugefügt",
-                "ru": "добавлена информация о точке данных lastRefresh",
-                "pt": "informação do datapoint lastRefresh adicionada",
-                "nl": "datapunt info lastRefresh toegevoegd",
-                "fr": "info de point de données lastRefresh ajouté",
-                "it": "informazioni datapoint lastRefresh aggiunte",
-                "es": "información del punto de datos lastRefresh agregado",
-                "pl": "Dodano informacje o punkcie danych lastRefresh",
-                "zh-cn": "数据点信息lastRefresh已添加"
-            },
-            "0.3.0": {
-                "en": "button to manual refresh a single host added\nuserCommand: ignore polling interval if type is button\nuserCommand: individual polling intervals added\nuserCommand: bug fix if sudo is used\nrefresh services info after using command\nservices command: bug fix for using sudo",
-                "de": "Schaltfläche zum manuellen Aktualisieren eines einzelnen hinzugefügten Hosts\nuserCommand: Abrufintervall ignorieren, wenn Typ die Schaltfläche ist\nuserCommand: Einzelne Abfrageintervalle hinzugefügt\nuserCommand: Fehlerbehebung bei Verwendung von sudo\nAktualisieren Sie die Dienstinformationen, nachdem Sie den Befehl verwendet haben\nBefehl services: Fehlerbehebung für die Verwendung von sudo",
-                "ru": "кнопка для ручного обновления добавленного отдельного хоста\nuserCommand: игнорировать интервал опроса, если тип - кнопка\nuserCommand: добавлены индивидуальные интервалы опроса\nuserCommand: исправление ошибки при использовании sudo\nобновить информацию об услугах после использования команды\nкоманда services: исправление ошибки при использовании sudo",
-                "pt": "botão para atualizar manualmente um único host adicionado\nuserCommand: ignora o intervalo de sondagem se o tipo for botão\nuserCommand: intervalos de sondagem individuais adicionados\nuserCommand: correção de bug se sudo for usado\natualize as informações dos serviços após usar o comando\nComando de serviços: correção de bug para usar sudo",
-                "nl": "knop om handmatig een enkele toegevoegde host te vernieuwen\nuserCommand: negeer het polling-interval als het type knop is\nuserCommand: individuele polling-intervallen toegevoegd\nuserCommand: bugfix als sudo wordt gebruikt\nvernieuw de informatie over services na het gebruik van de opdracht\nservices-opdracht: bugfix voor het gebruik van sudo",
-                "fr": "bouton pour actualiser manuellement un seul hôte ajouté\nuserCommand: ignore l'intervalle d'interrogation si le type est bouton\nuserCommand: ajout d'intervalles d'interrogation individuels\nuserCommand: correction de bogue si sudo est utilisé\nactualiser les informations sur les services après avoir utilisé la commande\ncommande services: correction de bogue pour l'utilisation de sudo",
-                "it": "pulsante per aggiornare manualmente un singolo host aggiunto\nuserCommand: ignora l'intervallo di polling se il tipo è pulsante\nuserCommand: aggiunti intervalli di polling individuali\nuserCommand: correzione di bug se viene utilizzato sudo\naggiorna le informazioni sui servizi dopo aver usato il comando\ncomando services: correzione di bug per l'utilizzo di sudo",
-                "es": "botón para actualizar manualmente un solo host agregado\nuserCommand: ignora el intervalo de sondeo si el tipo es botón\nuserCommand: se agregaron intervalos de sondeo individuales\nuserCommand: corrección de errores si se usa sudo\nactualizar la información de los servicios después de usar el comando\ncomando de servicios: corrección de errores para usar sudo",
-                "pl": "Przycisk ręcznego odświeżania dodanego pojedynczego hosta\nuserCommand: ignoruj interwał sondowania, jeśli typ to przycisk\nuserCommand: dodano indywidualne interwały odpytywania\nuserCommand: poprawka błędu, jeśli używane jest sudo\nodśwież informacje o usługach po użyciu polecenia\npolecenie services: poprawka błędu w używaniu sudo",
-                "zh-cn": "按钮以手动刷新添加的单个主机\nuserCommand：如果类型为button，则忽略轮询间隔\nuserCommand：添加了单个轮询间隔\nuserCommand：如果使用sudo的错误修复\n使用命令后刷新服务信息\nservices命令：使用sudo的错误修复"
-            },
-            "0.2.7": {
-                "en": "option to deactive polling for hosts added\nbug fixes for using sudo",
-                "de": "Option zum Deaktivieren der Abfrage für Hosts hinzugefügt\nFehlerbehebungen für die Verwendung von sudo",
-                "ru": "добавлена возможность деактивного опроса хостов\nисправления ошибок при использовании sudo",
-                "pt": "opção de pesquisa desativada para hosts adicionada\ncorreções de bugs para usar sudo",
-                "nl": "optie om polling voor hosts te deactiveren toegevoegd\nbugfixes voor het gebruik van sudo",
-                "fr": "option de désactivation de l'interrogation pour les hôtes ajoutée\ncorrections de bogues pour l'utilisation de sudo",
-                "it": "opzione per il polling disattivato per gli host aggiunta\ncorrezioni di bug per l'utilizzo di sudo",
-                "es": "opción para desactivar el sondeo para hosts agregada\ncorrecciones de errores para usar sudo",
-                "pl": "dodano opcję wyłączenia odpytywania dla hostów\npoprawki błędów w używaniu sudo",
-                "zh-cn": "对添加的主机停用轮询的选项\n使用sudo的错误修复"
-            },
-            "0.2.6": {
-                "en": "Node-SSH bug fix",
-                "de": "Node-SSH-Fehlerbehebung",
-                "ru": "Исправление ошибки Node-SSH",
-                "pt": "Correção de bug Node-SSH",
-                "nl": "Bugfix in Node-SSH",
-                "fr": "Correction de bogue Node-SSH",
-                "it": "Correzione di bug del nodo SSH",
-                "es": "Corrección de errores de Node-SSH",
-                "pl": "Poprawka błędu Node-SSH",
-                "zh-cn": "节点SSH错误修复"
-            },
-            "0.2.5": {
-                "en": "sentry error handling optimized\ninfo datapoints added, isOnline changed to info.is_online",
-                "de": "Wachfehlerbehandlung optimiert\nInfo-Datenpunkte hinzugefügt, isOnline in info.is_online geändert",
-                "ru": "оптимизирована обработка ошибок караула\nдобавлены информационные точки данных, isOnline изменено на info.is_online",
-                "pt": "tratamento de erros sentinela otimizado\ninfo datapoints adicionados, isOnline alterado para info.is_online",
-                "nl": "sentry foutafhandeling geoptimaliseerd\ninfo datapunten toegevoegd, isOnline gewijzigd in info.is_online",
-                "fr": "gestion des erreurs de sentinelle optimisée\ninfo points de données ajoutés, isOnline changé en info.is_online",
-                "it": "gestione degli errori di sentinella ottimizzata\nInfo datapoint aggiunti, isOnline modificato in info.is_online",
-                "es": "manejo de errores centinela optimizado\nSe agregaron puntos de datos de información, isOnline cambió a info.is_online",
-                "pl": "zoptymalizowana obsługa błędów wartowników\nDodano punkty danych info, isOnline zmieniono na info.is_online",
-                "zh-cn": "哨兵错误处理已优化\n已添加info数据点，isOnline已更改为info.is_online"
-            },
-            "0.2.4": {
-                "en": "datapoint isOnline added\nsettings: styles optimized\nuserCommand: null values if response is null or empty\nbug fixes",
-                "de": "Datenpunkt isOnline hinzugefügt\nEinstellungen: Stile optimiert\nuserCommand: Nullwerte, wenn die Antwort null oder leer ist\nFehlerbehebung",
-                "ru": "datapoint isOnline добавлен\nнастройки: стили оптимизированы\nuserCommand: нулевые значения, если ответ нулевой или пустой\nисправление ошибок",
-                "pt": "datapoint isOnline adicionado\nconfigurações: estilos otimizados\nuserCommand: valores nulos se a resposta for nula ou vazia\ncorreção de bugs",
-                "nl": "datapunt isOnline toegevoegd\ninstellingen: stijlen geoptimaliseerd\nuserCommand: null-waarden als het antwoord null of leeg is\nbugfixes",
-                "fr": "datapoint isOnline ajouté\nparamètres: styles optimisés\nuserCommand: valeurs nulles si la réponse est nulle ou vide\ncorrections de bogues",
-                "it": "datapoint isOnline aggiunto\nimpostazioni: stili ottimizzati\nuserCommand: valori nulli se la risposta è nullo o vuoto\ncorrezioni di bug",
-                "es": "el punto de datos se agrega en línea\nconfiguración: estilos optimizados\nuserCommand: valores nulos si la respuesta es nula o vacía\ncorrección de errores",
-                "pl": "Dodano punkt danych isOnline\nustawienia: style zoptymalizowane\nuserCommand: wartości null, jeśli odpowiedź ma wartość null lub jest pusta\npoprawki błędów",
-                "zh-cn": "数据点isOnline已添加\n设置：优化样式\nuserCommand：如果响应为null或为空，则为null值\nbug修复"
-            },
-            "0.2.3": {
-                "en": "bug fixes",
-                "de": "Fehlerbehebung",
-                "ru": "исправление ошибок",
-                "pt": "correção de bugs",
-                "nl": "bugfixes",
-                "fr": "corrections de bogues",
-                "it": "correzioni di bug",
-                "es": "corrección de errores",
-                "pl": "poprawki błędów",
-                "zh-cn": "bug修复"
-            },
-            "0.2.2": {
-                "en": "bug fixes",
-                "de": "Fehlerbehebung",
-                "ru": "исправление ошибок",
-                "pt": "correção de bugs",
-                "nl": "bugfixes",
-                "fr": "corrections de bogues",
-                "it": "correzioni di bug",
-                "es": "corrección de errores",
-                "pl": "poprawki błędów",
-                "zh-cn": "bug修复"
-            }
-        },
-        "title": "Linux Control",
-        "titleLang": {
-            "en": "Linux Control",
-            "de": "Linux Control",
-            "ru": "Linux Control",
-            "pt": "Linux Control",
-            "nl": "Linux Control",
-            "fr": "Linux Control",
-            "it": "Linux Control",
-            "es": "Linux Control",
-            "pl": "Linux Control",
-            "zh-cn": "Linux Control"
-        },
-        "desc": {
-            "en": "Controlling Linux devices and information about your system",
-            "de": "Steuern von Linux-Geräten und Informationen zu Ihrem System",
-            "ru": "Управление устройствами Linux и информацией о вашей системе",
-            "pt": "Controlando dispositivos Linux e informações sobre seu sistema",
-            "nl": "Controle van Linux-apparaten en informatie over uw systeem",
-            "fr": "Contrôle des périphériques Linux et des informations sur votre système",
-            "it": "Controllo dei dispositivi Linux e informazioni sul sistema",
-            "es": "Control de dispositivos Linux e información sobre su sistema",
-            "pl": "Kontrolowanie urządzeń z systemem Linux i informacji o systemie",
-            "zh-cn": "控制Linux设备和有关系统的信息"
-        },
-        "authors": [
-            "Scrounger <scrounger@gmx.net>"
-        ],
-        "keywords": [
-            "linux",
-            "control",
-            "ssh",
-            "remote"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "linux-control.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linux-control/master/admin/linux-control.png",
-        "readme": "https://github.com/Scrounger/ioBroker.linux-control/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "hardware",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=1.4.2"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://b78d46cef31e48cbb69ac7b00c79b5a3@sentry.iobroker.net/76"
-            }
-        }
+  "common": {
+    "name": "linux-control",
+    "version": "1.1.5",
+    "news": {
+      "1.1.5": {
+        "en": "Dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "Зависимости обновлены",
+        "pt": "Dependências atualizadas",
+        "nl": "Afhankelijkheden bijgewerkt",
+        "fr": "Dépendances mises à jour",
+        "it": "Dipendenze aggiornate",
+        "es": "Dependencias actualizadas",
+        "pl": "Zaktualizowano zależności",
+        "zh-cn": "已更新依赖项"
+      },
+      "1.1.4": {
+        "en": "always create my command datapoint",
+        "de": "erstelle immer meinen Befehlsdatenpunkt",
+        "ru": "всегда создавать мою точку данных команды",
+        "pt": "sempre crio meu datapoint de comando",
+        "nl": "maak altijd mijn opdrachtgegevenspunt aan",
+        "fr": "toujours créer mon point de données de commande",
+        "it": "crea sempre il mio punto dati di comando",
+        "es": "siempre crea mi punto de datos de comando",
+        "pl": "zawsze twórz mój punkt danych poleceń",
+        "zh-cn": "始终创建我的命令数据点"
+      },
+      "1.1.3": {
+        "en": "show warn message if permission denied\npreformance improvment",
+        "de": "Warnmeldung anzeigen, wenn Berechtigung verweigert\nLeistungssteigerung",
+        "ru": "показать предупреждающее сообщение, если в разрешении отказано\nулучшение преформ",
+        "pt": "mostrar mensagem de aviso se a permissão for negada\nmelhoria de performance",
+        "nl": "waarschuwingsbericht weergeven als toestemming geweigerd\nprestatieverbetering",
+        "fr": "afficher un message d'avertissement si l'autorisation est refusée\namélioration des performances",
+        "it": "mostra il messaggio di avviso se l'autorizzazione è negata\nmiglioramento delle prestazioni",
+        "es": "mostrar mensaje de advertencia si se niega el permiso\nmejora del rendimiento",
+        "pl": "pokaż komunikat ostrzegawczy, jeśli odmówiono pozwolenia\npoprawa wydajności",
+        "zh-cn": "如果权限被拒绝，则显示警告消息\n表现改善"
+      },
+      "1.1.2": {
+        "en": "show error if user is not in sudoers file\nbug fix if response has no result optimized\nmyCommands: bug fix sudo is no longer mandatory",
+        "de": "Fehler anzeigen, wenn sich der Benutzer nicht in der sudoers-Datei befindet\nFehlerbehebung, wenn die Antwort kein optimiertes Ergebnis hat\nmyCommands: Bugfix Sudo ist nicht mehr obligatorisch",
+        "ru": "показать ошибку, если пользователя нет в файле sudoers\nисправление ошибки, если ответ не дал оптимизированного результата\nmyCommands: исправление ошибки sudo больше не является обязательным",
+        "pt": "mostrar erro se o usuário não estiver no arquivo sudoers\ncorreção de bug se a resposta não tiver resultado otimizado\nmyCommands: bug fix sudo não é mais obrigatório",
+        "nl": "show error als de gebruiker niet in het sudoers-bestand zit\nbugfix als reactie geen geoptimaliseerd resultaat heeft\nmyCommands: bug fix sudo is niet langer verplicht",
+        "fr": "afficher l'erreur si l'utilisateur n'est pas dans le fichier sudoers\ncorrection de bogue si la réponse n'a pas de résultat optimisé\nmyCommands: la correction de bogue sudo n'est plus obligatoire",
+        "it": "mostra l'errore se l'utente non è nel file sudoers\ncorrezione di bug se la risposta non ha risultati ottimizzati\nmyCommands: bug fix sudo non è più obbligatorio",
+        "es": "mostrar error si el usuario no está en el archivo sudoers\ncorrección de errores si la respuesta no tiene resultados optimizados\nmyCommands: la corrección de errores sudo ya no es obligatoria",
+        "pl": "pokaż błąd, jeśli użytkownika nie ma w pliku sudoers\npoprawka błędu, jeśli odpowiedź nie ma zoptymalizowanych wyników\nmyCommands: naprawianie błędów sudo nie jest już obowiązkowe",
+        "zh-cn": "如果用户不在sudoers文件中，则显示错误\n错误修复，如果响应没有优化结果\nmyCommands：错误修复sudo不再是必需的"
+      },
+      "1.1.0": {
+        "en": "datapoints type and role bug fixes\nadapter settings card layout added",
+        "de": "Fehlerbehebungen für Datenpunkttyp und -rolle\nAdaptereinstellungen Kartenlayout hinzugefügt",
+        "ru": "исправления ошибок типов и ролей точек данных\nдобавлен макет карты настроек адаптера",
+        "pt": "tipo de pontos de dados e correções de bugs de funções\nconfiguração do adaptador layout do cartão adicionado",
+        "nl": "datapunten type en rol bugfixes\nadapter instellingen kaart layout toegevoegd",
+        "fr": "Correction de bogues relatifs au type et au rôle des points de données\nmise en page de la carte des paramètres de l'adaptateur ajoutée",
+        "it": "tipo di datapoint e correzioni di bug di ruolo\nlayout scheda impostazioni adattatore aggiunto",
+        "es": "tipo de puntos de datos y corrección de errores de rol\ndiseño de tarjeta de configuración del adaptador agregado",
+        "pl": "poprawki błędów typu i roli punktów danych\nDodano układ karty ustawień adaptera",
+        "zh-cn": "数据点类型和角色错误修复\n适配器设置卡布局已添加"
+      },
+      "1.0.1": {
+        "en": "translation for polling interval optimized",
+        "de": "Übersetzung für Abfrageintervall optimiert",
+        "ru": "Оптимизирован перевод для интервала опроса",
+        "pt": "tradução para intervalo de sondagem otimizada",
+        "nl": "vertaling voor geoptimaliseerd polling-interval",
+        "fr": "traduction optimisée pour l'intervalle d'interrogation",
+        "it": "traduzione per l'intervallo di polling ottimizzata",
+        "es": "traducción para intervalo de sondeo optimizado",
+        "pl": "tłumaczenie zoptymalizowane pod kątem interwału odpytywania",
+        "zh-cn": "轮询间隔的转换优化"
+      },
+      "1.0.0": {
+        "en": "bump to stable",
+        "de": "Stoß zu stabil",
+        "ru": "подъехать к стабильной",
+        "pt": "colidir para estável",
+        "nl": "hobbel naar stabiel",
+        "fr": "bosse à stable",
+        "it": "bump to stabile",
+        "es": "golpe a estable",
+        "pl": "uderzyć do stabilnego",
+        "zh-cn": "颠簸到稳定"
+      }
     },
-    "native": {
-        "hosts": [],
-        "folders": [],
-        "commands": [],
-        "whitelist": {
-            "info": [
-                "is_online",
-                "ip"
-            ],
-            "control": [
-                "aptUpdate",
-                "aptUpgrade",
-                "response"
-            ],
-            "distribution": [
-                "name",
-                "version",
-                "codename",
-                "fullname"
-            ],
-            "updates": [
-                "lastUpdate",
-                "newPackages",
-                "upgradable",
-                "newPackagesList"
-            ],
-            "services": [],
-            "needrestart": []
-        },
-        "blacklistDatapoints": {},
-        "serviceWhiteList": {}
+    "title": "Linux Control",
+    "titleLang": {
+      "en": "Linux Control",
+      "de": "Linux Control",
+      "ru": "Linux Control",
+      "pt": "Linux Control",
+      "nl": "Linux Control",
+      "fr": "Linux Control",
+      "it": "Linux Control",
+      "es": "Linux Control",
+      "pl": "Linux Control",
+      "zh-cn": "Linux Control"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "command",
-            "type": "channel",
-            "common": {
-                "name": "Command"
-            },
-            "native": {}
-        },
-        {
-            "_id": "command.execute",
-            "type": "state",
-            "common": {
-                "role": "button",
-                "name": "execute command",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "command.command",
-            "type": "state",
-            "common": {
-                "role": "value",
-                "name": "command to execute",
-                "type": "string",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "command.response",
-            "type": "state",
-            "common": {
-                "role": "value",
-                "name": "command response",
-                "type": "string",
-                "read": true,
-                "write": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "command.host",
-            "type": "state",
-            "common": {
-                "role": "value",
-                "name": "select host",
-                "type": "string",
-                "states": "",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        }
-    ]
+    "desc": {
+      "en": "Controlling Linux devices and information about your system",
+      "de": "Steuern von Linux-Geräten und Informationen zu Ihrem System",
+      "ru": "Управление устройствами Linux и информацией о вашей системе",
+      "pt": "Controlando dispositivos Linux e informações sobre seu sistema",
+      "nl": "Controle van Linux-apparaten en informatie over uw systeem",
+      "fr": "Contrôle des périphériques Linux et des informations sur votre système",
+      "it": "Controllo dei dispositivi Linux e informazioni sul sistema",
+      "es": "Control de dispositivos Linux e información sobre su sistema",
+      "pl": "Kontrolowanie urządzeń z systemem Linux i informacji o systemie",
+      "zh-cn": "控制Linux设备和有关系统的信息"
+    },
+    "authors": [
+      "Scrounger <scrounger@gmx.net>"
+    ],
+    "keywords": [
+      "linux",
+      "control",
+      "ssh",
+      "remote"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "linux-control.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linux-control/master/admin/linux-control.png",
+    "readme": "https://github.com/Scrounger/ioBroker.linux-control/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "hardware",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=1.4.2"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://b78d46cef31e48cbb69ac7b00c79b5a3@sentry.iobroker.net/76"
+      }
+    }
+  },
+  "native": {
+    "hosts": [],
+    "folders": [],
+    "commands": [],
+    "whitelist": {
+      "info": [
+        "is_online",
+        "ip"
+      ],
+      "control": [
+        "aptUpdate",
+        "aptUpgrade",
+        "response"
+      ],
+      "distribution": [
+        "name",
+        "version",
+        "codename",
+        "fullname"
+      ],
+      "updates": [
+        "lastUpdate",
+        "newPackages",
+        "upgradable",
+        "newPackagesList"
+      ],
+      "services": [],
+      "needrestart": []
+    },
+    "blacklistDatapoints": {},
+    "serviceWhiteList": {}
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "command",
+      "type": "channel",
+      "common": {
+        "name": "Command"
+      },
+      "native": {}
+    },
+    {
+      "_id": "command.execute",
+      "type": "state",
+      "common": {
+        "role": "button",
+        "name": "execute command",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "command.command",
+      "type": "state",
+      "common": {
+        "role": "value",
+        "name": "command to execute",
+        "type": "string",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "command.response",
+      "type": "state",
+      "common": {
+        "role": "value",
+        "name": "command response",
+        "type": "string",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "command.host",
+      "type": "state",
+      "common": {
+        "role": "value",
+        "name": "select host",
+        "type": "string",
+        "states": "",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    }
+  ]
 }
