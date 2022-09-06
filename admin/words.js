@@ -1021,6 +1021,30 @@ const dictionary = {
 		"es": "agregar carpeta",
 		"pl": "Dodaj folder",
 		"zh-cn": "新增文件夹"
+	},
+	"globalSettings": {
+		"en": "Global settings",
+		"de": "Globale Einstellungen",
+		"ru": "Глобальные настройки",
+		"pt": "Configurações globais",
+		"nl": "Global setting",
+		"fr": "Paramètres mondiaux",
+		"it": "Impostazioni globali",
+		"es": "Ajustes globales",
+		"pl": "Globalna ustawa",
+		"zh-cn": "B. 全球环境"
+	},
+	"aptUpdateInterval": {
+		"en": "Get information about updates only every x minutes (0 = use host interval)",
+		"de": "Informationen zu Updates nur alle x Minuten abrufen (0 = Host-Intervall)",
+		"ru": "Получать информацию об обновлениях только каждые x минуты (0 = использовать интервал хоста)",
+		"pt": "Obtenha informações sobre atualizações apenas a cada minuto x (0 = use intervalo de host)",
+		"nl": "Zorg voor informatie over updates maar elke X minuten",
+		"fr": "Obtenez des informations sur les mises à jour seulement toutes les x minutes (0 = intervalle d'utilisation)",
+		"it": "Ottenere informazioni sugli aggiornamenti solo ogni x minuti (0 = utilizzare l'intervallo host)",
+		"es": "Obtenga información sobre las actualizaciones sólo cada x minutos (0 = uso intervalo de host)",
+		"pl": "Dane na temat aktualizacji są dostępne tylko w każdej x minuty (0 = 0)",
+		"zh-cn": "仅提供每十分钟(0 = 使用东道国间汇率)的最新情况"
 	}
 };
 

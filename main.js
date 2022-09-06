@@ -618,7 +618,28 @@ class LinuxControl extends utils.Adapter {
 		let logPrefix = `[updateInfos] ${host.name} (${host.ip}:${host.port}):`;
 		try {
 			if (connection) {
-				await this.cmdAptUpdate(connection, host);
+				if (this.isAdapterStart) {
+					await this.cmdAptUpdate(connection, host);
+				} else {
+					if (this.config.aptUpdateInterval === 0) {
+						// apt update should run on every host refresh interval
+						await this.cmdAptUpdate(connection, host);
+						this.debugHandling(`${logPrefix}: no diffrent interval for updates configured by user`);
+					} else {
+						// user defined a diffrent update interval for apt update
+
+						let lastUpdate = await this.getStateAsync(`${this.namespace}.${host.name}.updates.upgradable`);
+						if (lastUpdate) {
+							let now = new Date().getTime();
+							let diff = (now - lastUpdate.ts) / 1000 / 60;
+							if (diff > this.config.aptUpdateInterval) {
+								await this.cmdAptUpdate(connection, host);
+							} else {
+								this.debugHandling(`${logPrefix}: receving last updates info before ${diff.toFixed(0)} Min. -> no data refresh needed`);
+							}
+						}
+					}
+				}
 			}
 		} catch (err) {
 			this.errorHandling(err, logPrefix);
