@@ -233,7 +233,7 @@
         "role": "value",
         "name": "select host",
         "type": "string",
-        "states": "",
+        "states": {},
         "read": true,
         "write": true
       },

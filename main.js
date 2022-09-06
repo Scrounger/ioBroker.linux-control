@@ -988,14 +988,13 @@ class LinuxControl extends utils.Adapter {
 	async setSelectableHosts() {
 		let hostObj = await this.getObjectAsync(`command.host`);
 		if (hostObj && hostObj.common) {
-			let hostStates = ''
+			let hostStates = {};
 			// @ts-ignore
 			for (const host of this.config.hosts) {
 				if (host) {
 					// @ts-ignore
-					hostStates = hostStates + `${host.name}:${host.name};`
+					hostStates[host.name] = host.name;
 				}
-
 			}
 			hostObj.common.states = hostStates;
 
