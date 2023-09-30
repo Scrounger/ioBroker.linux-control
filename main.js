@@ -494,7 +494,7 @@ class LinuxControl extends utils.Adapter {
 			// @ts-ignore
 			if (this.config.whitelist && this.config.whitelist["services"] && this.config.whitelist["services"].length > 0 && !this.config.blacklistDatapoints[host.name].includes('services.all')) {
 				if (connection) {
-					let response = await this.sendCommand(connection, host, `systemctl list-units --type service --all --no-legend | grep -v '^*' | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, false);
+					let response = await this.sendCommand(connection, host, `systemctl list-units --type service --all --no-legend | sed -E 's/^[^a-zA-Z0-9]*([a-zA-Z0-9-]+\.service)/\1/' | awk '{out=""; for(i=5;i<=NF;i++){out=out" "$i}; print $1","$2","$3","$4","out}'${serviceName ? ` | grep ${serviceName}` : ''}`, logPrefix, undefined, false);
 
 					if (response) {
 						response = response.replace(/\t/g, ',')
