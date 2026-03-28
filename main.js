@@ -13,7 +13,7 @@ const NodeSSH = require('node-ssh').NodeSSH;
 const csvToJson = require('csvtojson');
 const words = require('./admin/words.js');
 const ping = require('ping');
-const { exception } = require('console');
+const { exception } = require('node:console');
 
 let language = 'en';
 let _ = null;
