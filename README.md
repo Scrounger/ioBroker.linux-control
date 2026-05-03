@@ -207,6 +207,8 @@ It is important that the retrieved data is transmitted in the correct type! The 
 ### 0.0.1
 * (Scrounger) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
