@@ -102,6 +102,10 @@ It is important that the retrieved data is transmitted in the correct type! The 
     ### __WORK IN PROGRESS__
 -->
 
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 1.1.6 (2022-09-06)
 * (Scrounger) global interval for update informations added
 * (Scrounger) fix invalid object host

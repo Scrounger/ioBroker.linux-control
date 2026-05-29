@@ -135,16 +135,18 @@
     "compact": true,
     "connectionType": "local",
     "dataSource": "poll",
-    "materialize": true,
     "dependencies": [
       {
-        "js-controller": ">=1.4.2"
+        "js-controller": ">=6.0.11"
       }
     ],
     "plugins": {
       "sentry": {
         "dsn": "https://b78d46cef31e48cbb69ac7b00c79b5a3@sentry.iobroker.net/76"
       }
+    },
+    "adminUI": {
+      "config": "materialize"
     }
   },
   "native": {
