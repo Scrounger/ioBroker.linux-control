@@ -4,8 +4,8 @@
     "version": "1.1.6",
     "news": {
       "1.1.6": {
-        "en": "Improved timer cleanup on unload, state ack handling, and added legacy SSH algorithms option",
-        "de": "Verbesserte Timer-Bereinigung beim Beenden, Status-Ack-Handhabung und Option für veraltete SSH-Algorithmen hinzugefügt",
+        "en": "Improved timer cleanup, state ack handling, legacy SSH option, prevented password autofill in admin UI, fixed README badges, and updated dependencies",
+        "de": "Timer-Bereinigung, Status-Ack-Handhabung, Option für veraltete SSH-Algorithmen, Passwort-Autofill-Fix in Admin UI, README-Badges korrigiert und Abhängigkeiten aktualisiert",
         "ru": "Улучшена очистка таймеров при выгрузке, обработка подтверждений состояния и добавлена опция устаревших алгоритмов SSH",
         "pt": "Limpeza de temporizador aprimorada no descarregamento, manipulação de confirmação de estado e adicionada opção de algoritmos SSH legados",
         "nl": "Verbeterde timer-opschoning bij het ontladen, afhandeling van status-ack en optie voor verouderde SSH-algoritmen toegevoegd",

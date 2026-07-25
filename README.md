@@ -1,18 +1,17 @@
 ![Logo](admin/linux-control.png)
+
 # ioBroker.linux-control
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.linux-control.svg)](https://www.npmjs.com/package/iobroker.linux-control)
+[![NPM version](https://img.shields.io/npm/v/iobroker.linux-control.svg)](https://www.npmjs.com/package/iobroker.linux-control)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.linux-control.svg)](https://www.npmjs.com/package/iobroker.linux-control)
-![Number of Installations (latest)](http://iobroker.live/badges/linux-control-installed.svg)
-![Number of Installations (stable)](http://iobroker.live/badges/linux-control-stable.svg)
-[![Dependency Status](https://img.shields.io/david/Scrounger/iobroker.linux-control.svg)](https://david-dm.org/Scrounger/iobroker.linux-control)
-[![Known Vulnerabilities](https://snyk.io/test/github/Scrounger/ioBroker.linux-control/badge.svg)](https://snyk.io/test/github/Scrounger/ioBroker.linux-control)
-
-[![NPM](https://nodei.co/npm/iobroker.linux-control.png?downloads=true)](https://nodei.co/npm/iobroker.linux-control/)
-
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/Scrounger/ioBroker.linux-control/master.svg)](https://travis-ci.org/Scrounger/ioBroker.linux-control)
+![Number of Installations (latest)](https://iobroker.live/badges/iobroker.linux-control-installed.svg)
+![Number of Installations (stable)](https://iobroker.live/badges/iobroker.linux-control-stable.svg)
+[![License](https://img.shields.io/github/license/Scrounger/ioBroker.linux-control.svg)](https://github.com/Scrounger/ioBroker.linux-control/blob/master/LICENSE)
 
 ## Linux Control Adapter for ioBroker
+
+English | [Deutsch](README_de.md)
+
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url)
 
 Controlling Linux devices and get information about your system
@@ -22,23 +21,25 @@ Controlling Linux devices and get information about your system
 ## Configuration
 
 ### General
+
 ![General](docs/en/img/general.png)
 
-|setting|description|
-|-------|-----------|
-|enabled|enabled or disable updating of the host|
-|datapoint id|id under which all datapoints are to be stored|
-|IP|IP address of your linux device|
-|Port|SSH Port of your linux device|
-|polling interval|polling interval in minutes.<br>To deatcivate the polling you can use '0' or leave it blank|
-|user|ssh user for login|
-|password / passpharse|ssh password for login or passpharse if you use a rsa key|
-|use Sudo| using sudo |
-|legacy SSH|enable legacy / deprecated SSH key exchange & cipher algorithms (e.g., `diffie-hellman-group1-sha1`, `3des-cbc`, `ssh-rsa`) for older devices/switches|
-|rsa key|path and filename of your rsa key. Access rights must be available!|
-|timeout|connection timeout|
+| setting               | description                                                                                                                                            |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| enabled               | enabled or disable updating of the host                                                                                                                |
+| datapoint id          | id under which all datapoints are to be stored                                                                                                         |
+| IP                    | IP address of your linux device                                                                                                                        |
+| Port                  | SSH Port of your linux device                                                                                                                          |
+| polling interval      | polling interval in minutes.<br>To deatcivate the polling you can use '0' or leave it blank                                                            |
+| user                  | ssh user for login                                                                                                                                     |
+| password / passpharse | ssh password for login or passpharse if you use a rsa key                                                                                              |
+| use Sudo              | using sudo                                                                                                                                             |
+| legacy SSH            | enable legacy / deprecated SSH key exchange & cipher algorithms (e.g., `diffie-hellman-group1-sha1`, `3des-cbc`, `ssh-rsa`) for older devices/switches |
+| rsa key               | path and filename of your rsa key. Access rights must be available!                                                                                    |
+| timeout               | connection timeout                                                                                                                                     |
 
 ### Datapoints
+
 ![Datapoints](docs/en/img/datapoints.gif)
 
 The adapter creates predefined datapoints with information and the possibility to control the Linux device. These can be selected here.
@@ -51,6 +52,7 @@ Note if you would like to add the whole channel to the blacklist, you must drag 
 **Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
 
 ### Services
+
 ![Services](docs/en/img/services.png)
 
 If the retrieval of services under datapoints is activated, you can define here per host for which services only information should be retrieved.
@@ -58,43 +60,57 @@ If the retrieval of services under datapoints is activated, you can define here 
 **Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
 
 ### Folders
+
 ![Folders](docs/en/img/folders.png)
 
 Here you can retrieve information about the size of folders, count of the files included in these folders and the timestamp of the last change in this folder.
 
 **Due to the many different Linux distributions this feature is only tested with Debian 10, Ubuntu 18 / 20 LTS!**
 
-|setting|description|
-|-------|-----------|
-|enabled|enabled or disable updating of the folder|
-|Host|Host which should be used|
-|datapoint id|id under which all datapoints are to be stored|
-|Path|path of the folder|
-|filename pattern|pattern for files names which should be regonized.|
-|Unit|Unit for size|
-|decimal places|decimal places|
-|count of files|create datapoint for count of files|
-|last change|create datapoint for timestamp of the last change in this folder|
+| setting          | description                                                      |
+| ---------------- | ---------------------------------------------------------------- |
+| enabled          | enabled or disable updating of the folder                        |
+| Host             | Host which should be used                                        |
+| datapoint id     | id under which all datapoints are to be stored                   |
+| Path             | path of the folder                                               |
+| filename pattern | pattern for files names which should be regonized.               |
+| Unit             | Unit for size                                                    |
+| decimal places   | decimal places                                                   |
+| count of files   | create datapoint for count of files                              |
+| last change      | create datapoint for timestamp of the last change in this folder |
 
 ### My Commands
+
 ![Custom Commands](docs/en/img/myCommands.png)
 
 Here, very individual commands can be defined and then written to your own defined data points.
 It is important that the retrieved data is transmitted in the correct type! The type must then be configured accordingly.
 
-|setting|description|
-|-------|-----------|
-|enabled|enabled or disable updating of the command|
-|Host|Host which should be used|
-|datapoint id|id under which datapoints are to be stored|
-|polling interval|diffrent polling interval in seconds for the command only. For deactivating use `0` or leave the field blank, then the polling interval from the host is used|
-|description|description / name of the datapoint|
-|command|command that should be used <br><br>If you use a user that needs `sudo` then you have to add `sudo -S` to your own command!|
-|type|type of the datapoint|
-|unit|unit of the datapoint|
+| setting          | description                                                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| enabled          | enabled or disable updating of the command                                                                                                                    |
+| Host             | Host which should be used                                                                                                                                     |
+| datapoint id     | id under which datapoints are to be stored                                                                                                                    |
+| polling interval | diffrent polling interval in seconds for the command only. For deactivating use `0` or leave the field blank, then the polling interval from the host is used |
+| description      | description / name of the datapoint                                                                                                                           |
+| command          | command that should be used <br><br>If you use a user that needs `sudo` then you have to add `sudo -S` to your own command!                                   |
+| type             | type of the datapoint                                                                                                                                         |
+| unit             | unit of the datapoint                                                                                                                                         |
 
-## Known Issues
-* if its not possible to get connection to your linux client, check if `iputils-ping` is correct installed on client
+## Troubleshooting & Known Issues
+
+- **Host shows as `seems not to be online` (ICMP Ping failure):**
+  Before connecting via SSH, the adapter performs an ICMP ping probe (`ping.promise.probe`). In **Docker containers** or **unprivileged LXC containers** (e.g. Proxmox), the `iobroker` user may lack permissions to open raw ICMP sockets.
+  - **Fix 1 (Recommended):** Set the SUID permission bit on `ping` on your ioBroker server:
+    ```bash
+    sudo chmod u+s $(which ping)
+    ```
+  - **Fix 2:** Set `cap_net_raw` capabilities:
+    ```bash
+    sudo setcap cap_net_raw+ep $(which ping)
+    ```
+  - **Fix 3 (Docker):** Add `--cap-add=NET_RAW` to your container flags or set `sysctl -w net.ipv4.ping_group_range="0 2147483647"` on the host.
+- Check if `iputils-ping` is installed on the remote Linux target.
 
 ## Changelog
 
@@ -104,39 +120,45 @@ It is important that the retrieved data is transmitted in the correct type! The 
 -->
 
 ### **WORK IN PROGRESS**
-* (meistermopper) add optional legacy SSH algorithms support for older devices (closes #90)
-* (meistermopper) add Biome linter, `npm run test:local` workflow and align with harvia-fenix quality standard
-* (meistermopper) fix invalid common.states type for `command.host` object
-* (meistermopper) update dependencies, adminUI configuration and repochecker compliance
 
-### 1.1.6 (2022-09-06)
-* (Scrounger) global interval for update informations added
-* (Scrounger) fix invalid object host
+- (meistermopper) add optional legacy SSH algorithms support for older devices (closes #90)
+- (meistermopper) add Biome linter, `npm run test:local` workflow
+- (meistermopper) fix invalid common.states type for `command.host` object
+- (meistermopper) update dependencies, adminUI configuration and repochecker compliance
 
 ### 1.1.6 (2026-07-23)
-* (meistermopper) Improved timer resource cleanup on unload using adapter-core safe timeouts
-* (meistermopper) Enforced state ack handling filter in onStateChange
-* (meistermopper) Added legacy SSH key exchange and cipher algorithm support
+
+- (meistermopper) Improved timer resource cleanup on unload using adapter-core safe timeouts
+- (meistermopper) Enforced state ack handling filter in onStateChange
+- (meistermopper) Added legacy SSH key exchange and cipher algorithm support
+- (meistermopper) Prevented browser password autofill in admin hosts configuration table
+- (meistermopper) Fixed broken badges in README and updated links to HTTPS
+- (meistermopper) Added ICMP ping troubleshooting guide and created German README (`README_de.md`)
+- (meistermopper) Updated dependencies (`node-ssh`, `ping`, `axios`, `mocha`, `chai`, `eslint`, `gulp`)
 
 ### 1.1.5 (2022-05-03)
-* (Scrounger) Dependencies updated
+
+- (Scrounger) Dependencies updated
 
 ### 1.1.4 (2021-12-18)
-* (Scrounger) always create my command datapoint
+
+- (Scrounger) always create my command datapoint
 
 ### 1.1.3 (2021-10-04)
-* (Scrounger) show warn message if permission denied
-* (xCruziX) preformance improvment
+
+- (Scrounger) show warn message if permission denied
+- (xCruziX) preformance improvment
 
 ### 1.1.2 (2021-01-08)
-* (Scrounger) show error if user is not in sudoers file
-* (Scrounger) bug fix if response has no result optimized
-* (Scrounger) myCommands: bug fix sudo is no longer mandatory
+
+- (Scrounger) show error if user is not in sudoers file
+- (Scrounger) bug fix if response has no result optimized
+- (Scrounger) myCommands: bug fix sudo is no longer mandatory
 
 Older changelogs can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
 
-
 ## License
+
 MIT License
 
 Copyright (c) 2020-2026 Scrounger <scrounger@gmx.net>
