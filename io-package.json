@@ -142,6 +142,7 @@
     "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linux-control/master/admin/linux-control.png",
     "readme": "https://github.com/Scrounger/ioBroker.linux-control/blob/master/README.md",
     "loglevel": "info",
+    "tier": 2,
     "mode": "daemon",
     "type": "hardware",
     "compact": true,
