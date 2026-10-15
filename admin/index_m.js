@@ -439,6 +439,7 @@ function loadHostsTable(settings, hosts, onChange) {
 	}
 
 	values2table('hosts', hosts, onChange);
+	$('#hosts input[type="password"]').attr('autocomplete', 'new-password');
 
 	onChange(false);
 	// function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
